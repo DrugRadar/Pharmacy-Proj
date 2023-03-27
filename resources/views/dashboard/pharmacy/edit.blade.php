@@ -2,7 +2,7 @@
 @section('content')
 <div>
     <h1>Pharmacy</h1>
-    <form method="POST" action="{{route('pharmacy.update',$pharmacy->id)}}" enctype=" multipart/form-data">
+    <form method="POST" action="{{route('pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="mb-3 mt-3">
