@@ -49,7 +49,6 @@
                             </clipPath>
                         </defs>
 
-
                         <g xmlns="http://www.w3.org/2000/svg" transform="matrix(1.25,0,0,-1.25,0,1000)" id="g10"><g transform="scale(0.1,0.1)" id="g12">
                         <g id="g14">
                         <g clip-path="url(#clipPath18)" id="g16">
@@ -274,9 +273,9 @@
     </main>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/core/bootstrap.bundle.min.js"></script>
+    <!-- <script src="assets/js/core/bootstrap.bundle.min.js"></script>
     <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     @yield('modal')
 </body>
