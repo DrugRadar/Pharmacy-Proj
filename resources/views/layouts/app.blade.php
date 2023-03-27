@@ -118,7 +118,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../pages/tables.html">
+                        <a class="nav-link text-white" href="{{route('areas.index')}}">
                             <div
                                 class="text-white text-center me-2 d-flex align-items-center justify-content-center"
                             >
