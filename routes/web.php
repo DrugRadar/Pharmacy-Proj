@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PharmacyController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,11 @@ Route::get('/dashboard', function(){
 // Route::get('/pharmacy/edit/{id}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
 
 Route::resource('pharmacy', PharmacyController::class);
+
+Route::get('/area', [AreaController::class, 'index'])->name("area.index");
+Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
+Route::post('/area', [AreaController::class, 'store'])->name('area.store');
+Route::get('/area/delete/{id}', [AreaController::class, 'delete'])->name('area.delete');
+Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
+Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
+

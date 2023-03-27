@@ -60,7 +60,7 @@ class PharmacyController extends Controller
         }
 
         $pharmacy->avatar_image = $imageName;
-        $pharmacy->save();
+        $pharmacy->save(); 
     }
 
     private function updatePharmacy($pharmacy) {
