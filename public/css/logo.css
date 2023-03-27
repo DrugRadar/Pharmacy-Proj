@@ -1,0 +1,131 @@
+ /********************* white bta3******************** */
+ #path266,
+#path268,
+#path270,
+#path272,
+#path274,
+#path276,
+#path278,
+#path280
+{
+  fill:#fff;fill-opacity:1;fill-rule:nonzero;stroke:none
+}
+#path280{   animation: bottomPiece1 5.5s 0s forwards;}
+#path274{   animation: bottomPiece2 5.5s 0s forwards;}
+#path276{   animation: middlePiece 5.5s 0s forwards;}
+#path278, #path270, #path268, #path266{   animation: ballAndTop 5.5s 0s forwards;}
+
+@keyframes bottomPiece1 {
+10%{          transform: translateY(690px);}
+ 50%{       transform: translateY(0px);}
+
+}
+@keyframes bottomPiece2 {
+10%{         transform: translateY(490px);}
+ 50%{       transform: translateY(0px);}
+
+}
+@keyframes ballAndTop {
+10%{        transform: translateY(-260px);}
+ 50%{       transform: translateY(0px);}
+
+}
+@keyframes middlePiece {
+10%{      transform: translateY(250px);}
+ 50%{       transform: translateY(0px);}
+
+}
+/********************* wings motion******************** */
+/*left*/
+ @keyframes lWing {
+10%{ transform: translate3d(-1524px,1895px,2px); }
+100%{ transform: translateZ(0px,0px,0px); opacity: 1;}
+}
+#path258
+{
+  fill: #fab52e;
+  fill-opacity: 1;
+  fill-rule: nonzero;
+  stroke: none;
+  animation: lWing 5.5s 0s ;
+  animation-fill-mode: forwards;
+  animation-delay: 1.4s;
+  opacity: 0;
+}
+/*line*/
+#path260
+{
+  animation: lWing 5.5s 0s ;
+  animation-fill-mode: forwards;
+  fill-opacity:1;fill-rule:nonzero;stroke:none;
+  animation-delay: 1.4s;
+  opacity: 0;
+}
+/*right*/
+ @keyframes rWing {
+10%{ transform: translate3d(1895px,1924px,2px); }
+100%{ transform: translateZ(0px,0px,0px); opacity: 1;}
+
+}
+#path262
+{
+  fill: #fab52e;
+  fill-opacity: 1;
+  fill-rule: nonzero;
+  stroke: none;
+  animation: rWing 5.5s 0s ;
+  animation-fill-mode: forwards;
+
+  animation-delay: 1.4s;
+  opacity: 0;
+}
+/*two lines*/
+#path264
+{
+  animation: rWing 5.5s 0s ;
+  animation-fill-mode: forwards;
+  fill-opacity:1;fill-rule:nonzero;stroke:none;
+  animation-delay: 1.4s;
+  opacity: 0;
+}
+ @keyframes movingWingLine {
+50% {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 760;
+     }
+     100% {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 760;
+     }
+}
+
+/******************* snaks********************8*/
+/*right*/
+#path282,
+#path284,
+#path286,
+#path288,
+#path290,
+/*left*/
+#path292
+{
+  fill:#46cec0;fill-opacity:1; stroke:#fff;
+  stroke-dasharray: 490;
+  stroke-dashoffset: 490;
+  stroke-width:20;
+  animation: border 2s linear alternate infinite;
+  animation-delay: 2s;
+  opacity: 0;
+}
+@keyframes border {
+  10% { stroke-dashoffset: 1822;stroke:#000; opacity: 0.1;  }
+  20%{opacity: 0.2;}
+  30%{opacity: 0.3;}
+  40%{opacity: 0.4;}
+  50%{opacity: 0.5;}
+  60%{opacity: 0.6;}
+  70%{opacity: 0.7;}
+  80%{opacity: 0.8;}
+  90%{opacity: 0.9;}
+  100% { stroke-dashoffset: 90;stroke:#fff;  opacity: 1;   }
+}
