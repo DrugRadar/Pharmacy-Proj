@@ -39,7 +39,7 @@
         				<p class="text-warning"><small>This action cannot be undone.</small></p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger"><a href="{{route('area.delete' , $area->id)}}" class="text-decoration-none">Delete</a></button>
               </div>
             </div>

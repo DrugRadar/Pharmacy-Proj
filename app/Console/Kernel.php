@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateAdminCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
     }
-
+    protected $commands = [
+        // ...
+        CreateAdminCommand::class,
+    ];
     /**
      * Register the commands for the application.
      */
