@@ -43,6 +43,7 @@ class PharmacyController extends Controller
     
         if (request()->hasFile('avatar_image')) {
             $this->updateAvatarImage($pharmacy);
+       
         }
     
         $this->updatePharmacy($pharmacy);
@@ -51,6 +52,7 @@ class PharmacyController extends Controller
     }
     
     private function updateAvatarImage($pharmacy) {
+
         $image = request()->file('avatar_image');
         $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
         $imageName = $image->getClientOriginalName();
@@ -60,8 +62,9 @@ class PharmacyController extends Controller
         }
     
         $pharmacy->avatar_image = $imageName;
-        $pharmacy->save();
+        $pharmacy->save(); 
     }
+    
     
     private function updatePharmacy($pharmacy) {
         $pharmacy->name = request()->name;
