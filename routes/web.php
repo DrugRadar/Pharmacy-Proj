@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PharmacyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function(){
     return view('dashboard.index');
-});
+})->name('dashboard.index');
+
+Route::get('/pharmacy', [PharmacyController::class, 'index'])->name("pharmacy.index");
+Route::put('/pharmacy/{id}', [PharmacyController::class, 'update'])->name('pharmacy.update');
+Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name("pharmacy.create");
+Route::post('/pharmacy', [PharmacyController::class, 'store'])->name('pharmacy.store');
+Route::get('/pharmacy/edit/{id}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
