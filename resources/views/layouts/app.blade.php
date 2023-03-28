@@ -80,7 +80,7 @@
                         <animate attributeName="d"  dur="12.8s" begin="0s" repeatCount="indefinite" xlink:href="#path258"/>
                     </svg>
 
-                    <div style="font-size:20px; color:whitesmoke;" class="my-auto"> Brand</div>
+                    <div style="font-size:20px; color:whitesmoke;" class="my-auto"> DrugRadar</div>
                 </div>
             </a>
         </div>
@@ -225,7 +225,7 @@
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright:
-                <a class="text-white text-decoration-none" href="{{route('dashboard.index')}}" target="_parent">Brand</a>
+                <a class="text-white text-decoration-none" href="{{route('dashboard.index')}}" target="_parent">DrugRadar</a>
                 <svg width="50" height="50" style="background:transparent;" viewBox="120 140 790 700">
                         <defs id="defs6">
                             <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">

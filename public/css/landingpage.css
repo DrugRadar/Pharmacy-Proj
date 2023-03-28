@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background: url('../images/pexels-martin-péchy-2078266.jpg');
+    background:  linear-gradient(178.6deg, rgb(20, 36, 50) 11.8%, rgb(124, 143, 161) 83.8%);
+    /* background:linear-gradient(45deg,rgba(255, 0, 0, 0.356),rgba(0, 0, 255, 0.336),rgba(0, 128, 0, 0.274),rgba(255, 255, 0, 0.274),rgba(0, 0, 0, 0.281)); */
+}
+
+.content{
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top:0;
+    left:0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content h1{
+    font-size: 45px;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.content p{
+    font-size: 16px;
+    color: #fff;
+}
+
+/* .content a{
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size:19px ;
+    display: inline-block;
+    letter-spacing: 2px;
+    padding: 12px 20px;
+    background-color:rgb(20, 36, 50) ;
+    border-radius: 5px;
+} */
+
+/* .content a:hover{
+    background-color:rgba(20, 36, 50, 0.685) ;
+} */
+
+
+/* === removing default button style ===*/
+.button {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* button styling */
+.button {
+  --border-right: 6px;
+  --text-stroke-color: rgba(255,255,255,0.6);
+  --animation-color:rgb(20, 36, 50);
+  --fs-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: var(--fs-size);
+  font-family: "Arial";
+  position: relative;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+/* this is the text, when you hover on button */
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+/* hover */
+.button:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color))
+}
