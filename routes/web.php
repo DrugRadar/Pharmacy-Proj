@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
-Route::get('/dashboard', function(){
+Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->name('dashboard.index');
 
@@ -49,3 +53,9 @@ Route::delete('/doctor/delete/{id}', [DoctorController::class, 'destroy'])->name
 Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
 Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
+// login Route
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
