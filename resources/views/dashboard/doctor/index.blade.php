@@ -21,7 +21,13 @@
             <td>{{$doctor->id}}</td>
             <td>{{$doctor->national_id}}</td>
             <td>
-                <button class="btn btn-info"><a href="{{route('doctor.edit',$doctor->id)}}">Edit</a></button>
+
+                <a href="{{route('doctor.edit',$doctor->id)}}"><button class="btn btn-info">Edit</button></a>
+                @if($doctor->isBanned())
+                <a href="{{route('doctor.unBan',$doctor->id)}}"><button class="btn btn-dark">UnBan</button></a>
+                @else
+                <a href="{{route('doctor.ban',$doctor->id)}}"><button class="btn btn-dark">Ban</button></a>
+                @endif
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal-{{$doctor->id}}">DELETE </button>
                 <div class="modal fade" id="exampleModal-{{$doctor->id}}" tabindex="-1"

@@ -47,3 +47,5 @@ Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store')
 Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
 Route::delete('/doctor/delete/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
 Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
+Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
