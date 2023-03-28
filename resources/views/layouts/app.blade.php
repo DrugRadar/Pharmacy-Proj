@@ -120,7 +120,7 @@
         <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('pharmacy.index')}}">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
@@ -140,11 +140,11 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-group' style="font-size: 25px;"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Pharmacists</span>
+                        <span class="nav-link-text ms-1">Doctors</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bxs-group' style="font-size: 25px;"></i>
                         </div>
@@ -160,7 +160,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bxs-capsule' style="font-size: 25px;"></i>
                         </div>
@@ -168,7 +168,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-cycling' style="font-size: 25px;"></i>
                         </div>
@@ -176,7 +176,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
                         </div>
