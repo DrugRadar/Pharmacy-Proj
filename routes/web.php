@@ -40,7 +40,6 @@ Route::get('/area/delete/{id}', [AreaController::class, 'delete'])->name('area.d
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
 
-Route::get('area/list', [AreaController::class, 'getArea'])->name('area.list');
 
 Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
 Route::get('/doctor/create', [DoctorController::class, 'create'])->name("doctor.create");
