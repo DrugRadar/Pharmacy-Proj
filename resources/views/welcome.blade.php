@@ -27,7 +27,7 @@
                     <h2 class="DrugRadar"> DrugRadar
                         <i class='bx bxs-capsule capsule'></i>
                     </h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing el</p>
+                    <p class="slogan">Navigating the world of pharmaceuticals, One click at a time!</p>
                 </div>
             </div>
 

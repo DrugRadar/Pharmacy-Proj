@@ -5,47 +5,46 @@
     <div class="text-center">
         <a href="{{route('area.create')}}" class="mt-4 btn btn-success">Create Area</a>
     </div>
-    <table class="table mt-4">
+    <table class="table mt-4 yajra-datatable table-bordered" id="area-table">
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Area name</th>
                 <th scope="col">Area Address</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        @foreach($areas as $area)
-        <tr>
-            <td>{{$area->name}}</td>
-            <td>{{$area->address}}</td>
-            <td>
-                <button class="btn btn-info"><a href="{{route('area.edit' , $area->id)}}" class="text-decoration-none">Edit</a></button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal{{$area->id}}">
-                  Delete
-                </button>
-
-            </td>
-
-        </tr>
- <!-- Modal -->
-        <div class="modal fade"  id="modal{{$area->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Area</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                    <p>Are you sure you want to delete this Record?</p>
-        				<p class="text-warning"><small>This action cannot be undone.</small></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger"><a href="{{route('area.delete' , $area->id)}}" class="text-decoration-none text-white">Delete</a></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
     </table>
 </div>
+@endsection
+@section('scripts')
+
+<script type="text/javascript">
+$(function() {
+    $('#area-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("area.index") }}',
+        columns: [{
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'address',
+                name: 'address'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            }
+        ]
+    });
+});
+</script>
 @endsection
