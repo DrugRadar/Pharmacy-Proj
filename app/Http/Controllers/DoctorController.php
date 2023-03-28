@@ -70,6 +70,18 @@ class DoctorController extends Controller
         $this->updateDoctor($doctor);
         return redirect()->route('doctor.index');
     }
+    public function ban($id){
+        $bannedDoctor=Doctor::find($id);
+        $bannedDoctor->ban();
+
+        return redirect()->route('doctor.index');
+    }
+    public function unBan($id){
+        $bannedDoctor=Doctor::find($id);
+        $bannedDoctor->unban();
+
+        return redirect()->route('doctor.index');
+    }
 
     private function updateAvatarImage($doctor) {
         $image = request()->file('avatar_image');
