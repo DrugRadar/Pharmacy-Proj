@@ -12,14 +12,30 @@
 <body>
     <div class="container">
         <div class="content">
-            <h1>DrugRadar <i class='bx bxs-capsule capsule'></i></h1>
+            {{-- <h1>DrugRadar <i class='bx bxs-capsule capsule'></i></h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             <a href="{{route('dashboard.index')}}" data-text="Awesome" class="button" style="margin-top: 50px; cursor: pointer;">
                 <span class="actual-text">&nbsp;Dashboard&nbsp;</span>
                 <span class="hover-text" aria-hidden="true">&nbsp;Dashboard&nbsp;</span>
                 <i class='bx bxs-chevrons-right' style="margin-left: -25px;"></i>
-            </a>
+            </a> --}}
+            <div class="square twitch" style="margin-bottom: 50px;">
+                <span class="one" ></span>
+                <span class="two"></span>
+                <span class="three"></span>
+                <div class="circle">
+                    <h2 class="DrugRadar"> DrugRadar
+                        <i class='bx bxs-capsule capsule'></i>
+                    </h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing el</p>
+                </div>
+            </div>
 
+            <a href="{{route('dashboard.index')}}" class="button" target="_parent">
+                    <span class="actual-text">&nbsp;Dashboard&nbsp;</span>
+                    <span class="hover-text" aria-hidden="true">&nbsp;Dashboard&nbsp;</span>
+                    <i class='bx bxs-chevrons-right' style="margin-left: -25px;"></i>
+            </a>
         </div>
     </div>
 
