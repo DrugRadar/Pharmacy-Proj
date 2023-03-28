@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
+use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +41,12 @@ Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update')
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
 
 Route::get('area/list', [AreaController::class, 'getArea'])->name('area.list');
+
+Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
+Route::get('/doctor/create', [DoctorController::class, 'create'])->name("doctor.create");
+Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
+Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
+Route::delete('/doctor/delete/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
+Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
