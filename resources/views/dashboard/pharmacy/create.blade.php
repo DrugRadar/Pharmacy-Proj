@@ -22,8 +22,12 @@
                 placeholder="">
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">area_id</label>
-            <input type="text" name="area_id" class="form-control w-50" id="exampleFormControlInput1" placeholder="">
+            <label for="exampleFormControlTextarea1" class="form-label">area</label>
+            <select name="area_id" class="form-control w-50" id="creator">
+                @foreach($areas as $area)
+                <option value="{{$area->id}}">{{$area->name}}</option>
+                @endforeach
+            </select>
         </div>
         <label class="form-check-label">avatar image</label>
         <input class="form-control w-50" type="file" id="formFile" name="avatar_image">
