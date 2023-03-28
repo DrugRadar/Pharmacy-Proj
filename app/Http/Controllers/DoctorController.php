@@ -7,13 +7,30 @@ use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
+use Yajra\DataTables\DataTables;
+
 
 class DoctorController extends Controller
 {
     //
-    public function index(){
-        $doctors = Doctor::all();
-        return view('dashboard.doctor.index',['doctors' => $doctors]);
+    // public function index(){
+    //     $doctors = Doctor::all();
+    //     return view('dashboard.doctor.index',['doctors' => $doctors]);
+    // }
+    public function index(Request $request){
+       if ($request->ajax()) {
+            $data = Doctor::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $actionBtn = '<a href="#" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+                    data-bs-target="#exampleModal-{{$row->id}}">DELETE </button>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+       }
+        return view('dashboard.doctor.index');
     }
     public function create(){
         $pharmacies = Pharmacy::all();

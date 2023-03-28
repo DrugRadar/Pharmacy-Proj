@@ -2,19 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use DataTables;
 
 class PharmacyController extends Controller
 {
-    public function index(){
-        $pharmacies = Pharmacy::all();
-        return view('dashboard.pharmacy.index',['pharmacies' => $pharmacies]);
+    public function index(Request $request){
+        if ($request->ajax()) {
+            $data = Pharmacy::select('*');
+            return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function($row){
+                $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+
+        }
+        return view('dashboard.pharmacy.index');
     }
 
     public function create(){
-        return view('dashboard.pharmacy.create');
+        $areas = Area::all();
+        return view('dashboard.pharmacy.create', ['areas' => $areas]);
     }
 
     public function store(){
@@ -29,6 +43,7 @@ class PharmacyController extends Controller
             'email' => request()->email,
             'password' =>  request()->password,
             'national_id' =>  request()->national_id,
+            'area_id' =>  request()->area_id,
             'avatar_image'=> isset($imagePath) ? $imageName : null,
 
         ]);
@@ -60,7 +75,7 @@ class PharmacyController extends Controller
         }
 
         $pharmacy->avatar_image = $imageName;
-        $pharmacy->save(); 
+        $pharmacy->save();
     }
 
     private function updatePharmacy($pharmacy) {
@@ -74,5 +89,19 @@ class PharmacyController extends Controller
     public function destroy($id){
         Pharmacy::destroy($id);
         return redirect()->route('pharmacy.index');
+    }
+
+    public function getPharmacy(Request $request){
+        if ($request->ajax()) {
+            $data = Pharmacy::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }
