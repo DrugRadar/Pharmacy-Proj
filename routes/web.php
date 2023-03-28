@@ -37,3 +37,5 @@ Route::post('/area', [AreaController::class, 'store'])->name('area.store');
 Route::get('/area/delete/{id}', [AreaController::class, 'delete'])->name('area.delete');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
+
+Route::get('area/list', [AreaController::class, 'getArea'])->name('area.list');
