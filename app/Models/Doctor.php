@@ -5,13 +5,15 @@ use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cog\Contracts\Ban\Bannable as BannableContract;
+use Spatie\Permission\Traits\HasRoles;
 
 class Doctor extends Model implements BannableContract
 {
     use HasFactory;
     use Bannable;
+    use HasRoles;
     protected $table = 'doctor';
-
+    protected $guard_name = 'web';
     protected $fillable = [
         'name',
         'email',
