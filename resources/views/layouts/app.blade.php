@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {{-- <link
             rel="apple-touch-icon"
@@ -28,6 +29,11 @@
     <link rel="stylesheet" href="{{asset('css/logo.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body class="g-sidenav-show bg-gray-200">
@@ -114,7 +120,7 @@
         <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('pharmacy.index')}}">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
@@ -122,7 +128,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="{{route('pharmacy.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user' style="font-size: 25px;"></i>
                         </div>
@@ -134,11 +140,11 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-group' style="font-size: 25px;"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Pharmacists</span>
+                        <span class="nav-link-text ms-1">Doctors</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bxs-group' style="font-size: 25px;"></i>
                         </div>
@@ -154,7 +160,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bxs-capsule' style="font-size: 25px;"></i>
                         </div>
@@ -162,7 +168,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-cycling' style="font-size: 25px;"></i>
                         </div>
@@ -170,7 +176,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../pages/tables.html">
+                    <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
                         </div>
@@ -275,16 +281,14 @@
                 <a class="text-white text-decoration-none" href="{{route('dashboard.index')}}"
                     target="_parent">DrugRadar</a>
                 <svg width="50" height="50" style="background:transparent;" viewBox="120 140 790 700">
-                    <defs id="defs6">
-                        <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">
-                            <path id="path20"
-                                d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0 Z" />
-                        </clipPath>
-                        <clipPath id="clipPath24" clipPathUnits="userSpaceOnUse">
-                            <path id="path26"
-                                d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0" />
-                        </clipPath>
-                    </defs>
+                        <defs id="defs6">
+                            <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">
+                                <path id="path20" d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0 Z"/>
+                            </clipPath>
+                            <clipPath id="clipPath24" clipPathUnits="userSpaceOnUse">
+                                <path id="path26" d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0"/>
+                            </clipPath>
+                        </defs>
 
 
                     <g xmlns="http://www.w3.org/2000/svg" transform="matrix(1.25,0,0,-1.25,0,1000)" id="g10">
@@ -350,10 +354,16 @@
     <!-- <script src="assets/js/core/bootstrap.bundle.min.js"></script>
     <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="assets/js/plugins/smooth-scrollbar.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
     </script>
-    @yield('modal')
-</body>
 
+    @yield('modal')
+    @yield('scripts')
+</body>
 </html>
