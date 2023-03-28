@@ -1,35 +1,35 @@
 @extends('layouts.app')
 @section('content')
 <div>
-    <h1>Pharmacies</h1>
+    <h1>Doctors</h1>
     <div class="text-center">
-        <a href="{{route('pharmacy.create')}}" class="mt-4 btn btn-success">Create Pharmacy</a>
+        <a href="{{route('doctor.create')}}" class="mt-4 btn btn-success">Create Doctor</a>
     </div>
     <table class="table mt-4">
         <thead>
             <tr>
-                <th scope="col">Pharmacy name</th>
+                <th scope="col">Doctor name</th>
                 <th scope="col">ID</th>
                 <th scope="col">National id</th>
                 <th scope="col">Actions</th>
 
             </tr>
         </thead>
-        @foreach($pharmacies as $pharmacy)
+        @foreach($doctors as $doctor)
         <tr>
-            <td>{{$pharmacy->name}}</td>
-            <td>{{$pharmacy->id}}</td>
-            <td>{{$pharmacy->national_id}}</td>
+            <td>{{$doctor->name}}</td>
+            <td>{{$doctor->id}}</td>
+            <td>{{$doctor->national_id}}</td>
             <td>
-                <button class="btn btn-info"><a href="{{route('pharmacy.edit',$pharmacy->id)}}">Edit</a></button>
+                <button class="btn btn-info"><a href="{{route('doctor.edit',$doctor->id)}}">Edit</a></button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal-{{$pharmacy->id}}">DELETE </button>
-                <div class="modal fade" id="exampleModal-{{$pharmacy->id}}" tabindex="-1"
+                    data-bs-target="#exampleModal-{{$doctor->id}}">DELETE </button>
+                <div class="modal fade" id="exampleModal-{{$doctor->id}}" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5>Delete Pharmacist</h5>
+                                <h5>Delete Doctor</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">CANCEL</button>
-                                <form method="POST" action="{{route('pharmacy.destroy',$pharmacy->id)}}">
+                                <form method="POST" action="{{route('doctor.destroy',$doctor->id)}}">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger m-0">DELETE</button>
