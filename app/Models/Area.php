@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Area extends Model
 {
     use HasFactory;
-    protected $table = 'area';
+    protected $table = 'areas';
     use SoftDeletes;
     
     protected $dates = ['deleted_at'];

@@ -42,7 +42,7 @@ class DoctorController extends Controller
             $imageName = $image->getClientOriginalName();
         }
 
-        $doctor =  Doctor::create([
+       $newDoctor= Doctor::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
@@ -51,14 +51,15 @@ class DoctorController extends Controller
             'pharmacy_id'=> request()->pharmacy,
 
         ]);
-        if($doctor){
+        if($newDoctor){
             $user = User::create([
                 'name'=> request()->name , 
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-            $doctor->user()->save($user);
+            $newDoctor->user()->save($user);
         }
+        $newDoctor->assignRole(['doctor']);
         return to_route('doctor.index');
     }
     public function edit($id){

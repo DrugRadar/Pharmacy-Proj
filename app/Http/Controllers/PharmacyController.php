@@ -8,15 +8,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
-// use DataTables;
+// use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Pharmacy::select('*');
-            return DataTables::of($data)
+            return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
                 $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
@@ -24,7 +25,6 @@ class PharmacyController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-
         }
         return view('dashboard.pharmacy.index');
     }
@@ -41,29 +41,32 @@ class PharmacyController extends Controller
             $imageName = $image->getClientOriginalName();
         }
        
-        $pharmacy =  Pharmacy::create([
+       $newPharmacy= Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
             'national_id' =>  request()->national_id,
             'area_id' =>  request()->area_id,
             'avatar_image'=> isset($imagePath) ? $imageName : null,
-
         ]);
-        if($pharmacy){
+        if($newPharmacy){
             $user = User::create([
                 'name'=> request()->name , 
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-            $pharmacy->user()->save($user);
+            $newPharmacy->user()->save($user);
+            $newPharmacy->assignRole(['pharmacy']);
+
         }
+
         return to_route('pharmacy.index');
     }
 
     public function edit($id){
+        $areas = Area::all();
         $pharmacy= Pharmacy::find($id);
-        return view('dashboard.pharmacy.edit',['pharmacy' => $pharmacy]);
+        return view('dashboard.pharmacy.edit',['pharmacy' => $pharmacy, 'areas' => $areas]);
     }
 
     public function update($id){
