@@ -46,5 +46,6 @@ $(function() {
         ]
     });
 });
+
 </script>
 @endsection
