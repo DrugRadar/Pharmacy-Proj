@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('avatar_image');
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

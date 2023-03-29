@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('avatar_image')->nullable(false);
             $table->timestamp('last_visit')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
