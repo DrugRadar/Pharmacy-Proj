@@ -14,6 +14,7 @@ class Doctor extends Model implements BannableContract
     use HasRoles;
     protected $guard_name = 'web';
     protected $table = 'doctors';
+    protected $morphClass = 'doctor';
 
     protected $fillable = [
         'name',
@@ -25,5 +26,9 @@ class Doctor extends Model implements BannableContract
     ];
     public function pharmacy(){
         return $this->belongsTo(Pharmacy::class);
+    }
+    public function user()
+    {
+       return $this->morphOne(User::class, 'userable');
     }
 }
