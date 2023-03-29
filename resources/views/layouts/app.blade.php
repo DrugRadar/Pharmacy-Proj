@@ -217,7 +217,7 @@
                     </ol>
                     <h6 class="font-weight-bolder mb-0">Template</h6>
                 </nav>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown list-unstyled">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>

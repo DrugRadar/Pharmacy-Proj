@@ -58,8 +58,8 @@ class DoctorController extends Controller
                 'password' => Hash::make(request()->password),
             ]);
             $newDoctor->user()->save($user);
+            $newDoctor->assignRole(['doctor']);
         }
-        $newDoctor->assignRole(['doctor']);
         return to_route('doctor.index');
     }
     public function edit($id){

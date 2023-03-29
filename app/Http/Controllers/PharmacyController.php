@@ -16,7 +16,7 @@ class PharmacyController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Pharmacy::select('*');
+            $data = Pharmacy::latest()->get();
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -55,9 +55,8 @@ class PharmacyController extends Controller
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-            $newPharmacy->user()->save($user);
-            $newPharmacy->assignRole(['pharmacy']);
-
+            $user->assignRole(['pharmacy']);
+            $newPharmacy->user()->save($user);      
         }
 
         return to_route('pharmacy.index');
