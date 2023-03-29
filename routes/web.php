@@ -37,7 +37,7 @@ Route::resource('pharmacy', PharmacyController::class);
 Route::get('/area', [AreaController::class, 'index'])->name("area.index");
 Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
 Route::post('/area', [AreaController::class, 'store'])->name('area.store');
-Route::get('/area/delete/{id}', [AreaController::class, 'delete'])->name('area.delete');
+Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
 
