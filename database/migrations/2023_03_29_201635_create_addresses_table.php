@@ -19,10 +19,11 @@ return new class extends Migration
             $table->integer('floor_number')->nullable(false);
             $table->integer('flat_number')->nullable(false);
             $table->boolean('is_main')->nullable(false);
-            $table->string('client_id')->nullable(false);
+            $table->unsignedBigInteger('client_id')->nullable(false);
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
