@@ -10,8 +10,11 @@ class Pharmacy extends Model
 {
     use HasFactory;
     use HasRoles;
-    protected $guard_name = 'web';
+    protected $guard_name = 'pharmacy';
     protected $table = 'pharmacies';
+    protected $morphClass = 'pharmacy';
+    protected $guarded = [];
+
 
     protected $fillable = [
         'name',
@@ -21,4 +24,8 @@ class Pharmacy extends Model
         'national_id',
         'area_id',
     ];
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
 }

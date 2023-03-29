@@ -21,24 +21,32 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions 
-        Permission::create(['name' => 'edit pharmacy']);
-        Permission::create(['name' => 'delete pharmacy']);
-        Permission::create(['name' => 'create pharmacy']);
-        // Permission::create(['name' => 'see all pharmacies']);
-        // Permission::create(['name' => 'edit serving area of pharmacy']);
-        // Permission::create(['name' => 'edit priority of pharmacy']);
+        $guards = ['admin', 'pharmacy'];
+
+        foreach ($guards as $guard) {
+        Permission::create(['name' => 'edit pharmacy', 'guard_name' => $guard]);
+        Permission::create(['name' => 'edit doctor', 'guard_name' => $guard]);
+        Permission::create(['name' => 'delete doctor', 'guard_name' => $guard]);
+        Permission::create(['name' => 'create doctor', 'guard_name' => $guard]);
+        }
+        // Permission::firstOrCreate(['guard_name' => ['admin', 'pharmacy'],'name' => 'edit pharmacy']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'delete pharmacy']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'create pharmacy']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'see all pharmacies']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'edit serving area of pharmacy']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'edit priority of pharmacy']);
        
-        Permission::create(['name' => 'edit doctor']);
-        Permission::create(['name' => 'delete doctor']);
-        Permission::create(['name' => 'create doctor']);
+        // Permission::firstOrCreate(['guard_name' => ['admin', 'pharmacy'],'name' => 'edit doctor']);
+        // Permission::firstOrCreate(['guard_name' => ['admin', 'pharmacy'],'name' => 'delete doctor']);
+        // Permission::firstOrCreate(['guard_name' => ['admin', 'pharmacy'],'name' => 'create doctor']);
 
-        Permission::create(['name' => 'edit area']);
-        Permission::create(['name' => 'delete area']);
-        Permission::create(['name' => 'create area']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'edit area']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'delete area']);
+        Permission::firstOrCreate(['guard_name' => 'admin','name' => 'create area']);
 
-        $admin = Role::create(['name' => 'admin']);
-        $pharmacy = Role::create(['name' => 'pharmacy']);
-        $doctor = Role::create(['name' => 'doctor']);
+        $admin = Role::firstOrCreate(['guard_name' => 'admin','name' => 'admin']);
+        $pharmacy = Role::firstOrCreate(['guard_name' => 'pharmacy','name' => 'pharmacy']);
+        $doctor = Role::firstOrCreate(['guard_name' => 'doctor','name' => 'doctor']);
 
 
         $admin->syncPermissions(['edit pharmacy','delete pharmacy','create pharmacy','edit doctor','delete doctor','create doctor','edit area','delete area','create area']);
