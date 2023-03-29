@@ -58,7 +58,7 @@ class PharmacyController extends Controller
             // $role = Role::findByName('pharmacy');
             // $user = User::find(1);
             // $user->assignRole($role);
-            // $user->assignRole(['pharmacy']);
+            $user->assignRole(['pharmacy']);
             $newPharmacy->user()->save($user);      
         }
 
