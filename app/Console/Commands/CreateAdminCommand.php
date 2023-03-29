@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Spatie\Permission\Models\Role;
 
 class CreateAdminCommand extends Command
 {
@@ -34,7 +35,8 @@ class CreateAdminCommand extends Command
         $user->email = $email;
         $user->password = bcrypt($password);
         $user->is_admin = true;
-        $user->assignRole(['admin']);
+        // $role=Role::findByName('admin', 'web');
+        // $user->assignRole(['admin']);
         $user->save();
 
         $this->info('Admin user created successfully!');
