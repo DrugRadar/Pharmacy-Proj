@@ -4,11 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Pharmacy extends Model
 {
     use HasFactory;
+    use HasRoles;
+    protected $guard_name = 'web';
     protected $table = 'pharmacies';
+    protected $morphClass = 'pharmacy';
+    protected $guarded = [];
+
 
     protected $fillable = [
         'name',
@@ -18,4 +24,8 @@ class Pharmacy extends Model
         'national_id',
         'area_id',
     ];
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
 }

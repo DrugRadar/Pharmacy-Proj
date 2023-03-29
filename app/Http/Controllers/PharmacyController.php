@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Pharmacy;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+// use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Pharmacy::latest()->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row) {
-                    $actionBtn  = '<a id="$row->id" class="btn btn-primary" href="' . route('pharmacy.edit', $row->id) . '">Edit</a>';
-                    $actionBtn .= '<a class="delete btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </a>';
-                    return $actionBtn;
+            return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function($row){
+                $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -37,8 +40,8 @@ class PharmacyController extends Controller
             $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
             $imageName = $image->getClientOriginalName();
         }
-
-        Pharmacy::create([
+       
+       $newPharmacy= Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
@@ -46,6 +49,16 @@ class PharmacyController extends Controller
             'area_id' =>  request()->area_id,
             'avatar_image'=> isset($imagePath) ? $imageName : null,
         ]);
+        if($newPharmacy){
+            $user = User::create([
+                'name'=> request()->name , 
+                'email' => request()->email,
+                'password' => Hash::make(request()->password),
+            ]);
+            $user->assignRole(['pharmacy']);
+            $newPharmacy->user()->save($user);      
+        }
+
         return to_route('pharmacy.index');
     }
 

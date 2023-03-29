@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\Pharmacy;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
 use Yajra\DataTables\DataTables;
@@ -40,7 +42,7 @@ class DoctorController extends Controller
             $imageName = $image->getClientOriginalName();
         }
 
-        Doctor::create([
+       $newDoctor= Doctor::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
@@ -49,6 +51,15 @@ class DoctorController extends Controller
             'pharmacy_id'=> request()->pharmacy,
 
         ]);
+        if($newDoctor){
+            $user = User::create([
+                'name'=> request()->name , 
+                'email' => request()->email,
+                'password' => Hash::make(request()->password),
+            ]);
+            $newDoctor->user()->save($user);
+            $newDoctor->assignRole(['doctor']);
+        }
         return to_route('doctor.index');
     }
     public function edit($id){
