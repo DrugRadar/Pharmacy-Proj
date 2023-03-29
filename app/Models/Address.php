@@ -18,7 +18,13 @@ class Address extends Model
         'client_id',
     ];
 
-    public function area(){
+    public function area()
+    {
         return $this->belongsTo(Area::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

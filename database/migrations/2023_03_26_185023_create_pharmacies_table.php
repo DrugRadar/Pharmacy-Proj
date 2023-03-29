@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('area_id')->nullable('false');
+            $table->unsignedBigInteger('area_id')->nullable(false);
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('avatar_image');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
