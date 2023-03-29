@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Pharmacy;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use DataTables;
+use Yajra\DataTables\DataTables;
+// use DataTables;
 
 class PharmacyController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Pharmacy::select('*');
-            return Datatables::of($data)
+            return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
                 $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
@@ -37,8 +40,8 @@ class PharmacyController extends Controller
             $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
             $imageName = $image->getClientOriginalName();
         }
-
-        Pharmacy::create([
+       
+        $pharmacy =  Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
@@ -47,6 +50,14 @@ class PharmacyController extends Controller
             'avatar_image'=> isset($imagePath) ? $imageName : null,
 
         ]);
+        if($pharmacy){
+            $user = User::create([
+                'name'=> request()->name , 
+                'email' => request()->email,
+                'password' => Hash::make(request()->password),
+            ]);
+            $pharmacy->user()->save($user);
+        }
         return to_route('pharmacy.index');
     }
 
