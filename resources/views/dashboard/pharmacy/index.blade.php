@@ -60,23 +60,6 @@
             });
         });
 
-        $(function() {
-            $('#pharmacy-table').on('click', '#ModalDelete', function() {
-                var id = $(this).data('id');
-                $.ajax({
-                    url: '{{ route("pharmacy.destroy", ":id") }}'.replace(':id', id),
-                    type: 'DELETE',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    success: function(response) {
-                        console.log("delete success");
-                    },
-                    error: function(xhr) {
-                        console.log("err");
-                    }
-                });
-            });
-        });
-
         $(document).on('click', '.delete', function() {
             window.pharmacyId = $(this).attr('id');
             var id = window.pharmacyId;
