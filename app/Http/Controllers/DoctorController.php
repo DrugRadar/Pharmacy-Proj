@@ -12,19 +12,15 @@ use Yajra\DataTables\DataTables;
 
 class DoctorController extends Controller
 {
-    //
-    // public function index(){
-    //     $doctors = Doctor::all();
-    //     return view('dashboard.doctor.index',['doctors' => $doctors]);
-    // }
+
     public function index(Request $request){
        if ($request->ajax()) {
             $data = Doctor::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="#" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
-                    data-bs-target="#exampleModal-{{$row->id}}">DELETE </button>';
+                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal" 
+                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -60,6 +56,7 @@ class DoctorController extends Controller
         $doctor= Doctor::find($id);
         $pharmacies = Pharmacy::all();
         return view('dashboard.doctor.edit',['doctor' => $doctor],['pharmacies' => $pharmacies]);
+    //    return response()->json($doctor);
     }
 
     public function update($id){
@@ -69,18 +66,6 @@ class DoctorController extends Controller
         }
 
         $this->updateDoctor($doctor);
-        return redirect()->route('doctor.index');
-    }
-    public function ban($id){
-        $bannedDoctor=Doctor::find($id);
-        $bannedDoctor->ban();
-
-        return redirect()->route('doctor.index');
-    }
-    public function unBan($id){
-        $bannedDoctor=Doctor::find($id);
-        $bannedDoctor->unban();
-
         return redirect()->route('doctor.index');
     }
 
@@ -106,9 +91,9 @@ class DoctorController extends Controller
         $doctor->save();
     }
 
-    public function destroy($doctor){
+    public function destroy($id){
 
-        $FoundDoctor = Doctor::findOrFail($doctor);
+        $FoundDoctor = Doctor::findOrFail($id);
              
         if ($FoundDoctor->image) {
             $imagePath = 'image/' . $FoundDoctor->image;

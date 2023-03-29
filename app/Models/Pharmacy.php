@@ -10,8 +10,9 @@ class Pharmacy extends Model
 {
     use HasFactory;
     use HasRoles;
-    protected $table = 'pharmacy';
     protected $guard_name = 'web';
+    protected $table = 'pharmacies';
+
     protected $fillable = [
         'name',
         'email',

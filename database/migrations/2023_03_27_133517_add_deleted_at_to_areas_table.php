@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('area', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable('false');
-            $table->string('address')->nullable('false');
-            $table->timestamps();
+        Schema::table('areas', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('area');
+        Schema::table('areas', function (Blueprint $table) {
+            //
+        });
     }
 };

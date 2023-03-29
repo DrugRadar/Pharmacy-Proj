@@ -6,23 +6,23 @@ use App\Models\Area;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use DataTables;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Pharmacy::select('*');
-            return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', function($row){
-                $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                return $actionBtn;
+            $data = Pharmacy::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $actionBtn  = '<a id="$row->id" class="btn btn-primary" href="' . route('pharmacy.edit', $row->id) . '">Edit</a>';
+                    $actionBtn .= '<a class="delete btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </a>';
+                    return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-
         }
         return view('dashboard.pharmacy.index');
     }
@@ -46,15 +46,15 @@ class PharmacyController extends Controller
             'national_id' =>  request()->national_id,
             'area_id' =>  request()->area_id,
             'avatar_image'=> isset($imagePath) ? $imageName : null,
-
         ]);
         $newPharmacy->assignRole(['pharmacy']);
         return to_route('pharmacy.index');
     }
 
     public function edit($id){
+        $areas = Area::all();
         $pharmacy= Pharmacy::find($id);
-        return view('dashboard.pharmacy.edit',['pharmacy' => $pharmacy]);
+        return view('dashboard.pharmacy.edit',['pharmacy' => $pharmacy, 'areas' => $areas]);
     }
 
     public function update($id){

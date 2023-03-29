@@ -12,8 +12,9 @@ class Doctor extends Model implements BannableContract
     use HasFactory;
     use Bannable;
     use HasRoles;
-    protected $table = 'doctor';
     protected $guard_name = 'web';
+    protected $table = 'doctors';
+
     protected $fillable = [
         'name',
         'email',

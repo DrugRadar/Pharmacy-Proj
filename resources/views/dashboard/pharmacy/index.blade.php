@@ -17,7 +17,10 @@
             </tr>
         </thead>
     </table>
+    <x-modal role="pharmacy"></x-modal>
 </div>
+
+
 @endsection
 
 @section('scripts')
@@ -28,8 +31,8 @@
                 serverSide: true,
                 ajax: '{{ route("pharmacy.index") }}',
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
                     },
                     {
                         data: 'name',
@@ -54,6 +57,34 @@
                         searchable: false
                     }
                 ]
+            });
+        });
+
+        $(document).on('click', '.delete', function() {
+            window.pharmacyId = $(this).attr('id');
+            var id = window.pharmacyId;
+            const token = $('meta[name="csrf-token"]').attr('content');
+            var deleteUrl = '{{ route("pharmacy.destroy", ":id") }}'.replace(':id', id);
+            document.getElementById("form_id").action = deleteUrl;
+        });
+
+        $(function() {
+            $('#pharmacy-table').on('click', '.deleteBtn', function() {
+                var id = window.pharmacyId;
+                var deleteUrl = '{{ route("pharmacy.destroy", ":id") }}'.replace(':id', id);
+                $.ajax({
+                    url: '{{ route("doctor.destroy", ":id") }}'.replace(':id', id),
+                    type: 'delete',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log("delete success");
+                    },
+                    error: function(xhr) {
+                        console.log("err");
+                    }
+                });
             });
         });
     </script>
