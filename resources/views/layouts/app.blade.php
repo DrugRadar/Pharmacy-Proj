@@ -116,7 +116,7 @@
                 </div>
             </a>
         </div>
-        <hr class="horizontal light mt-5 mb-2" />
+        <hr class="horizontal light mt-4 mb-2" />
         <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -176,6 +176,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white" href="{{route('address.index')}}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class='bx bx-cycling' style="font-size: 25px;"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Addresses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
@@ -205,7 +213,7 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    
+
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm">
                             <a class="opacity-5 text-dark" href="javascript:;">Pages</a>
@@ -243,7 +251,7 @@
                                 <input type="text" class="form-control" />
                             </div>
                         </div> -->
-                        
+
                     <div class="DarkbtnContainer ms-md-auto pe-md-3 d-flex align-items-center">
                         <input type="checkbox" id="dark-mode">
                         <label for="dark-mode" class="Dark-btn"></label>
