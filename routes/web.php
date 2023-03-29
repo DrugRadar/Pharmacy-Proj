@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
@@ -44,6 +45,13 @@ Route::post('/area', [AreaController::class, 'store'])->name('area.store');
 Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
+
+Route::get('/address', [AddressController::class, 'index'])->name("address.index");
+Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
+Route::post('/address', [AddressController::class, 'store'])->name('address.store');
+Route::delete('/address/destroy/{id}', [AddressController::class, 'destroy'])->name('address.destroy');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/address/edit/{id}', [AddressController::class, 'edit'])->name('address.edit');
 
 
 Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
