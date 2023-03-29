@@ -17,7 +17,8 @@ class AreaController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('area.edit', $row->id) . '">Edit</a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -44,7 +45,7 @@ class AreaController extends Controller
         $this->updateArea($area);
         return redirect()->route('area.index');
     }
-    public function delete($id){
+    public function destroy($id){
         $area = Area::find($id);
         $area->delete();
         return redirect()->route('area.index');

@@ -41,7 +41,7 @@ Route::resource('pharmacy', PharmacyController::class);
 Route::get('/area', [AreaController::class, 'index'])->name("area.index");
 Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
 Route::post('/area', [AreaController::class, 'store'])->name('area.store');
-Route::get('/area/delete/{id}', [AreaController::class, 'delete'])->name('area.delete');
+Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
 
@@ -49,8 +49,8 @@ Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit'
 Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
 Route::get('/doctor/create', [DoctorController::class, 'create'])->name("doctor.create");
 Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
-Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
-Route::delete('/doctor/delete/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+Route::get('/doctor/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
+Route::delete('/doctor/destroy/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
 Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
 Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
