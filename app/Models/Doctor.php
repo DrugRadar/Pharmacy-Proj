@@ -10,7 +10,7 @@ class Doctor extends Model implements BannableContract
 {
     use HasFactory;
     use Bannable;
-    protected $table = 'doctor';
+    protected $table = 'doctors';
 
     protected $fillable = [
         'name',

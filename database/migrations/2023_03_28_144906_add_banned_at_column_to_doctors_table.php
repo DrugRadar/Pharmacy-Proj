@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('doctor', function (Blueprint $table) {
+        Schema::table('doctors', function (Blueprint $table) {
             //
             $table->timestamp('banned_at')->nullable();
         });
