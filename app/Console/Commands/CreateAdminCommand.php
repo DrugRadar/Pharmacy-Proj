@@ -34,7 +34,7 @@ class CreateAdminCommand extends Command
         $user->email = $email;
         $user->password = bcrypt($password);
         $user->is_admin = true;
-        $user->assignRole(['admin']);
+        // $user->assignRole(['admin']);
         $user->save();
 
         $this->info('Admin user created successfully!');
