@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
@@ -38,7 +39,7 @@ class PharmacyController extends Controller
             $imageName = $image->getClientOriginalName();
         }
 
-        Pharmacy::create([
+       $newPharmacy= Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
@@ -46,6 +47,7 @@ class PharmacyController extends Controller
             'area_id' =>  request()->area_id,
             'avatar_image'=> isset($imagePath) ? $imageName : null,
         ]);
+        $newPharmacy->assignRole(['pharmacy']);
         return to_route('pharmacy.index');
     }
 
