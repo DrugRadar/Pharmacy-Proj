@@ -8,13 +8,27 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <style>
+            body {
+                height: 100vh;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                background:  linear-gradient(178.6deg, rgb(20, 36, 50) 11.8%, rgb(124, 143, 161) 83.8%);
+            }
+            .card, .card-header, .card-body {
+                background: transparent !important;
+                font-family: monospace !important;
+                font-size: 20px !important;
+            }
+        </style>
     </head>
-    <body>
+    <body class="d-flex justify-content-center align-items-center">
     <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="card text-white">
+                <div class="card-header d-flex justify-content-center">{{ __('Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -62,12 +76,12 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" style="background:rgb(20, 36, 50);">
                                     {{ __('Login') }}
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" style="color:rgb(20, 36, 50);" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
