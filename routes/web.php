@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
@@ -67,7 +68,8 @@ Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medic
 Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
 // login Route
 
-
+Route::get('client/register',[ClientController::class,'register'])->name('client.register');
+Route::get('client/login',[ClientController::class,'login'])->name('client.login');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
