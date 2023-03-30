@@ -55,9 +55,7 @@ class PharmacyController extends Controller
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-            // $role = Role::findByName('pharmacy');
-            // $user = User::find(1);
-            // $user->assignRole($role);
+
             // $user->assignRole(['pharmacy']);
             $newPharmacy->user()->save($user);      
         }
