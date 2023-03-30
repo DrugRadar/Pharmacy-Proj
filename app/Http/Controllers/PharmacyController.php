@@ -13,6 +13,13 @@ use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
 {
+    function __construct()
+    {
+        
+         $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
+         $this->middleware('role:pharmacy', ['only' => ['show']]);
+
+    }
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Pharmacy::latest()->get();
@@ -55,7 +62,7 @@ class PharmacyController extends Controller
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-            $user->assignRole(['pharmacy']);
+         //   $user->assignRole(['pharmacy']);
             $newPharmacy->user()->save($user);
         }
 

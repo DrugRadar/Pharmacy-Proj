@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateAdminCommand;
+use App\Console\Commands\NotifyInactiveClients;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,11 +14,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // $schedule->command('app:notify-inactive-clients')->daily();
+        $schedule->command('app:notify-inactive-clients')->everyMinute();
     }
     protected $commands = [
         // ...
         CreateAdminCommand::class,
+        NotifyInactiveClients::class,
     ];
     /**
      * Register the commands for the application.
