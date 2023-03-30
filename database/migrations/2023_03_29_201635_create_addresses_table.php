@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pharmacies', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('area_id')->nullable(false);
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('national_id')->unique();
-            $table->string('avatar_image');
+            $table->string('street_name')->nullable(false);
+            $table->integer('building_number')->nullable(false);
+            $table->integer('floor_number')->nullable(false);
+            $table->integer('flat_number')->nullable(false);
+            $table->boolean('is_main')->nullable(false);
+            $table->unsignedBigInteger('client_id')->nullable(false);
             $table->foreign('area_id')->references('id')->on('areas');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pharmacies');
+        Schema::dropIfExists('addresses');
     }
 };

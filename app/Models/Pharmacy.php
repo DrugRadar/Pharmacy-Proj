@@ -10,7 +10,7 @@ class Pharmacy extends Model
 {
     use HasFactory;
     use HasRoles;
-    protected $guard_name = 'web';
+    protected $guard_name = 'pharmacy';
     protected $table = 'pharmacies';
     protected $morphClass = 'pharmacy';
     protected $guarded = [];

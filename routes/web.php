@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\MedicineController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -30,12 +32,6 @@ Route::get('/dashboard', function () {
 })->name('dashboard.index');
 
 
-// Route::get('/pharmacy', [PharmacyController::class, 'index'])->name("pharmacy.index");
-// Route::put('/pharmacy/{id}', [PharmacyController::class, 'update'])->name('pharmacy.update');
-// Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name("pharmacy.create");
-// Route::post('/pharmacy', [PharmacyController::class, 'store'])->name('pharmacy.store');
-// Route::get('/pharmacy/edit/{id}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
-
 Route::resource('pharmacy', PharmacyController::class);
 
 Route::get('/area', [AreaController::class, 'index'])->name("area.index");
@@ -44,6 +40,13 @@ Route::post('/area', [AreaController::class, 'store'])->name('area.store');
 Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
 Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
+
+Route::get('/address', [AddressController::class, 'index'])->name("address.index");
+Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
+Route::post('/address', [AddressController::class, 'store'])->name('address.store');
+Route::delete('/address/destroy/{id}', [AddressController::class, 'destroy'])->name('address.destroy');
+Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
+Route::get('/address/edit/{id}', [AddressController::class, 'edit'])->name('address.edit');
 
 
 Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
@@ -54,6 +57,14 @@ Route::delete('/doctor/destroy/{id}', [DoctorController::class, 'destroy'])->nam
 Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
 Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
+
+
+Route::get('/medicine', [MedicineController::class, 'index'])->name("medicine.index");
+Route::get('/medicine/create', [MedicineController::class, 'create'])->name("medicine.create");
+Route::post('/medicine', [MedicineController::class, 'store'])->name('medicine.store');
+Route::delete('/medicine/destroy/{id}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
+Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
+Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
 // login Route
 
 

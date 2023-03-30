@@ -6,20 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Area extends Model
+class Medicine extends Model
 {
-    use HasFactory;
-    protected $table = 'areas';
-    use SoftDeletes;
-
+    use HasFactory,SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    
     protected $fillable = [
         'name',
-        'address',
+        'type',
+        'price',
+        'quantity'   
     ];
 
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
 }

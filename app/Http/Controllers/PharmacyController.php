@@ -41,7 +41,7 @@ class PharmacyController extends Controller
             $imageName = $image->getClientOriginalName();
         }
 
-       $newPharmacy= Pharmacy::create([
+        $newPharmacy= Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' =>  request()->password,
