@@ -120,21 +120,38 @@
         <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                @if(Auth::user()->hasrole('admin'))
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Admin</span>
+                        
+                            <span class="nav-link-text ms-1">Admin</span>
+                     
                     </a>
+                    @elseif(Auth::user()->hasrole('pharmacy') || Auth::user()->hasrole('doctor'))
+                        <a class="nav-link text-white" href="">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class='bx bx-user-pin' style="font-size: 25px;"></i>
+                            </div>
+                                <span class="nav-link-text ms-1">Profile</span>
+                        </a>
+                        @endif
                 </li>
+                @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('pharmacy.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user' style="font-size: 25px;"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Pharmacy Owner</span>
+                       
+                        <span class="nav-link-text ms-1">Pharmacies</span>
+                      
+
                     </a>
                 </li>
+                @endif
+                @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('doctor.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -143,6 +160,8 @@
                         <span class="nav-link-text ms-1">Doctors</span>
                     </a>
                 </li>
+                @endif
+                @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -151,6 +170,8 @@
                         <span class="nav-link-text ms-1">Users</span>
                     </a>
                 </li>
+                @endif
+                @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('area.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -159,6 +180,8 @@
                         <span class="nav-link-text ms-1">Areas</span>
                     </a>
                 </li>
+                @endif
+                @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('medicine.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -167,6 +190,8 @@
                         <span class="nav-link-text ms-1">Medicines</span>
                     </a>
                 </li>
+                @endif
+                
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -175,6 +200,7 @@
                         <span class="nav-link-text ms-1">Orders</span>
                     </a>
                 </li>
+                @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('address.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -183,6 +209,7 @@
                         <span class="nav-link-text ms-1">Addresses</span>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
