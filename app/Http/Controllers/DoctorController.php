@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
@@ -14,10 +15,27 @@ use Yajra\DataTables\DataTables;
 
 class DoctorController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:see all doctors', ['only' => ['index']]);
+        $this->middleware('permission:delete doctor', ['only' => ['delete']]);
+        $this->middleware('permission:create doctor', ['only' => ['create','store']]);
+        $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
 
+
+
+        //  $this->middleware('role:admin', ['only' => ['show','edit','delete','create','update','store']]);
+        //  $this->middleware('role:pharmacy', ['only' => ['show','edit','delete','create','update','store']]);
+
+    }
     public function index(Request $request){
-       if ($request->ajax()) {
+        if(Auth::user()->hasrole('admin')){
             $data = Doctor::latest()->get();
+        }
+        else if(Auth::user()->hasrole('pharmacy')){
+            $data = Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
+        }
+       if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
@@ -56,9 +74,11 @@ class DoctorController extends Controller
                 'name'=> request()->name , 
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
+              
             ]);
+            $user->assignRole(['doctor']);
             $newDoctor->user()->save($user);
-            // $newDoctor->assignRole(['doctor']);
+          
         }
         return to_route('doctor.index');
     }
