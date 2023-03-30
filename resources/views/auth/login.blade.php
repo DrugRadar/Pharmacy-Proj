@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,161 +8,90 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
         <style>
-            *,
-            *:before,
-            *:after{
-                padding: 0;
-                margin: 0;
-                box-sizing: border-box;
+            body {
+                height: 100vh;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                background:  linear-gradient(178.6deg, rgb(20, 36, 50) 11.8%, rgb(124, 143, 161) 83.8%);
             }
-            body{
-                background-color: #080710;
-                max-height: 100vh !important;
-                overflow: hidden;
-            }
-
-            /* .background{
-                width: 430px;
-                height: 520px;
-                position: absolute;
-                transform: translate(-50%,-50%);
-                left: 50%;
-                top: 50%;
-            }
-            .background .shape{
-                height: 200px;
-                width: 200px;
-                position: absolute;
-                border-radius: 50%;
-            }
-            .shape:first-child{
-                background: linear-gradient(
-                    #1845ad,
-                    #23a2f6
-                );
-                left: -80px;
-                top: -80px;
-            }
-            .shape:last-child{
-                background: linear-gradient(
-                    to right,
-                    #ff512f,
-                    #f09819
-                );
-                right: -30px;
-                bottom: -80px;
-            } */
-            form{
-                background-color: rgba(255,255,255,0.13);
-                border-radius: 10px;
-                backdrop-filter: blur(10px);
-                border: 2px solid rgba(255,255,255,0.1);
-                box-shadow: 0 0 40px rgba(8,7,16,0.6);
-                padding: 50px 35px;
-            }
-            form *{
-                font-family: 'Poppins',sans-serif;
-                color: #ffffff;
-                letter-spacing: 0.5px;
-            }
-            form h3{
-                font-size: 32px;
-                font-weight: 500;
-                line-height: 42px;
-            }
-
-            input{
-                height: 50px;
-                background-color: rgba(255,255,255,0.07) !important;
-                padding: 0 10px;
-                color: #ffffff !important;
-                outline: none !important;
-                border: none !important;
-            }
-            ::placeholder{
-                color: #e5e5e5 !important;
-            }
-            button{
-                margin-top: 50px;
-                width: 100%;
-                color: #080710;
-                padding: 15px 0;
-                font-size: 18px;
-                font-weight: 600;
-                border-radius: 5px;
-                cursor: pointer;
-                outline: none !important;
-                border: none !important;
+            .card, .card-header, .card-body {
+                background: transparent !important;
+                font-family: monospace !important;
+                font-size: 20px !important;
             }
         </style>
     </head>
-    <body>
-        <div class="container" style="height: 100vh !important">
-            <!-- <div class="background">
-                <div class="shape"></div>
-                <div class="shape"></div>
-            </div> -->
-            <div class="w-10 h-100 text-white d-flex justify-content-center ">
-                <form method="POST" action="{{ route('login') }}" class="my-auto">
-                    @csrf
-                    <h3 class="text-center">{{ __('Login') }}</h3>
+    <body class="d-flex justify-content-center align-items-center">
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-white">
+                <div class="card-header d-flex justify-content-center">{{ __('Login') }}</div>
 
-                    <div class="row mb-3">
-                        <label for="email" class="col-12 col-form-label">{{ __('Email Address') }}</label>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                        <div class="col-12">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
-                            @error('email')
-                                <span class="invalid-feedback text-danger pt-1" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                    <div class="row mb-3">
-                        <label for="password" class="col-12 col-form-label">{{ __('Password') }}</label>
-
-                        <div class="col-12">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                            @error('password')
-                                <span class="invalid-feedback pt-1" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
-                                </label>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mb-0">
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary text-bg-light">
-                                {{ __('Login') }}
-                            </button>
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-link text-center col-12 pt-2" href="{{ route('password.request') }}" >
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                </form>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary" style="background:rgb(20, 36, 50);">
+                                    {{ __('Login') }}
+                                </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" style="color:rgb(20, 36, 50);" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
     </script>
