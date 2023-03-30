@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
@@ -31,12 +32,6 @@ Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->name('dashboard.index');
 
-
-// Route::get('/pharmacy', [PharmacyController::class, 'index'])->name("pharmacy.index");
-// Route::put('/pharmacy/{id}', [PharmacyController::class, 'update'])->name('pharmacy.update');
-// Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name("pharmacy.create");
-// Route::post('/pharmacy', [PharmacyController::class, 'store'])->name('pharmacy.store');
-// Route::get('/pharmacy/edit/{id}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
 
 Route::resource('pharmacy', PharmacyController::class);
 
@@ -73,7 +68,8 @@ Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medic
 Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
 // login Route
 
-
+Route::get('client/register',[ClientController::class,'register'])->name('client.register');
+Route::get('client/login',[ClientController::class,'login'])->name('client.login');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
