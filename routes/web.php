@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\MedicineController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +63,14 @@ Route::delete('/doctor/destroy/{id}', [DoctorController::class, 'destroy'])->nam
 Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
 Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
+
+
+Route::get('/medicine', [MedicineController::class, 'index'])->name("medicine.index");
+Route::get('/medicine/create', [MedicineController::class, 'create'])->name("medicine.create");
+Route::post('/medicine', [MedicineController::class, 'store'])->name('medicine.store');
+Route::delete('/medicine/destroy/{id}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
+Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
+Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
 // login Route
 
 
