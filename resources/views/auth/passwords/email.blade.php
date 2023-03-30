@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+        body {
+            height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        .card, .card-header, .card-body {
+            background: transparent !important;
+            font-family: monospace !important;
+            font-size: 20px !important;
+        }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
