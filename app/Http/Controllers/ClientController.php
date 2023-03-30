@@ -41,5 +41,8 @@ class ClientController extends Controller
             ], 404);
         }
     }
+    public function show($id){
+        return Client::find($id);
+    }
     
 }
