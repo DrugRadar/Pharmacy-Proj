@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+        <style>
+            body {
+                height: 100vh;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+            .card, .card-header, .card-body {
+                background: transparent !important;
+                font-family: monospace !important;
+                font-size: 20px !important;
+            }
+        </style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -51,7 +64,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     {{ __('Reset Password') }}
                                 </button>
                             </div>
