@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
-// use Yajra\DataTables\DataTables;
 
 class PharmacyController extends Controller
 {
@@ -20,7 +19,8 @@ class PharmacyController extends Controller
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $actionBtn = '<a href="{{route(pharmacy.edit)}}" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                $actionBtn = '<a id="'.$row->id.'" class="btn btn-primary" href="' . route("pharmacy.edit", $row->id) . '">Edit</a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
                 return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -40,7 +40,7 @@ class PharmacyController extends Controller
             $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
             $imageName = $image->getClientOriginalName();
         }
-       
+
        $newPharmacy= Pharmacy::create([
             'name' => request()->name,
             'email' => request()->email,
@@ -51,12 +51,12 @@ class PharmacyController extends Controller
         ]);
         if($newPharmacy){
             $user = User::create([
-                'name'=> request()->name , 
+                'name'=> request()->name ,
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
             $user->assignRole(['pharmacy']);
-            $newPharmacy->user()->save($user);      
+            $newPharmacy->user()->save($user);
         }
 
         return to_route('pharmacy.index');

@@ -73,7 +73,7 @@
                 var id = window.pharmacyId;
                 var deleteUrl = '{{ route("pharmacy.destroy", ":id") }}'.replace(':id', id);
                 $.ajax({
-                    url: '{{ route("doctor.destroy", ":id") }}'.replace(':id', id),
+                    url: '{{ route("pharmacy.destroy", ":id") }}'.replace(':id', id),
                     type: 'delete',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
