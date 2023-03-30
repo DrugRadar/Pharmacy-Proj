@@ -23310,8 +23310,8 @@ hr.horizontal.gray-light {
 
 .g-sidenav-show.g-sidenav-pinned .navbar .sidenav-toggler-inner .sidenav-toggler-line:first-child,
 .g-sidenav-show.g-sidenav-pinned .navbar .sidenav-toggler-inner .sidenav-toggler-line:last-child {
-  width: 13px;
-  transform: translateX(5px);
+    width: 13px;
+    transform: translateX(5px);
 }
 
 .navbar-light {
@@ -24240,7 +24240,7 @@ hr.horizontal.gray-light {
 }
 
 .sidenav .navbar-brand {
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 1.0rem;
 }
 
 .sidenav .collapse .nav-item .nav-link.active {
