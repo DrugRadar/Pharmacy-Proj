@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Address;
+use App\Models\Area;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -23,7 +25,9 @@ class AddressController extends Controller
         return view('dashboard.address.index');
     }
     public function create(){
-        return view('dashboard.address.create');
+        $areas = Area::all();
+        $clients = Client::all();
+        return view('dashboard.address.create', ['areas'=> $areas, 'clients'=> $clients]);
     }
     public function store(){
         Address::create([
@@ -38,8 +42,10 @@ class AddressController extends Controller
         return to_route('address.index');
     }
     public function edit($id){
+        $areas = Area::all();
+        $clients = Client::all();
         $address= Address::find($id);
-        return view('dashboard.address.edit',['address' => $address]);
+        return view('dashboard.address.edit',['address' => $address, 'areas'=> $areas, 'clients'=> $clients]);
     }
     public function update($id){
         $address = Address::find($id);

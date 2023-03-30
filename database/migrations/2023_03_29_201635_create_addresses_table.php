@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -14,8 +14,8 @@
                 <th scope="col">Building number</th>
                 <th scope="col">floor_number</th>
                 <th scope="col">flat_number</th>
-                <th scope="col">is_main</th>
                 <th scope="col">Client ID</th>
+                <th scope="col">action</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@ $(function() {
                 name: 'DT_RowIndex'
             },
             {
-                data: 'name',
+                data: 'area_id',
                 name: 'area_id'
             },
             {
@@ -55,10 +55,6 @@ $(function() {
             {
                 data: 'flat_number',
                 name: 'flat_number'
-            },
-            {
-                data: 'is_main',
-                name: 'is_main'
             },
             {
                 data: 'client_id',
