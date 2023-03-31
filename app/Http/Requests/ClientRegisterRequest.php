@@ -53,12 +53,13 @@ class ClientRegisterRequest extends FormRequest
         // return [
         //     //
         // ];
+        var_dump($this->id);
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
             'password' => 'required|string|min:6',
             // 'avatar_image' => 'required|image|max:2048',
-            'national_id' => 'required|string|max:20|unique:clients,national_id,'. $this->client->national_id,
+            'national_id' => 'required|string|max:20|unique:clients,national_id,'. $this->id,
             'date_of_birth' => 'required|date|before_or_equal:today',
             'gender' => 'required|in:male,female',
         ];
