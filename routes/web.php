@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\MedicineController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,25 +33,28 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard.index');
-    
-    
+
+
+    Route::get('/admin/profile' , [AdminController::class, 'profile'])->name('dashboard.admin.profile');
+
     Route::resource('pharmacy', PharmacyController::class);
-    
+    Route::get('/pharmacy/profile/{id}' , [PharmacyController::class, 'profile'])->name('dashboard.pharmacy.profile');
+
     Route::get('/area', [AreaController::class, 'index'])->name("area.index");
     Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
     Route::post('/area', [AreaController::class, 'store'])->name('area.store');
     Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
     Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
     Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
-    
+
     Route::get('/address', [AddressController::class, 'index'])->name("address.index");
     Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
     Route::post('/address', [AddressController::class, 'store'])->name('address.store');
     Route::delete('/address/destroy/{id}', [AddressController::class, 'destroy'])->name('address.destroy');
     Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
     Route::get('/address/edit/{id}', [AddressController::class, 'edit'])->name('address.edit');
-    
-    
+
+
     Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
     Route::get('/doctor/create', [DoctorController::class, 'create'])->name("doctor.create");
     Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
@@ -58,8 +63,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
     Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
     Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
-    
-    
+    Route::get('/doctor/profile/{id}' , [DoctorController::class, 'profile'])->name('dashboard.doctor.profile');
+
+
     Route::get('/medicine', [MedicineController::class, 'index'])->name("medicine.index");
     Route::get('/medicine/create', [MedicineController::class, 'create'])->name("medicine.create");
     Route::post('/medicine', [MedicineController::class, 'store'])->name('medicine.store');
