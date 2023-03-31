@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderPrescription extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'image'];
+    protected $fillable = [ 'prescription'];
 	public function order()
     {
     	return $this->belongsTo(Order::class);
