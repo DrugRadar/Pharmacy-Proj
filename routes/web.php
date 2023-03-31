@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\OrderController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +73,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/medicine/destroy/{id}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
     Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
+
+
+    Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
+    Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
+    Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
+    Route::get('/orders/process/{id}', [OrderController::class, 'process'])->name("order.process");
+    Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
 });
 
 // login Route

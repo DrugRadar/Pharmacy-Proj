@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Client extends Model implements MustVerifyEmail
+class Client extends Authenticatable  implements MustVerifyEmail
 
 {
     use HasFactory,Notifiable,HasApiTokens;
@@ -31,7 +31,10 @@ class Client extends Model implements MustVerifyEmail
         return $this->hasMany(Address::class);
     }
 
-    
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
     public function hasVerifiedEmail()
     {
         return ! is_null($this->email_verified_at);

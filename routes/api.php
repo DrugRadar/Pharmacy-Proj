@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OrderController;
 use Spatie\FlareClient\Api;
 
 /*
@@ -24,8 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::get('client/{id}', [ClientController::class , 'show'])->name('client.show');
-    Route::put('client/{id}', [ClientController::class , 'edit'])->name('client.edit');
+  
 });
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -35,3 +35,9 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/client/register', [ClientController::class, 'register']);
 Route::post('/client/login',[ClientController::class,'login']);
 Route::get('/verify-email/{id}/{hash}', [ClientController::class, 'verify'])->name('verification.verify');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/orders', [OrderController::class, 'create']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}',[OrderController::class,'show']);
+});
