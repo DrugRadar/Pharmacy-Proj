@@ -76,10 +76,15 @@ Route::group(['middleware' => ['auth']], function() {
 
 // login Route
 
-Route::get('client/register',[ClientController::class,'register'])->name('client.register');
-Route::get('client/login',[ClientController::class,'login'])->name('client.login');
-Route::get('/verify-email/{id}/{hash}', [ClientController::class, 'verify'])->name('verification.verify');
+
+
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// // welcome on login
+// Route::get('/email', function(){
+
+// });
