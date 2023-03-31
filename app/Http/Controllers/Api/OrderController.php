@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateOrderRequest;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Order;
@@ -14,13 +15,15 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function create(Request $request){
+    public function create(CreateOrderRequest $request){
     
     $client = auth()->user();
-    $is_insured = $request->input('is_insured');
+    $validated = $request->validated();
+
+    $is_insured = $validated['is_insured'];
     
     $is_insured = filter_var($is_insured, FILTER_VALIDATE_BOOLEAN);
-    $prescriptions = $request->file('prescription');
+    $prescriptions = $validated['prescription'];
     $delivering_address_id = $request->input('delivering_address_id');
     $clientAddress = Address::find($delivering_address_id);
     $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRegisterRequest;
+use App\Http\Requests\Api\ClientRegisterRequest;
+use App\Http\Requests\Api\ClientUpdateProfileRequest;
 use App\Models\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -15,9 +16,10 @@ use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
     
-    public function register(ClientRegisterRequest $request)
+    public function register(Request $request)
     {
         
+   
         $data = $request->all();
         $avatarImage = $request->file('avatar_image');
         $avatar = $avatarImage->getClientOriginalName();
@@ -89,18 +91,11 @@ public function login(Request $request)
     public function show($id){
         return Client::find($id);
     }
-    public function update(ClientRegisterRequest $request ,$id){
+    public function update(ClientUpdateProfileRequest $request ,$id)
+    {
         $client = Client::findOrFail($id);
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'gender' => 'required|in:male,female',
-        //     // 'password' => 'nullable|string|min:8|confirmed',
-        //     'date_of_birth' => 'required|date|before_or_equal:today',
-        //     // 'profile_image' => 'nullable|image|max:2048',
-        //     'mobile_number' => 'required|string|max:20',
-        //     'national_id' => 'required|string|max:20|unique:clients,national_id,' . $client->id,
-        // ]);
-        $client->update($request);        
+        $validated = $request->validated();
+        $client->update($validated);        
         return response()->json([
             'message' => 'Client updated successfully.',
             'data' => $client,
