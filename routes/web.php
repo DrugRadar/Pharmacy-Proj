@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
+    Route::get('/orders/process/{id}', [OrderController::class, 'process'])->name("order.process");
+    Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
 });
 
 // login Route
