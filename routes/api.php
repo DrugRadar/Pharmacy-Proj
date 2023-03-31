@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('client/{id}', [ClientController::class , 'show'])->name('client.show');
-    Route::put('client/{id}', [ClientController::class , 'edit'])->name('client.edit');
+    Route::put('client/{id}', [ClientController::class , 'update'])->name('client.update');
 });
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

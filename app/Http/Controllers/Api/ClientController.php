@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
     
-    public function register(Request $request)
+    public function register(ClientRegisterRequest $request)
     {
         
         $data = $request->all();
@@ -82,7 +82,21 @@ public function login(Request $request)
     public function show($id){
         return Client::find($id);
     }
-    public function edit($id , Request $request){
-        return Client::find($id);
+    public function update(ClientRegisterRequest $request ,$id){
+        $client = Client::findOrFail($id);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'gender' => 'required|in:male,female',
+        //     // 'password' => 'nullable|string|min:8|confirmed',
+        //     'date_of_birth' => 'required|date|before_or_equal:today',
+        //     // 'profile_image' => 'nullable|image|max:2048',
+        //     'mobile_number' => 'required|string|max:20',
+        //     'national_id' => 'required|string|max:20|unique:clients,national_id,' . $client->id,
+        // ]);
+        $client->update($request);        
+        return response()->json([
+            'message' => 'Client updated successfully.',
+            'data' => $client,
+        ]);
     }
 }
