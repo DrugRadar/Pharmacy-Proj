@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRegisterRequest;
+use App\Http\Requests\Api\ClientRegisterRequest;
+use App\Http\Requests\Api\ClientUpdateProfileRequest;
 use App\Models\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -17,11 +18,11 @@ class ClientController extends Controller
     
     public function register(ClientRegisterRequest $request)
     {
-        
-        $data = $request->all();
-        $data['password'] = Hash::make($data['password']);
+        $validated = $request->validated();
+        // $data = $request->all();
+        $validated['password'] = Hash::make($validated['password']);
         $client = new Client();
-        $client->fill($data);
+        $client->fill($validated);
         $client->save();
 
         if ($client instanceof MustVerifyEmail && ! $client->hasVerifiedEmail()) {
@@ -82,18 +83,11 @@ public function login(Request $request)
     public function show($id){
         return Client::find($id);
     }
-    public function update(ClientRegisterRequest $request ,$id){
+    public function update(ClientUpdateProfileRequest $request ,$id)
+    {
         $client = Client::findOrFail($id);
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'gender' => 'required|in:male,female',
-        //     // 'password' => 'nullable|string|min:8|confirmed',
-        //     'date_of_birth' => 'required|date|before_or_equal:today',
-        //     // 'profile_image' => 'nullable|image|max:2048',
-        //     'mobile_number' => 'required|string|max:20',
-        //     'national_id' => 'required|string|max:20|unique:clients,national_id,' . $client->id,
-        // ]);
-        $client->update($request);        
+        $validated = $request->validated();
+        $client->update($validated);        
         return response()->json([
             'message' => 'Client updated successfully.',
             'data' => $client,
