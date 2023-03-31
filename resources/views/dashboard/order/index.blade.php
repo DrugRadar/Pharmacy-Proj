@@ -13,7 +13,10 @@
             <th scope="col">ID</th>
             <th scope="col">client_id</th>
             <th scope="col">doctor_id</th>
+            <th scope="col">status</th>
+            <th scope="col">Delivering Address</th>
             <th scope="col">is_insured</th>
+
             <th scope="col">Actions</th>
 
         </tr>
@@ -45,6 +48,14 @@ $(function() {
                 name: 'doctor_id'
             },
             {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'client_address_id',
+                name: 'client_address_id'
+            },
+            {
                 data: 'is_insured',
                 name: 'is_insured'
             },
@@ -59,7 +70,6 @@ $(function() {
 });
 
 $(document).on('click', '.delete', function() {
-
     // window.doctorId = $(this).attr('id');
     // var id = window.doctorId;
     // const token = $('meta[name="csrf-token"]').attr('content');
