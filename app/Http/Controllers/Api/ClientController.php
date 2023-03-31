@@ -19,8 +19,15 @@ class ClientController extends Controller
     {
         
         $data = $request->all();
+        $avatarImage = $request->file('avatar_image');
+        $avatar = $avatarImage->getClientOriginalName();
+    
+        $avatarImage->storeAs('public/image', $avatar);
         $data['password'] = Hash::make($data['password']);
         $client = new Client();
+        $avatar_url = url($avatar);
+        $data['avatar_image'] = $avatar_url;
+        
         $client->fill($data);
         $client->save();
 
