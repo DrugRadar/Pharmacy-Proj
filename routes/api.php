@@ -4,6 +4,8 @@ use App\Mail\WelcomeMail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ClientController;
+use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +27,6 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-
+Route::post('/client/register', [ClientController::class, 'register']);
+Route::post('/client/login',[ClientController::class,'login']);
+Route::get('/verify-email/{id}/{hash}', [ClientController::class, 'verify'])->name('verification.verify');

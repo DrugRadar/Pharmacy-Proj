@@ -25,10 +25,10 @@
         background: inherit;
         position: absolute;
         left: -25px;
-        left position
+        left: position;
         right: 0;
         top: -25px;
-        top position
+        top :position;
         bottom: 0;
         box-shadow: inset 0 0 0 200px rgba(255,255,255,0.05);
         filter: blur(10px);
