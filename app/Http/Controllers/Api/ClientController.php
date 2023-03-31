@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Event;
+
 class ClientController extends Controller
 {
     
@@ -17,12 +19,7 @@ class ClientController extends Controller
         $client = new Client();
         $client->fill($data);
         $client->save();
-        $options = stream_context_create([
-            'ssl' => [
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-            ],
-        ]);
+
         if ($client instanceof MustVerifyEmail && ! $client->hasVerifiedEmail()) {
             event(new Registered($client));
         }
