@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\WelcomeMail;
 use App\Http\Controllers\Api\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 });
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
- 
+
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/client/register', [ClientController::class, 'register']);
