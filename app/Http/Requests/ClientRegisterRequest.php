@@ -11,7 +11,7 @@ class ClientRegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -57,20 +57,10 @@ class ClientRegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
             'password' => 'required|string|min:6',
-            'avatar' => 'required|image|max:2048',
-            'national_id' => ['required', 'string', 'regex:/^\d{14}$/'],
+            // 'avatar_image' => 'required|image|max:2048',
+            'national_id' => 'required|string|max:20|unique:clients,national_id,'. $this->client->national_id,
+            'date_of_birth' => 'required|date|before_or_equal:today',
+            'gender' => 'required|in:male,female',
         ];
     }
-    public function messages()
-{
-    return [
-        'name.required' => 'Please enter your full name.',
-        'email.required' => 'Please enter your email address.',
-        'email.unique' => 'The email address is already in use.',
-        'password.required' => 'Please enter a password.',
-        'password.min' => 'Your password must be at least 8 characters long.',
-    
-    ];
-
-}
 }
