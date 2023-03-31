@@ -25,8 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::get('client/{id}', [ClientController::class , 'show'])->name('client.show');
-    Route::put('client/{id}', [ClientController::class , 'update'])->name('client.update');
+  
 });
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -39,5 +38,6 @@ Route::get('/verify-email/{id}/{hash}', [ClientController::class, 'verify'])->na
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'create']);
-    Route::get('/orders', [OrderController::class, 'show']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}',[OrderController::class,'show']);
 });
