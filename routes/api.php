@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Api\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum', 'APIverified'])->get('client/{id}', [ClientController::class , 'show'])->name('client.show');
 
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('client/{id}', [ClientController::class , 'show'])->name('client.show');
+    Route::put('client/{id}', [ClientController::class , 'edit'])->name('client.edit');
+});
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
  

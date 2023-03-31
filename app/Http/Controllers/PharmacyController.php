@@ -62,7 +62,7 @@ class PharmacyController extends Controller
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
             ]);
-         //   $user->assignRole(['pharmacy']);
+           $user->assignRole(['pharmacy']);
             $newPharmacy->user()->save($user);
         }
 
