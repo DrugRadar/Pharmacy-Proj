@@ -67,7 +67,7 @@ public function login(Request $request)
         return response()->json(['message' => 'Email not verified'], 401);
     }
 
-    $token = $user->createToken('auth_token')->plainTextToken;
+    $token = $user->createToken($request->device_name)->plainTextToken;
 
     return response()->json([
         'message' => 'Client logged in successfully',
