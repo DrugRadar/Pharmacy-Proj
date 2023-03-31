@@ -29,4 +29,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderPrescription::class);
     }
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
 }
