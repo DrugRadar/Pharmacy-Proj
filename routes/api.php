@@ -4,7 +4,6 @@ use App\Http\Controllers\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ClientController;
 use Spatie\FlareClient\Api;
 
 /*
