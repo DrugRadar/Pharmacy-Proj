@@ -51,6 +51,7 @@
                     @endforeach
                     </select>
         </div>
+        @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Assigned Pharmacy</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
@@ -61,6 +62,7 @@
                     @endforeach
                     </select>
         </div>
+        @endif
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Doctor</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
@@ -71,6 +73,7 @@
                     @endforeach
                     </select>
         </div>
+        @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type">
@@ -85,8 +88,9 @@
                            </option>
                     </select>
         </div>
+        @endif
         <div class="mb-3 mt-3 me-2">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
+            <label for="exampleFormControlInput1" class="form-label col-2 p-0">status</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status">
                             <option value="processing">
                             Processing

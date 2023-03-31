@@ -22,11 +22,20 @@ class OrderController extends Controller
     }
 
     public function create(){
+        $user = Auth::user();
         $pharmacies = Pharmacy::all();
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
-        $doctors=Doctor::all();
+        if($user->hasRole('pharmacy'))
+        {
+            $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
+        }
+        if($user->hasRole('admin'))
+        {
+            $doctors=Doctor::all();
+        }
+       
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
     
@@ -36,22 +45,20 @@ class OrderController extends Controller
         $creator_type=$request->creator_type;
         $doctor = null;
         $status = 'Processing';
-
-        // if ($user->hasRole('doctor')) {
-        //     $doctor = Doctor::find($user->userable_id);
-        //     $creator = 'doctor';
-        //     $pharmacy = Pharmacy::find($doctor->pharmacy_id);
-        //     $doctor = $doctor->id;
-        // } elseif ($user->hasRole('pharmacy')) {
-        //     $creator = 'pharmacy';
-        //     $pharmacy = Pharmacy::find($user->userable_id);
-        // } 
-  
-       
+        $assigned_pharmacy=$request->assigned_pharmacy_id;
+        if ($user->hasRole('doctor')) {
+            $doctor = Doctor::find($user->userable_id);
+            $creator_type = 'doctor';
+            $assigned_pharmacy = Pharmacy::find($doctor->pharmacy_id);
+            $doctor = $doctor->id;
+        } elseif ($user->hasRole('pharmacy')) {
+            $creator_type = 'pharmacy';
+            $assigned_pharmacy = Pharmacy::find($user->userable_id);
+        } 
        $newOrder= Order::create([
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
-            'assigned_pharmacy_id' => $request->assigned_pharmacy_id,
+            'assigned_pharmacy_id' => $assigned_pharmacy,
             'doctor_id'=>$request->doctor_id,
             'status'=>$request->status,
             'is_insured'=>$request->is_insured,
