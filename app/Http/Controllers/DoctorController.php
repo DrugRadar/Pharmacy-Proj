@@ -22,11 +22,6 @@ class DoctorController extends Controller
         $this->middleware('permission:create doctor', ['only' => ['create','store']]);
         $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
 
-
-
-        //  $this->middleware('role:admin', ['only' => ['show','edit','delete','create','update','store']]);
-        //  $this->middleware('role:pharmacy', ['only' => ['show','edit','delete','create','update','store']]);
-
     }
     public function index(Request $request){
         if(Auth::user()->hasrole('admin')){
