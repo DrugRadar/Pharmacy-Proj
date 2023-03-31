@@ -24,6 +24,10 @@ class Pharmacy extends Model
         'national_id',
         'area_id',
     ];
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
     public function user()
     {
         return $this->morphOne(User::class, 'userable');

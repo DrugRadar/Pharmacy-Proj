@@ -124,16 +124,23 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                 @if(Auth::user()->hasrole('admin'))
-                    <a class="nav-link text-white" href="">
+                    <a class="nav-link text-white" href="{{route('dashboard.admin.profile' )}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
-                        
+
                             <span class="nav-link-text ms-1">Admin</span>
-                     
+
                     </a>
-                    @elseif(Auth::user()->hasrole('pharmacy') || Auth::user()->hasrole('doctor'))
-                        <a class="nav-link text-white" href="">
+                    @elseif(Auth::user()->hasrole('doctor'))
+                        <a class="nav-link text-white" href="{{route('dashboard.doctor.profile', Auth::user()->userable_id)}}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class='bx bx-user-pin' style="font-size: 25px;"></i>
+                            </div>
+                                <span class="nav-link-text ms-1">Profile</span>
+                        </a>
+                    @elseif(Auth::user()->hasrole('pharmacy'))
+                        <a class="nav-link text-white" href="{{route('dashboard.pharmacy.profile', Auth::user()->userable_id)}}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                             </div>
@@ -147,9 +154,9 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user' style="font-size: 25px;"></i>
                         </div>
-                       
+
                         <span class="nav-link-text ms-1">Pharmacies</span>
-                      
+
 
                     </a>
                 </li>
@@ -194,7 +201,7 @@
                     </a>
                 </li>
                 @endif
-                
+
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('order.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -207,7 +214,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('address.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class='bx bx-cycling' style="font-size: 25px;"></i>
+                            <i class='bx bx-street-view' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Addresses</span>
                     </a>
@@ -223,17 +230,6 @@
                 </li>
             </ul>
         </div>
-        {{-- <div class="sidenav-footer position-absolute w-100 bottom-0">
-                <div class="mx-3">
-                    <a
-                        class="btn bg-gradient-primary mt-4 w-100"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                        type="button"
-                        >New Article <i class='bx bx-plus'></i></a
-                    >
-                </div>
-
-            </div> --}}
     </aside>
 
     {{-- nav --}}
@@ -273,15 +269,6 @@
                                 </div>
                             </li>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <!-- <div
-                            class="ms-md-auto pe-md-3 d-flex align-items-center"
-                        >
-                            <div class="input-group input-group-outline">
-                                <label class="form-label">Type here...</label>
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div> -->
-
                     <div class="DarkbtnContainer ms-md-auto pe-md-3 d-flex align-items-center">
                         <input type="checkbox" id="dark-mode">
                         <label for="dark-mode" class="Dark-btn"></label>
@@ -292,27 +279,12 @@
         </nav>
 
 
-        <div class="container" style="min-height: 71vh">
+        <div class="container container d-flex flex-column justify-content-center" style="min-height: 71vh">
             @yield('content')
         </div>
 
         {{-- footer --}}
         <footer class="text-center text-white mt-auto me-3 bg-gradient-dark footer">
-            <!-- Grid container -->
-            {{-- <div class="container p-4 pb-0">
-                <!-- Section: CTA -->
-                <section class="">
-                    <p class="d-flex justify-content-center align-items-center">
-                        <span class="me-3">Register for free</span>
-                        <button type="button" class="btn btn-outline-light btn-rounded">
-                            Sign up!
-                        </button>
-                    </p>
-                </section>
-                <!-- Section: CTA -->
-            </div> --}}
-            <!-- Grid container -->
-
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright:
