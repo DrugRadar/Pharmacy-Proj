@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClientRegisterRequest;
 use App\Models\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -78,5 +79,10 @@ public function login(Request $request)
     ], 201);
 }
 
-    
+    public function show($id){
+        return Client::find($id);
+    }
+    public function edit($id , Request $request){
+        return Client::find($id);
+    }
 }
