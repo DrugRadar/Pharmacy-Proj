@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAreaRequest;
+use App\Http\Requests\UpdateAreaRequest;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -33,10 +35,10 @@ class AreaController extends Controller
     public function create(){
         return view('dashboard.area.create');
     }
-    public function store(){
+    public function store(StoreAreaRequest $request){
         Area::create([
-            'name' => request()->name,
-            'address' => request()->address,
+            'name' => $request->name,
+            'address' => $request->address,
         ]);
         return to_route('area.index');
     }
@@ -44,19 +46,20 @@ class AreaController extends Controller
         $area= Area::find($id);
         return view('dashboard.area.edit',['area' => $area]);
     }
-    public function update($id){
+    public function update(UpdateAreaRequest $request, $id){
         $area = Area::find($id);
-        $this->updateArea($area);
+        $this->updateArea($request, $area);
         return redirect()->route('area.index');
     }
+
     public function destroy($id){
         $area = Area::find($id);
         $area->delete();
         return redirect()->route('area.index');
     }
-    private function updateArea($area) {
-        $area->name = request()->name;
-        $area->address = request()->address;
+    private function updateArea($request, $area) {
+        $area->name = $request->name;
+        $area->address = $request->address;
 
         $area->save();
     }
