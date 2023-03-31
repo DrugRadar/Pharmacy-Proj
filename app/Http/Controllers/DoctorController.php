@@ -34,7 +34,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal" 
+                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
                     return $actionBtn;
                 })
@@ -66,14 +66,14 @@ class DoctorController extends Controller
         ]);
         if($newDoctor){
             $user = User::create([
-                'name'=> request()->name , 
+                'name'=> request()->name ,
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
-              
+
             ]);
             $user->assignRole(['doctor']);
             $newDoctor->user()->save($user);
-          
+
         }
         return to_route('doctor.index');
     }
@@ -104,7 +104,7 @@ class DoctorController extends Controller
         }
 
         $doctor->avatar_image = $imageName;
-        $doctor->save(); 
+        $doctor->save();
     }
 
     private function updateDoctor($doctor) {
@@ -119,13 +119,18 @@ class DoctorController extends Controller
     public function destroy($id){
 
         $FoundDoctor = Doctor::findOrFail($id);
-             
+
         if ($FoundDoctor->image) {
             $imagePath = 'image/' . $FoundDoctor->image;
             Storage::delete($imagePath);
         }
         $FoundDoctor->delete();
         return redirect()->route('doctor.index');
+    }
+
+    public function profile(){
+        $doctor = Doctor::find(Auth::user()->userable_id);
+        return view('dashboard.doctor.profile', ['doctor' => $doctor]);
     }
 
 }

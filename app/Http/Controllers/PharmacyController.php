@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
@@ -15,7 +16,7 @@ class PharmacyController extends Controller
 {
     function __construct()
     {
-        
+
          $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
          $this->middleware('role:pharmacy', ['only' => ['show']]);
 
@@ -123,5 +124,10 @@ class PharmacyController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+        public function profile(){
+        $pharmacy = Pharmacy::find(Auth::user()->userable_id);
+        return view('dashboard.pharmacy.profile', ['pharmacy' => $pharmacy]);
     }
 }
