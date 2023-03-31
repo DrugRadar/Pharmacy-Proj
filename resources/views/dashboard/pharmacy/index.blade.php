@@ -16,6 +16,9 @@
                 <th scope="col">Actions</th>
             </tr>
         </thead>
+        <tbody>
+
+        </tbody>
     </table>
     <x-modal role="pharmacy"></x-modal>
 </div>
