@@ -12,12 +12,30 @@ use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
     //
-    public function index(){
-
+    public function index(Request $request){
+        if(Auth::user()->hasrole('admin')){
+            $data = Order::latest()->get();
+        }
+        else if(Auth::user()->hasrole('pharmacy')){
+            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->get();
+        }
+       if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $actionBtn = '<a href="/orders/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Process</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+       }
+        
         return view('dashboard.order.index');
     }
 
