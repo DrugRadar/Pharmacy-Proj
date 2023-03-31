@@ -60,7 +60,46 @@ class OrderController extends Controller
        }
     }
     
-    public function show(){
+    public function index() {
         
+        $client = auth()->user();
+        $orders = Order::where('client_id', $client->id)->get();
+        
+        foreach ($orders as $order) {
+        $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        $formattedOrder = [
+            'id' => $order->id,
+            'order_total_price' => $order->total_price,
+            'ordered_at' => $order->created_at->diffForHumans(),
+            'status' => $order->status,
+            'assigned_pharmacy' => [
+                'id' => $pharmacyInfo->id,
+                'name' => $pharmacyInfo->name,
+                'area_id' => $pharmacyInfo->area_id,
+                'avatar_image' => $pharmacyInfo->avatar_image,
+            ]
+        ];
+        $formattedOrders[] = $formattedOrder;
+    }
+
+    return response()->json( $formattedOrders, 200);
+    }
+    public function show($id){
+        $client = auth()->user();
+        $order = Order::find($id);
+        $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        $formattedOrder = [
+            'id' => $order->id,
+            'order_total_price' => $order->total_price,
+            'ordered_at' => $order->created_at->diffForHumans(),
+            'status' => $order->status,
+            'assigned_pharmacy' => [
+                'id' => $pharmacyInfo->id,
+                'name' => $pharmacyInfo->name,
+                'area_id' => $pharmacyInfo->area_id,
+                'avatar_image' => $pharmacyInfo->avatar_image,
+            ]
+        ];
+        return response()->json( $formattedOrder, 200);
     }
 }
