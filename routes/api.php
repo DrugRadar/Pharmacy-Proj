@@ -39,5 +39,6 @@ Route::get('/verify-email/{id}/{hash}', [ClientController::class, 'verify'])->na
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'create']);
-    Route::get('/orders', [OrderController::class, 'show']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}',[OrderController::class,'show']);
 });
