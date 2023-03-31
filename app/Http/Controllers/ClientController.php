@@ -11,7 +11,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Event;
 class ClientController extends Controller
 {
-
     public function register(Request $request)
     {
         $data = $request->all();
@@ -63,7 +62,6 @@ class ClientController extends Controller
                 'message' => 'Client logged in successfully',
                 'data' => $user
             ], 201);
-
         } else {
             return response()->json([
                 'message' => 'Error in login. Password or name are incorrect.',
@@ -71,5 +69,4 @@ class ClientController extends Controller
             ], 404);
         }
     }
-
 }
