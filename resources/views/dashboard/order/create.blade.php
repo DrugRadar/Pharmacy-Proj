@@ -5,7 +5,6 @@
 
     <form method="POST" action="{{route('order.store')}}" enctype="multipart/form-data">
         @csrf
-
         <div class="d-flex justify-content-between">
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Name</label>
