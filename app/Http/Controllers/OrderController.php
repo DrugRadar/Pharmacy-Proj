@@ -19,10 +19,10 @@ class OrderController extends Controller
     //
     public function index(Request $request){
         if(Auth::user()->hasrole('admin')){
-            $data = Order::latest()->get();
+            $data = Order::with('doctor')->latest()->get();
         }
         else if(Auth::user()->hasrole('pharmacy')){
-            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->get();
+            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -31,7 +31,7 @@ class OrderController extends Controller
                     return $row->client->name;
                 })
                 ->addColumn('doctor_name', function ($row) {
-                    return $row->doctor->name;
+                return $row->doctor?->name ?? 'N/A';
                 })
                 ->addColumn('action', function($row) {
                     $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm">Process</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"

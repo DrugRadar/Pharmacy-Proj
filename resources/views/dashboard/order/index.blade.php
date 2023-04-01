@@ -8,21 +8,21 @@
     </div>
 
     <table id="orders-table" class="table table-bordered yajra-datatable">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">client_name</th>
-            <th scope="col">doctor_name</th>
-            <th scope="col">status</th>
-            <th scope="col">Delivering Address</th>
-            <th scope="col">is_insured</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <x-modal role="doctor"></x-modal>
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">client_name</th>
+                <th scope="col">doctor_name</th>
+                <th scope="col">status</th>
+                <th scope="col">Delivering Address</th>
+                <th scope="col">is_insured</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <x-modal role="doctor"></x-modal>
+        </tbody>
+    </table>
 </div>
 
 @endsection
