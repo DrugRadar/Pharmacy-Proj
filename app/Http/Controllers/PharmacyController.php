@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePharmacyRequest;
+use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Area;
 use App\Models\Pharmacy;
 use App\Models\User;
@@ -16,10 +18,8 @@ class PharmacyController extends Controller
 {
     function __construct()
     {
-
-         $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
-         $this->middleware('role:pharmacy', ['only' => ['show']]);
-
+        $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
+        $this->middleware('role:pharmacy', ['only' => ['show']]);
     }
     public function index(Request $request){
         if ($request->ajax()) {
@@ -42,28 +42,30 @@ class PharmacyController extends Controller
         return view('dashboard.pharmacy.create', ['areas' => $areas]);
     }
 
-    public function store(){
-        if (request()->hasFile('avatar_image')) {
-            $image = request()->file('avatar_image');
+    public function store(StorePharmacyRequest $request){
+        $newPharmacy= Pharmacy::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' =>  $request->password,
+            'national_id' =>  $request->national_id,
+            'area_id' =>  $request->area_id,
+        ]);
+
+        if ($request->hasFile('avatar_image')) {
+            $image = $request->file('avatar_image');
             $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
             $imageName = $image->getClientOriginalName();
+            $newPharmacy->avatar_image = $imageName;
+            $newPharmacy->save();
         }
 
-        $newPharmacy= Pharmacy::create([
-            'name' => request()->name,
-            'email' => request()->email,
-            'password' =>  request()->password,
-            'national_id' =>  request()->national_id,
-            'area_id' =>  request()->area_id,
-            'avatar_image'=> isset($imagePath) ? $imageName : null,
-        ]);
         if($newPharmacy){
             $user = User::create([
-                'name'=> request()->name ,
-                'email' => request()->email,
-                'password' => Hash::make(request()->password),
+                'name'=> $request->name ,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
             ]);
-           $user->assignRole(['pharmacy']);
+            $user->assignRole(['pharmacy']);
             $newPharmacy->user()->save($user);
         }
 
@@ -76,18 +78,18 @@ class PharmacyController extends Controller
         return view('dashboard.pharmacy.edit',['pharmacy' => $pharmacy, 'areas' => $areas]);
     }
 
-    public function update($id){
+    public function update(UpdatePharmacyRequest $request ,$id){
         $pharmacy = Pharmacy::find($id);
-        if (request()->hasFile('avatar_image')) {
-            $this->updateAvatarImage($pharmacy);
+        if ($request->hasFile('avatar_image')) {
+            $this->updateAvatarImage($request, $pharmacy);
         }
 
-        $this->updatePharmacy($pharmacy);
+        $this->updatePharmacy($request, $pharmacy);
         return redirect()->route('pharmacy.index');
     }
 
-    private function updateAvatarImage($pharmacy) {
-        $image = request()->file('avatar_image');
+    private function updateAvatarImage($request, $pharmacy) {
+        $image = $request->file('avatar_image');
         $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
         $imageName = $image->getClientOriginalName();
 
@@ -99,11 +101,11 @@ class PharmacyController extends Controller
         $pharmacy->save();
     }
 
-    private function updatePharmacy($pharmacy) {
-        $pharmacy->name = request()->name;
-        $pharmacy->email = request()->email;
-        $pharmacy->password = request()->password;
-        $pharmacy->national_id = request()->national_id;
+    private function updatePharmacy($request, $pharmacy) {
+        $pharmacy->name = $request->name;
+        $pharmacy->email = $request->email;
+        $pharmacy->password = $request->password;
+        $pharmacy->national_id = $request->national_id;
         $pharmacy->save();
     }
 

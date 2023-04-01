@@ -18,15 +18,24 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
-        if(Auth::user()->hasRole('admin')){
-            $data = Order::latest()->get();
+        if(Auth::user()->hasrole('admin')){
+            $data = Order::with('doctor')->latest()->get();
         }
-        else if(Auth::user()->hasRole('pharmacy')){
-            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->get();
+        else if(Auth::user()->hasrole('pharmacy')){
+            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
-       if ($request->ajax()) {
+        if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('client_name', function ($row) {
+                    return $row->client->name;
+                })
+                ->addColumn('doctor_name', function ($row) {
+                return $row->doctor?->name ?? 'N/A';
+                })
+                ->addColumn('creator_type', function ($row) {
+                    return $row->creator_type;
+                    })
                 ->addColumn('action', function($row) {
                     $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm">EDIT</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
@@ -34,8 +43,8 @@ class OrderController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-       }
-        
+        }
+
         return view('dashboard.order.index');
     }
 
@@ -53,10 +62,10 @@ class OrderController extends Controller
         {
             $doctors=Doctor::all();
         }
-       
+
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
-    
+
     public function store(Request $request){
 
         $user = Auth::user();
@@ -67,13 +76,14 @@ class OrderController extends Controller
         if ($user->hasRole('doctor')) {
             $doctor = Doctor::find($user->userable_id);
             $creator_type = 'doctor';
-            $assigned_pharmacy = Pharmacy::find($doctor->pharmacy_id);
+            // $assigned_pharmacy = Pharmacy::find($doctor->pharmacy_id);
+            $assigned_pharmacy = $doctor->pharmacy_id;
             $doctor = $doctor->id;
         } elseif ($user->hasRole('pharmacy')) {
             $creator_type = 'pharmacy';
-            $assigned_pharmacy = Pharmacy::find($user->userable_id);
+            // $assigned_pharmacy = Pharmacy::find($user->userable_id);
+            $assigned_pharmacy = $user->userable_id;
         }
-
        $newOrder= Order::create([
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
@@ -84,6 +94,12 @@ class OrderController extends Controller
             'creator_type'=>$creator_type,
             'total_price'=>$request->total_price,
         ]);
+        foreach ($request->medicine_id as $key => $medicine_id) {
+            $newOrder->orderMedicine()->create([
+                'medicine_id' => $medicine_id,
+                'quantity' => 1,
+             ]);
+        }
 
         $this->pushMedicinesToOrder($request,$newOrder);
         return to_route('order.index'); 
@@ -132,7 +148,7 @@ class OrderController extends Controller
             $order->orderMedicine()->create([
                 'medicine_id' => $medicine_id,
                 'quantity' => 1,
-             ]);
+            ]);
         }
 
     }

@@ -8,23 +8,22 @@
     </div>
 
     <table id="orders-table" class="table table-bordered yajra-datatable">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">client_id</th>
-            <th scope="col">doctor_id</th>
-            <th scope="col">status</th>
-            <th scope="col">Delivering Address</th>
-            <th scope="col">is_insured</th>
-
-            <th scope="col">Actions</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        <x-modal role="Order"></x-modal>
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">client_name</th>
+                <th scope="col">doctor_name</th>
+                <th scope="col">creator_name</th>
+                <th scope="col">status</th>
+                <th scope="col">Delivering Address</th>
+                <th scope="col">is_insured</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <x-modal role="doctor"></x-modal>
+        </tbody>
+    </table>
 </div>
 
 @endsection
@@ -40,12 +39,16 @@ $(function() {
                 name: 'DT_RowIndex'
             },
             {
-                data: 'client_id',
-                name: 'client_id'
+                data: 'client_name',
+                name: 'client_name'
             },
             {
-                data: 'doctor_id',
-                name: 'doctor_id'
+                data: 'doctor_name',
+                name: 'doctor_name'
+            },
+            {
+                data: 'creator_type',
+                name: 'creator_type'
             },
             {
                 data: 'status',

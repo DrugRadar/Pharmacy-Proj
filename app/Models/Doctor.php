@@ -27,6 +27,6 @@ class Doctor extends Model implements BannableContract
     }
     public function user()
     {
-       return $this->morphOne(User::class, 'userable');
+        return $this->morphOne(User::class, 'userable');
     }
 }
