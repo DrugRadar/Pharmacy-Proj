@@ -15,7 +15,6 @@
                 <th scope="col">doctor_name</th>
                 <th scope="col">creator_name</th>
                 <th scope="col">status</th>
-                <th scope="col">Delivering Address</th>
                 <th scope="col">is_insured</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -55,10 +54,6 @@ $(function() {
                 name: 'status'
             },
             {
-                data: 'client_address_id',
-                name: 'client_address_id'
-            },
-            {
                 data: 'is_insured',
                 name: 'is_insured'
             },
@@ -73,31 +68,31 @@ $(function() {
 });
 
 $(document).on('click', '.delete', function() {
-    // window.doctorId = $(this).attr('id');
-    // var id = window.doctorId;
-    // const token = $('meta[name="csrf-token"]').attr('content');
-    // var deleteUrl = '{{ route("doctor.destroy", ":id") }}'.replace(':id', id);
-    // document.getElementById("form_id").action = deleteUrl;
+    window.orderId = $(this).attr('id');
+    var id = window.orderId;
+    const token = $('meta[name="csrf-token"]').attr('content');
+    var deleteUrl = '{{ route("order.destroy", ":id") }}'.replace(':id', id);
+    document.getElementById("form_id").action = deleteUrl;
 });
 
 $(function() {
-    // $('#doctors-table').on('click', '.deleteBtn', function() {
-    //     var id = window.doctorId;
-    //     var deleteUrl = '{{ route("doctor.destroy", ":id") }}'.replace(':id', id);
-    //     $.ajax({
-    //         url: '{{ route("doctor.destroy", ":id") }}'.replace(':id', id),
-    //         type: 'delete',
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         success: function(response) {
-    //             console.log("delete success");
-    //         },
-    //         error: function(xhr) {
-    //             console.log("err");
-    //         }
-    //     });
-    // });
+    $('#orders-table').on('click', '.deleteBtn', function() {
+        var id = window.doctorId;
+        var deleteUrl = '{{ route("order.destroy", ":id") }}'.replace(':id', id);
+        $.ajax({
+            url: '{{ route("order.destroy", ":id") }}'.replace(':id', id),
+            type: 'delete',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                console.log("delete success");
+            },
+            error: function(xhr) {
+                console.log("err");
+            }
+        });
+    });
 });
 </script>
 @endsection

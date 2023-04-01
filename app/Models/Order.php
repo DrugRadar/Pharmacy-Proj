@@ -6,10 +6,13 @@ use App\Models\Medicine;
 use App\Models\OrderPrescription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'client_id',
         'assigned_pharmacy_id',
