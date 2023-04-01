@@ -15,21 +15,20 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    
+
     public function register(Request $request)
     {
-        
-   
+
+
         $data = $request->all();
         $avatarImage = $request->file('avatar_image');
         $avatar = $avatarImage->getClientOriginalName();
-    
+
         $avatarImage->storeAs('public/image', $avatar);
         $data['password'] = Hash::make($data['password']);
         $client = new Client();
-        $avatar_url = url($avatar);
-        $data['avatar_image'] = $avatar_url;
-        
+        $client->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
+
         $client->fill($data);
         $client->save();
 
@@ -95,7 +94,7 @@ public function login(Request $request)
     {
         $client = Client::findOrFail($id);
         $validated = $request->validated();
-        $client->update($validated);        
+        $client->update($validated);
         return response()->json([
             'message' => 'Client updated successfully.',
             'data' => $client,

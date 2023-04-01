@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens; 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 
-class Client extends Authenticatable  implements MustVerifyEmail
+class Client extends Authenticatable  implements MustVerifyEmail, HasMedia
 
 {
-    use HasFactory,Notifiable,HasApiTokens;
+    use HasFactory,Notifiable,HasApiTokens,InteractsWithMedia;
 
     protected $fillable = [
         "name",
@@ -22,7 +24,7 @@ class Client extends Authenticatable  implements MustVerifyEmail
         "date_of_birth",
         "national_id",
         "mobile_number",
-        "avatar_image",
+        // "avatar_image",
         "last_visit",
     ];
 
