@@ -15,7 +15,6 @@
                 <th scope="col">doctor_name</th>
                 <th scope="col">creator_name</th>
                 <th scope="col">status</th>
-                <th scope="col">Delivering Address</th>
                 <th scope="col">is_insured</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -53,10 +52,6 @@ $(function() {
             {
                 data: 'status',
                 name: 'status'
-            },
-            {
-                data: 'client_address_id',
-                name: 'client_address_id'
             },
             {
                 data: 'is_insured',
