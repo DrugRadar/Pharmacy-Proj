@@ -24,9 +24,15 @@ class OrderController extends Controller
         else if(Auth::user()->hasrole('pharmacy')){
             $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->get();
         }
-       if ($request->ajax()) {
+        if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('client_name', function ($row) {
+                    return $row->client->name;
+                })
+                ->addColumn('doctor_name', function ($row) {
+                    return $row->doctor->name;
+                })
                 ->addColumn('action', function($row) {
                     $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm">Process</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
@@ -35,7 +41,7 @@ class OrderController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
        }
-        
+
         return view('dashboard.order.index');
     }
 
@@ -53,10 +59,10 @@ class OrderController extends Controller
         {
             $doctors=Doctor::all();
         }
-       
+
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
-    
+
     public function store(Request $request){
 
         $user = Auth::user();
@@ -72,7 +78,7 @@ class OrderController extends Controller
         } elseif ($user->hasRole('pharmacy')) {
             $creator_type = 'pharmacy';
             $assigned_pharmacy = Pharmacy::find($user->userable_id);
-        } 
+        }
        $newOrder= Order::create([
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
@@ -90,8 +96,8 @@ class OrderController extends Controller
              ]);
         }
 
-        return to_route('order.index'); 
-        
+        return to_route('order.index');
+
     }
 
     public function process($id){
@@ -122,6 +128,6 @@ class OrderController extends Controller
         $order->status="WaitingForUserConfirmation";
         $order->doctor_id=$request->doctor_id;
         $order->save();
-        return to_route('order.index'); 
+        return to_route('order.index');
     }
 }
