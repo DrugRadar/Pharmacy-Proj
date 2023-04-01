@@ -75,7 +75,6 @@
                         </svg>
                     </div>
                 </div>
-                <h1>{{Auth::user() -> can('edit pharmacy')}}</h1>
             </div>
         </div>
     </div>

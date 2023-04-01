@@ -64,7 +64,7 @@ class AddressController extends Controller
         $this->updateArea($request, $address);
         return redirect()->route('address.index');
     }
-    
+
     public function destroy($id){
         $address = Address::find($id);
         $address->delete();
