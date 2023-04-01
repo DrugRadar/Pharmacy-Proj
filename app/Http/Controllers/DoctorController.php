@@ -27,10 +27,10 @@ class DoctorController extends Controller
     }
 
     public function index(Request $request){
-        if(Auth::user()->hasrole('admin')){
+        if(Auth::user()->roles[0]->name=='admin'){
             $data = Doctor::latest()->get();
         }
-        else if(Auth::user()->hasrole('pharmacy')){
+        else if(Auth::user()->roles[0]->name=='pharmacy'){
             $data = Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
         }
         if ($request->ajax()) {

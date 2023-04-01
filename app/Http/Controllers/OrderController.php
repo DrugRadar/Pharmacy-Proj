@@ -20,11 +20,17 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
-        if(Auth::user()->hasrole('admin')){
+       
+        if(Auth::user()->roles[0]->name=='admin'){
             $data = Order::with('doctor')->latest()->get();
         }
-        else if(Auth::user()->hasrole('pharmacy')){
+        else if(Auth::user()->roles[0]->name=='pharmacy'){
             $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
+        }
+        else if(Auth::user()->roles[0]->name=='doctor'){
+            $doctor = Doctor::find(Auth::user()->userable_id);
+            $pharmacyId=$doctor->Pharmacy->id;
+            $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -56,13 +62,17 @@ class OrderController extends Controller
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
-        if($user->hasRole('pharmacy'))
+        if($user->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
         }
-        if($user->hasRole('admin'))
+        if($user->roles[0]->name=='admin')
         {
             $doctors=Doctor::all();
+        }
+        if($user->roles[0]->name=='doctor')
+        {
+            $doctors='';
         }
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
@@ -71,15 +81,15 @@ class OrderController extends Controller
 
         $user = Auth::user();
         $creator_type=$request->creator_type;
-        $doctor = null;
+        $doctor_id = $request->doctor_id;
         $status = 'Processing';
         $assigned_pharmacy=$request->assigned_pharmacy_id;
-        if ($user->hasRole('doctor')) {
+        if ($user->roles[0]->name=='doctor') {
             $doctor = Doctor::find($user->userable_id);
             $creator_type = 'doctor';
             $assigned_pharmacy = $doctor->pharmacy_id;
-            $doctor = $doctor->id;
-        } elseif ($user->hasRole('pharmacy')) {
+            $doctor_id = $doctor->id;
+        } elseif ($user->roles[0]->name=='pharmacy') {
             $creator_type = 'pharmacy';
             $assigned_pharmacy = $user->userable_id;
         }
@@ -87,7 +97,7 @@ class OrderController extends Controller
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
             'assigned_pharmacy_id' => $assigned_pharmacy,
-            'doctor_id'=>$request->doctor_id,
+            'doctor_id'=>$doctor_id,
             'status'=>$request->status,
             'is_insured'=>$request->is_insured,
             'creator_type'=>$creator_type,
@@ -101,7 +111,7 @@ class OrderController extends Controller
         $doctors=Doctor::where('pharmacy_id', $order->assigned_pharmacy_id)->get();
         $medicines=Medicine::all();
         $clientAddress=Address::find($order->client_address_id);
-        if($user->hasRole('admin'))
+        if($user->roles[0]->name=='admin')
         {
             $pharmacies=Pharmacy::all();
             return view('dashboard.order.process',['order' => $order,'client'=>$client,'medicines'=>$medicines,'doctors'=>$doctors,'clientAddress'=>$clientAddress,'pharmacies'=>$pharmacies]);
@@ -130,9 +140,15 @@ class OrderController extends Controller
         $medicinesQuantities=$request->quantity;
         $this->pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities);
         $order->total_price = $request->total;
-        if($request->status)
         $order->status="WaitingForUserConfirmation";
-        $order->doctor_id=$orderInfo['doctor_id'];
+        if(Auth::user()->roles[0]->name=='doctor')
+        {
+            $order->doctor_id=Auth::user()->userable_id;
+        }
+        else
+        {
+            $order->doctor_id=$orderInfo['doctor_id'];
+        }
         $order->save();
         return to_route('order.index'); 
     }
