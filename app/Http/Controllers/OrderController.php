@@ -91,13 +91,9 @@ class OrderController extends Controller
             'status'=>$request->status,
             'is_insured'=>$request->is_insured,
             'creator_type'=>$creator_type,
-            'total_price'=>$request->total_price,
         ]);
-        // $this->pushMedicinesToOrder($request,$newOrder);
-        return to_route('order.index'); 
-        
+       return $this->continue($request,$newOrder->id);
     }
-
     public function process($id){
         $user = Auth::user();
         $order= Order::find($id);
@@ -132,9 +128,9 @@ class OrderController extends Controller
         $order= Order::find($id);
         $orderInfo=session()->get('data');
         $medicinesQuantities=$request->quantity;
-        // dd($orderInfo);
         $this->pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities);
         $order->total_price = $request->total;
+        if($request->status)
         $order->status="WaitingForUserConfirmation";
         $order->doctor_id=$orderInfo['doctor_id'];
         $order->save();

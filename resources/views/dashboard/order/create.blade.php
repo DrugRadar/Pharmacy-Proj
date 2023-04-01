@@ -5,7 +5,6 @@
 
     <form method="POST" action="{{route('order.store')}}" enctype="multipart/form-data">
         @csrf
-
         <div class="d-flex justify-content-between">
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Name</label>
@@ -108,10 +107,6 @@
                            Canceled
                            </option>
                     </select>
-        </div>
-        <div class="mb-3 p-0">
-            <label for="exampleFormControlTextarea1" class="form-label col-2 p-0 text-2xl">Total Price</label>
-            <input type="number" name="total_price" class="form-control w-50 col-8" id="exampleFormControlInput1" placeholder="Total Price">
         </div>
         <button type="submit" class="btn btn-success align-self-end">Order</button>
     </form>
