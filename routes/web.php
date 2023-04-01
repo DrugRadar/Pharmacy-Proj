@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 // login Route
 
-
+// Route::get('/confirmOrder', [OrderController::class, 'SendOrderConfirmationMail'])->name("order");
 
 
 

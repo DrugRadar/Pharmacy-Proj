@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmOrder;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Doctor;
@@ -12,6 +13,7 @@ use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -122,6 +124,14 @@ class OrderController extends Controller
         $order->status="WaitingForUserConfirmation";
         $order->doctor_id=$request->doctor_id;
         $order->save();
+        // dd("ddd");
+        $this-> SendOrderConfirmationMail($order);
         return to_route('order.index'); 
     }
+
+    public function SendOrderConfirmationMail( $orderData)
+    {
+        Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
+    }
 }
+
