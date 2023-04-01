@@ -62,11 +62,7 @@ class DoctorController extends Controller
         ]);
 
         if ($request->hasFile('avatar_image')) {
-            $image = $request->file('avatar_image');
-            $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-            $imageName = $image->getClientOriginalName();
-            $newDoctor->avatar_image = $imageName;
-            $newDoctor->save();
+            $newDoctor->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
 
         if($newDoctor){
@@ -78,7 +74,7 @@ class DoctorController extends Controller
             $user->assignRole(['doctor']);
             $newDoctor->user()->save($user);
         }
-        
+
         return to_route('doctor.index');
     }
 
@@ -91,24 +87,14 @@ class DoctorController extends Controller
     public function update(UpdateDoctorRequest $request, $id){
         $doctor = Doctor::find($id);
         if ($request->hasFile('avatar_image')) {
-            $this->updateAvatarImage($request, $doctor);
+            foreach($doctor->getMedia('avatar_image') as $image){
+                $image->delete();
+            }
+            $doctor->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
 
         $this->updateDoctor($request, $doctor);
         return redirect()->route('doctor.index');
-    }
-
-    private function updateAvatarImage($request, $doctor) {
-        $image = $request->file('avatar_image');
-        $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-        $imageName = $image->getClientOriginalName();
-
-        if ($doctor->avatar_image != null) {
-            Storage::delete('public/image/' . $doctor->avatar_image);
-        }
-
-        $doctor->avatar_image = $imageName;
-        $doctor->save();
     }
 
     private function updateDoctor($request, $doctor) {

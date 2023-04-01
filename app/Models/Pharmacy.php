@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 
-class Pharmacy extends Model
+class Pharmacy extends Model implements HasMedia
+
 {
-    use HasFactory,HasRoles;
+    use HasFactory;
+    use HasRoles,  InteractsWithMedia;
 
     protected $guard_name = 'pharmacy';
     protected $table = 'pharmacies';
@@ -20,7 +24,7 @@ class Pharmacy extends Model
         'name',
         'email',
         'password',
-        'avatar_image',
+        // 'avatar_image',
         'national_id',
         'area_id',
     ];
