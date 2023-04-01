@@ -33,6 +33,9 @@ class OrderController extends Controller
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
                 })
+                ->addColumn('creator_type', function ($row) {
+                    return $row->creator_type;
+                    })
                 ->addColumn('action', function($row) {
                     $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm">Process</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
@@ -73,11 +76,13 @@ class OrderController extends Controller
         if ($user->hasRole('doctor')) {
             $doctor = Doctor::find($user->userable_id);
             $creator_type = 'doctor';
-            $assigned_pharmacy = Pharmacy::find($doctor->pharmacy_id);
+            // $assigned_pharmacy = Pharmacy::find($doctor->pharmacy_id);
+            $assigned_pharmacy = $doctor->pharmacy_id;
             $doctor = $doctor->id;
         } elseif ($user->hasRole('pharmacy')) {
             $creator_type = 'pharmacy';
-            $assigned_pharmacy = Pharmacy::find($user->userable_id);
+            // $assigned_pharmacy = Pharmacy::find($user->userable_id);
+            $assigned_pharmacy = $user->userable_id;
         }
        $newOrder= Order::create([
             'client_id' => $request->client_id,

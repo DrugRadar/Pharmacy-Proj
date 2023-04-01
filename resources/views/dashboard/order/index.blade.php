@@ -13,6 +13,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">client_name</th>
                 <th scope="col">doctor_name</th>
+                <th scope="col">creator_name</th>
                 <th scope="col">status</th>
                 <th scope="col">Delivering Address</th>
                 <th scope="col">is_insured</th>
@@ -44,6 +45,10 @@ $(function() {
             {
                 data: 'doctor_name',
                 name: 'doctor_name'
+            },
+            {
+                data: 'creator_type',
+                name: 'creator_type'
             },
             {
                 data: 'status',
