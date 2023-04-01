@@ -97,6 +97,7 @@ class OrderController extends Controller
                 ]
             ];
             $formattedOrders[] = $formattedOrder;
+            // $formattedOrders[] = $formattedOrder;
         }
         
         return response()->json($formattedOrders, 200);
