@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ClientRegisterRequest;
 use App\Http\Requests\Api\ClientUpdateProfileRequest;
 use App\Models\Client;
+use App\Notifications\ClientVerified;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -15,21 +16,20 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    
+
     public function register(Request $request)
     {
-        
-   
+
+
         $data = $request->all();
         $avatarImage = $request->file('avatar_image');
         $avatar = $avatarImage->getClientOriginalName();
-    
+
         $avatarImage->storeAs('public/image', $avatar);
         $data['password'] = Hash::make($data['password']);
         $client = new Client();
-        $avatar_url = url($avatar);
-        $data['avatar_image'] = $avatar_url;
-        
+        $client->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
+
         $client->fill($data);
         $client->save();
 
@@ -52,7 +52,7 @@ class ClientController extends Controller
 
         $client->markEmailAsVerified();
         $client->save();
-
+        $client->notify(new ClientVerified());
         return response()->json([
         'message' => 'Email verified successfully'
     ]);
@@ -95,7 +95,7 @@ public function login(Request $request)
     {
         $client = Client::findOrFail($id);
         $validated = $request->validated();
-        $client->update($validated);        
+        $client->update($validated);
         return response()->json([
             'message' => 'Client updated successfully.',
             'data' => $client,

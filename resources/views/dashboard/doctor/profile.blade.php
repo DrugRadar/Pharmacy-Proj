@@ -60,7 +60,7 @@
     </style>
 
 <div class="card align-self-center bg-gradient-dark">
-         <img src="{{url("storage/image/".$doctor->avatar_image)}}" alt="profile picture" class="profile__picture">
+         <img src="{{$doctor->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture">
          <div class="text">
             <h3>Doctor Name</h3>
             <p>{{$doctor->name}}</p>

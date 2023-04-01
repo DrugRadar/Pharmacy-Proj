@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\AddressController;
 use Spatie\FlareClient\Api;
 
 /*
@@ -25,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-  
+
 });
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -40,4 +41,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'create']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}',[OrderController::class,'show']);
+    
+    // Route::post('/orders', [OrderController::class, 'store']);
+
+    Route::post('/address', [AddressController::class, 'create']);
+    Route::get('/address/{id}', [AddressController::class, 'index']);
+    Route::put('/client/{clientId}/address/{addressId}',[AddressController::class,'update']);
+    Route::delete('/client/{clientId}/address/{addressId}',[AddressController::class,'delete']);
 });

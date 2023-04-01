@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
@@ -11,18 +10,22 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
 use Yajra\DataTables\DataTables;
+use App\Http\Requests\UpdateDoctorRequest;
+use App\Http\Requests\StoreDoctorRequest;
 
 
 class DoctorController extends Controller
 {
-    function __construct()
-    {
+    function __construct(){
         $this->middleware('permission:see all doctors', ['only' => ['index']]);
         $this->middleware('permission:delete doctor', ['only' => ['delete']]);
         $this->middleware('permission:create doctor', ['only' => ['create','store']]);
         $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
 
+        //  $this->middleware('role:admin', ['only' => ['show','edit','delete','create','update','store']]);
+        //  $this->middleware('role:pharmacy', ['only' => ['show','edit','delete','create','update','store']]);
     }
+
     public function index(Request $request){
         if(Auth::user()->hasrole('admin')){
             $data = Doctor::latest()->get();
@@ -30,7 +33,7 @@ class DoctorController extends Controller
         else if(Auth::user()->hasrole('pharmacy')){
             $data = Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
         }
-       if ($request->ajax()) {
+        if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
@@ -40,84 +43,70 @@ class DoctorController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-       }
+        }
         return view('dashboard.doctor.index');
     }
+
     public function create(){
         $pharmacies = Pharmacy::all();
         return view('dashboard.doctor.create',['pharmacies' => $pharmacies]);
     }
 
-    public function store(){
-        if (request()->hasFile('avatar_image')) {
-            $image = request()->file('avatar_image');
-            $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-            $imageName = $image->getClientOriginalName();
+    public function store(StoreDoctorRequest $request){
+        $newDoctor = Doctor::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' =>  $request->password,
+            'national_id' =>  $request->national_id,
+            'pharmacy_id'=> $request->pharmacy_id,
+        ]);
+
+        if ($request->hasFile('avatar_image')) {
+            $newDoctor->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
 
-       $newDoctor= Doctor::create([
-            'name' => request()->name,
-            'email' => request()->email,
-            'password' =>  request()->password,
-            'national_id' =>  request()->national_id,
-            'avatar_image'=> isset($imagePath) ? $imageName : null,
-            'pharmacy_id'=> request()->pharmacy,
-
-        ]);
         if($newDoctor){
             $user = User::create([
                 'name'=> request()->name ,
                 'email' => request()->email,
                 'password' => Hash::make(request()->password),
-
             ]);
             $user->assignRole(['doctor']);
             $newDoctor->user()->save($user);
-
         }
+
         return to_route('doctor.index');
     }
+
     public function edit($id){
         $doctor= Doctor::find($id);
         $pharmacies = Pharmacy::all();
         return view('dashboard.doctor.edit',['doctor' => $doctor],['pharmacies' => $pharmacies]);
-    //    return response()->json($doctor);
     }
 
-    public function update($id){
+    public function update(UpdateDoctorRequest $request, $id){
         $doctor = Doctor::find($id);
-        if (request()->hasFile('avatar_image')) {
-            $this->updateAvatarImage($doctor);
+        if ($request->hasFile('avatar_image')) {
+            foreach($doctor->getMedia('avatar_image') as $image){
+                $image->delete();
+            }
+            $doctor->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
 
-        $this->updateDoctor($doctor);
+        $this->updateDoctor($request, $doctor);
         return redirect()->route('doctor.index');
     }
 
-    private function updateAvatarImage($doctor) {
-        $image = request()->file('avatar_image');
-        $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-        $imageName = $image->getClientOriginalName();
-
-        if ($doctor->avatar_image != null) {
-            Storage::delete('public/image/' . $doctor->avatar_image);
-        }
-
-        $doctor->avatar_image = $imageName;
-        $doctor->save();
-    }
-
-    private function updateDoctor($doctor) {
-        $doctor->name = request()->name;
-        $doctor->email = request()->email;
-        $doctor->password = request()->password;
-        $doctor->national_id = request()->national_id;
-        $doctor->pharmacy_id = request()->pharmacy;
+    private function updateDoctor($request, $doctor) {
+        $doctor->name = $request->name;
+        $doctor->email = $request->email;
+        $doctor->password = $request->password;
+        $doctor->national_id = $request->national_id;
+        $doctor->pharmacy_id = $request->pharmacy_id;
         $doctor->save();
     }
 
     public function destroy($id){
-
         $FoundDoctor = Doctor::findOrFail($id);
 
         if ($FoundDoctor->image) {
