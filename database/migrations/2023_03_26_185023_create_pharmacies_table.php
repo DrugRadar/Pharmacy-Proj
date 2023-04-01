@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('national_id')->unique();
-            $table->string('avatar_image');
+            $table->string('avatar_image')->nullable()->default(null);
             $table->foreign('area_id')->references('id')->on('areas');
             $table->timestamps();
             $table->softDeletes();
