@@ -20,13 +20,14 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
-        if(Auth::user()->hasrole('admin')){
+       
+        if(Auth::user()->roles[0]->name=='admin'){
             $data = Order::with('doctor')->latest()->get();
         }
-        else if(Auth::user()->hasrole('pharmacy')){
+        else if(Auth::user()->roles[0]->name=='pharmacy'){
             $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
-        else if(Auth::user()->hasrole('doctor')){
+        else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
             $pharmacyId=$doctor->Pharmacy->id;
             $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
@@ -61,15 +62,15 @@ class OrderController extends Controller
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
-        if($user->hasRole('pharmacy'))
+        if($user->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
         }
-        if($user->hasRole('admin'))
+        if($user->roles[0]->name=='admin')
         {
             $doctors=Doctor::all();
         }
-        if($user->hasRole('doctor'))
+        if($user->roles[0]->name=='doctor')
         {
             $doctors='';
         }
@@ -83,12 +84,12 @@ class OrderController extends Controller
         $doctor_id = $request->doctor_id;
         $status = 'Processing';
         $assigned_pharmacy=$request->assigned_pharmacy_id;
-        if ($user->hasRole('doctor')) {
+        if ($user->roles[0]->name=='doctor') {
             $doctor = Doctor::find($user->userable_id);
             $creator_type = 'doctor';
             $assigned_pharmacy = $doctor->pharmacy_id;
             $doctor_id = $doctor->id;
-        } elseif ($user->hasRole('pharmacy')) {
+        } elseif ($user->roles[0]->name=='pharmacy') {
             $creator_type = 'pharmacy';
             $assigned_pharmacy = $user->userable_id;
         }
@@ -110,7 +111,7 @@ class OrderController extends Controller
         $doctors=Doctor::where('pharmacy_id', $order->assigned_pharmacy_id)->get();
         $medicines=Medicine::all();
         $clientAddress=Address::find($order->client_address_id);
-        if($user->hasRole('admin'))
+        if($user->roles[0]->name=='admin')
         {
             $pharmacies=Pharmacy::all();
             return view('dashboard.order.process',['order' => $order,'client'=>$client,'medicines'=>$medicines,'doctors'=>$doctors,'clientAddress'=>$clientAddress,'pharmacies'=>$pharmacies]);
@@ -140,7 +141,7 @@ class OrderController extends Controller
         $this->pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities);
         $order->total_price = $request->total;
         $order->status="WaitingForUserConfirmation";
-        if(Auth::user()->hasRole('doctor'))
+        if(Auth::user()->roles[0]->name=='doctor')
         {
             $order->doctor_id=Auth::user()->userable_id;
         }
