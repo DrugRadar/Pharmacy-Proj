@@ -135,10 +135,15 @@ class OrderController extends Controller
         ];
         return response()->json($formattedOrder, 200);
     }
-    public function confirmOrder($id){
-        $order = Order::find($id);
-        $order->status = 'confirmed';
-        $order->save();
-        return response()->json("order confirmed" , 200);
-    }
+    // public function confirmOrder($id){
+    //     $order = Order::find($id);
+    //     if ($order) {
+    //         $order->status = 'confirmed';
+    //         $order->save();
+    //         return view('confirmed');
+    //     } else {
+    //         abort(404);
+    //     }
+    //     // return response()->json("order confirmed" , 200);
+    // }
 }
