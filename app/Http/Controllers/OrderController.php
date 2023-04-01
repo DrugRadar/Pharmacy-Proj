@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmOrder;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Doctor;
@@ -12,6 +13,7 @@ use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -157,9 +159,41 @@ class OrderController extends Controller
                 'quantity' => $medicinesQuantities[$key],
             ]);
         }
+       $this->sendOrderConfirmationMail($order) ;
     }
     }catch (\Exception $e) {
         throw $e;
     }
     }
+    public function sendOrderConfirmationMail( $orderData)
+    {
+        Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
+    }
+
+    public function confirmOrder($id){
+        $order = Order::find($id);
+        if ($order) {
+            $order->status = 'confirmed';
+            $order->save();
+            return view('confirmOrder.confirmed');
+        } else {
+            abort(404);
+        }
+        // return response()->json("order confirmed" , 200);
+    }
+    public function cancelOrder($id){
+        $order = Order::find($id);
+        if ($order) {
+            $order->status = 'canceled';
+            $order->save();
+            return view('confirmOrder.canceledOrder');
+        } else {
+            abort(404);
+        }
+    }
+    public function payOrder($id){
+        // code for payment 
+        return view('confirmOrder.payment',['id'=>$id]);
+    }
 }
+
