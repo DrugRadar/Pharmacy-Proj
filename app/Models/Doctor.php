@@ -9,9 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Doctor extends Model implements BannableContract
 {
-    use HasFactory;
-    use Bannable;
-    use HasRoles;
+    use HasFactory,HasRoles,Bannable;
     protected $guard_name = 'doctor';
     protected $table = 'doctors';
     protected $morphClass = 'doctor';

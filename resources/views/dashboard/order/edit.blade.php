@@ -3,7 +3,7 @@
 <div class="">
     <h1>Process Order</h1>
 
-    <form method="POST" action="{{route('order.continue',[$order->id])}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('order.update',[$order->id])}}" enctype="multipart/form-data">
         @csrf
         @if($order->orderPrescription )
         <div class="mb-3 mt-3 col-4 p-0">

@@ -79,7 +79,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
     Route::get('/orders/process/{id}', [OrderController::class, 'process'])->name("order.process");
+    Route::post('/orders/continue/{id}', [OrderController::class, 'continue'])->name("order.continue");
+    Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name("order.edit");
+    Route::put('/orders/{id}', [OrderController::class, 'update'])->name("order.update");
     Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
+    Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+
 });
 
 // login Route

@@ -8,8 +8,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Pharmacy extends Model
 {
-    use HasFactory;
-    use HasRoles;
+    use HasFactory,HasRoles;
+
     protected $guard_name = 'pharmacy';
     protected $table = 'pharmacies';
     protected $morphClass = 'pharmacy';
