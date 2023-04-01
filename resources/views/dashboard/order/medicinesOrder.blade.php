@@ -11,17 +11,16 @@
   @foreach($medicines as $index => $medicine )
   <div class="mb-3 mt-3  p-0">    
             <div class="d-flex">
-            <input type="text" name="medicineName"class="form-control col-4 me-2" value="{{$medicine->name}}">
-            <input type="number" id="price{{ $index }}" name="price[]" class="form-control col-4 me-2 price" value="{{$medicine->price}}" > 
+            <input type="text"class="form-control col-4 me-2" value="{{is_object($medicine) ? $medicine->name  : $medicine}}">
+            <input type="number" id="price{{ $index }}" name="price[]" class="form-control col-4 me-2 price" value="{{is_object($medicine) ?$medicine->price:''}}" > 
             <input type="number"id="quantity{{ $index }}" name="quantity[]" value=""class="form-control col-4 me-2 quantity" placeholder="Medicine quantity"> 
      
             </div>
-                     
   </div>
   @endforeach
   <label for="total">Total Price:</label>
-        <output id="total"></output>
-        <input type="hidden" name="total" id="total" value="">
+        <!-- <output id="total"></output> -->
+        <input  name="total" id="total" value="">
 
     </div>
 <button type="submit" id="submit-button" class="btn btn-success align-self-end">Send</button>

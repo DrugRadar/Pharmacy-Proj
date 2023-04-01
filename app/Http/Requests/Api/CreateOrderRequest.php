@@ -23,7 +23,7 @@ class CreateOrderRequest extends FormRequest
     {
         return [
            "is_insured" => 'required|boolean',
-        //    "prescription.*" => 'required|mimes:jpeg,jpg,png',
+           "prescription.*" => 'required|mimes:jpeg,jpg,png',
         ];
     }
 }
