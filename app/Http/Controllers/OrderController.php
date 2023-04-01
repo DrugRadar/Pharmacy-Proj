@@ -26,6 +26,11 @@ class OrderController extends Controller
         else if(Auth::user()->hasrole('pharmacy')){
             $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
+        else if(Auth::user()->hasrole('doctor')){
+            $doctor = Doctor::find(Auth::user()->userable_id);
+            $pharmacyId=$doctor->Pharmacy->id;
+            $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
+        }
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -64,6 +69,10 @@ class OrderController extends Controller
         {
             $doctors=Doctor::all();
         }
+        if($user->hasRole('doctor'))
+        {
+            $doctors='';
+        }
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
 
@@ -71,14 +80,14 @@ class OrderController extends Controller
 
         $user = Auth::user();
         $creator_type=$request->creator_type;
-        $doctor = null;
+        $doctor_id = $request->doctor_id;
         $status = 'Processing';
         $assigned_pharmacy=$request->assigned_pharmacy_id;
         if ($user->hasRole('doctor')) {
             $doctor = Doctor::find($user->userable_id);
             $creator_type = 'doctor';
             $assigned_pharmacy = $doctor->pharmacy_id;
-            $doctor = $doctor->id;
+            $doctor_id = $doctor->id;
         } elseif ($user->hasRole('pharmacy')) {
             $creator_type = 'pharmacy';
             $assigned_pharmacy = $user->userable_id;
@@ -87,7 +96,7 @@ class OrderController extends Controller
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
             'assigned_pharmacy_id' => $assigned_pharmacy,
-            'doctor_id'=>$request->doctor_id,
+            'doctor_id'=>$doctor_id,
             'status'=>$request->status,
             'is_insured'=>$request->is_insured,
             'creator_type'=>$creator_type,
@@ -130,9 +139,15 @@ class OrderController extends Controller
         $medicinesQuantities=$request->quantity;
         $this->pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities);
         $order->total_price = $request->total;
-        if($request->status)
         $order->status="WaitingForUserConfirmation";
-        $order->doctor_id=$orderInfo['doctor_id'];
+        if(Auth::user()->hasRole('doctor'))
+        {
+            $order->doctor_id=Auth::user()->userable_id;
+        }
+        else
+        {
+            $order->doctor_id=$orderInfo['doctor_id'];
+        }
         $order->save();
         return to_route('order.index'); 
     }
