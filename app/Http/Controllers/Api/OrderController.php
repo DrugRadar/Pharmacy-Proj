@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Models\Address;
 use App\Models\Client;
+use App\Models\Medicine;
 use App\Models\Order;
+use App\Models\OrderMedicine;
 use App\Models\OrderPrescription;
 use App\Models\Pharmacy;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -87,23 +89,38 @@ class OrderController extends Controller
 
     return response()->json( $formattedOrders, 200);
     }
+
     public function show($id){
         $client = auth()->user();
         $order = Order::find($id);
         $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
+        $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
         $avatar_url = url($pharmacyInfo->avatar_image);
+        $medicines = [];
+        foreach ($medicinesInfo as $medicineInfo) {
+            $medicines[] = [
+                'id'=>$medicineInfo->id,
+                'name' => $medicineInfo->name,
+                'type' => $medicineInfo->type,
+                'quantity' => $medicineInfo->quantity,
+                'total_price' => $medicineInfo->total_price
+            ];
+        }
         $formattedOrder = [
             'id' => $order->id,
+            'medicines' => $medicines,
             'order_total_price' => $order->total_price,
             'ordered_at' => $order->created_at->diffForHumans(),
             'status' => $order->status,
             'assigned_pharmacy' => [
                 'id' => $pharmacyInfo->id,
                 'name' => $pharmacyInfo->name,
-                'area_id' => $pharmacyInfo->area_id,
-                'avatar_image' => $avatar_url,
+                'address' => $pharmacyInfo->area_id,
+                'avatar_image_url' => $avatar_url,
             ]
         ];
-        return response()->json( $formattedOrder, 200);
+        return response()->json($formattedOrder, 200);
     }
+    
 }
