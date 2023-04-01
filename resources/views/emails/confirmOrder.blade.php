@@ -7,7 +7,7 @@ Thank you for your order. We have received your request and will process it shor
 
 **Order ID:** {{ $order->id }}<br>
 **Order Date:** {{ $order->created_at }}<br>
-**Order Total:** {{ $order->total_price }}<br>
+**Order Total:** {{ $order->total_price}}<br>
 
 If you would like to confirm your order, please click the button below:
 
