@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ClientRegisterRequest;
 use App\Http\Requests\Api\ClientUpdateProfileRequest;
 use App\Models\Client;
+use App\Notifications\ClientVerified;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -52,7 +53,7 @@ class ClientController extends Controller
 
         $client->markEmailAsVerified();
         $client->save();
-
+        $client->notify(new ClientVerified());
         return response()->json([
         'message' => 'Email verified successfully'
     ]);
