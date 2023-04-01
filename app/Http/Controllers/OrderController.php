@@ -40,7 +40,7 @@ class OrderController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-       }
+        }
 
         return view('dashboard.order.index');
     }
@@ -93,7 +93,7 @@ class OrderController extends Controller
             $newOrder->orderMedicine()->create([
                 'medicine_id' => $medicine_id,
                 'quantity' => 1,
-             ]);
+            ]);
         }
 
         return to_route('order.index');
@@ -122,7 +122,7 @@ class OrderController extends Controller
             $order->orderMedicine()->create([
                 'medicine_id' => $medicine_id,
                 'quantity' => 1,
-             ]);
+            ]);
         }
         $order->total_price = $request->total_price;
         $order->status="WaitingForUserConfirmation";
