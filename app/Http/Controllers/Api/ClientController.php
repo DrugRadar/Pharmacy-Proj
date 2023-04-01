@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ClientRegisterRequest;
 use App\Http\Requests\Api\ClientUpdateProfileRequest;
+use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use App\Notifications\ClientVerified;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -17,20 +18,17 @@ use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(ClientRegisterRequest $request)
     {
 
 
         $data = $request->all();
-        $avatarImage = $request->file('avatar_image');
-        $avatar = $avatarImage->getClientOriginalName();
-
-        $avatarImage->storeAs('public/image', $avatar);
-        $data['password'] = Hash::make($data['password']);
+        $validated = $request->validated();
+        $validated['password'] = Hash::make($validated['password']);
         $client = new Client();
         $client->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
 
-        $client->fill($data);
+        $client->fill($validated);
         $client->save();
 
         if ($client instanceof MustVerifyEmail && ! $client->hasVerifiedEmail()) {
@@ -38,7 +36,7 @@ class ClientController extends Controller
         }
         return response()->json([
             'message' => 'Client created successfully',
-            'data' => $client
+            'data' => new ClientResource( $client)
         ], 201);
     }
 
@@ -82,7 +80,7 @@ public function login(Request $request)
     return response()->json([
         'message' => 'Client logged in successfully',
         'data' => [
-            'user' => $user,
+            'user' => new ClientResource ($user),
             'access_token' => $token,
         ],
     ], 201);
@@ -96,9 +94,11 @@ public function login(Request $request)
         $client = Client::findOrFail($id);
         $validated = $request->validated();
         $client->update($validated);
+        $client->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         return response()->json([
             'message' => 'Client updated successfully.',
-            'data' => $client,
-        ]);
+            'data' =>new ClientResource( $client),
+        ], 202);
+
     }
 }
