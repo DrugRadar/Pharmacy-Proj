@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
@@ -19,7 +20,6 @@ class PharmacyController extends Controller
     {
         $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
         $this->middleware('role:pharmacy', ['only' => ['show']]);
-
     }
     public function index(Request $request){
         if ($request->ajax()) {
@@ -58,7 +58,7 @@ class PharmacyController extends Controller
             $newPharmacy->avatar_image = $imageName;
             $newPharmacy->save();
         }
-        
+
         if($newPharmacy){
             $user = User::create([
                 'name'=> $request->name ,
@@ -126,5 +126,10 @@ class PharmacyController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+        public function profile(){
+        $pharmacy = Pharmacy::find(Auth::user()->userable_id);
+        return view('dashboard.pharmacy.profile', ['pharmacy' => $pharmacy]);
     }
 }

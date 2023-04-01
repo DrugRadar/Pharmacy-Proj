@@ -5,19 +5,10 @@
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    {{-- <link
-            rel="apple-touch-icon"
-            sizes="76x76"
-            href="../assets/img/apple-icon.png"
-        /> --}}
-    {{-- <link rel="icon" type="image/png" href="../assets/img/icons/logoImg.png" /> --}}
     <title>Material Dashboard 2 by Creative Tim</title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-    <!-- Nucleo Icons -->
-    {{-- <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
-        <link href="assets/css/nucleo-svg.css" rel="stylesheet" /> --}}
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
@@ -33,6 +24,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
 
 </head>
 
@@ -121,16 +115,23 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                 @if(Auth::user()->hasrole('admin'))
-                    <a class="nav-link text-white" href="">
+                    <a class="nav-link text-white" href="{{route('dashboard.admin.profile' )}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
-                        
+
                             <span class="nav-link-text ms-1">Admin</span>
-                     
+
                     </a>
-                    @elseif(Auth::user()->hasrole('pharmacy') || Auth::user()->hasrole('doctor'))
-                        <a class="nav-link text-white" href="">
+                    @elseif(Auth::user()->hasrole('doctor'))
+                        <a class="nav-link text-white" href="{{route('dashboard.doctor.profile', Auth::user()->userable_id)}}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class='bx bx-user-pin' style="font-size: 25px;"></i>
+                            </div>
+                                <span class="nav-link-text ms-1">Profile</span>
+                        </a>
+                    @elseif(Auth::user()->hasrole('pharmacy'))
+                        <a class="nav-link text-white" href="{{route('dashboard.pharmacy.profile', Auth::user()->userable_id)}}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                             </div>
@@ -144,9 +145,9 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user' style="font-size: 25px;"></i>
                         </div>
-                       
+
                         <span class="nav-link-text ms-1">Pharmacies</span>
-                      
+
 
                     </a>
                 </li>
@@ -191,9 +192,9 @@
                     </a>
                 </li>
                 @endif
-                
+
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="">
+                    <a class="nav-link text-white" href="{{route('order.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-cycling' style="font-size: 25px;"></i>
                         </div>
@@ -204,7 +205,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('address.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class='bx bx-cycling' style="font-size: 25px;"></i>
+                            <i class='bx bx-street-view' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Addresses</span>
                     </a>
@@ -220,17 +221,6 @@
                 </li>
             </ul>
         </div>
-        {{-- <div class="sidenav-footer position-absolute w-100 bottom-0">
-                <div class="mx-3">
-                    <a
-                        class="btn bg-gradient-primary mt-4 w-100"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                        type="button"
-                        >New Article <i class='bx bx-plus'></i></a
-                    >
-                </div>
-
-            </div> --}}
     </aside>
 
     {{-- nav --}}
@@ -270,15 +260,6 @@
                                 </div>
                             </li>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <!-- <div
-                            class="ms-md-auto pe-md-3 d-flex align-items-center"
-                        >
-                            <div class="input-group input-group-outline">
-                                <label class="form-label">Type here...</label>
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div> -->
-
                     <div class="DarkbtnContainer ms-md-auto pe-md-3 d-flex align-items-center">
                         <input type="checkbox" id="dark-mode">
                         <label for="dark-mode" class="Dark-btn"></label>
@@ -289,27 +270,12 @@
         </nav>
 
 
-        <div class="container" style="min-height: 71vh">
+        <div class="container container d-flex flex-column justify-content-center" style="min-height: 71vh">
             @yield('content')
         </div>
 
         {{-- footer --}}
         <footer class="text-center text-white mt-auto me-3 bg-gradient-dark footer">
-            <!-- Grid container -->
-            {{-- <div class="container p-4 pb-0">
-                <!-- Section: CTA -->
-                <section class="">
-                    <p class="d-flex justify-content-center align-items-center">
-                        <span class="me-3">Register for free</span>
-                        <button type="button" class="btn btn-outline-light btn-rounded">
-                            Sign up!
-                        </button>
-                    </p>
-                </section>
-                <!-- Section: CTA -->
-            </div> --}}
-            <!-- Grid container -->
-
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright:
@@ -397,6 +363,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     @yield('modal')
     @yield('scripts')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\Client;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -10,7 +11,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Event;
 class ClientController extends Controller
 {
-    
     public function register(Request $request)
     {
         $data = $request->all();
@@ -52,11 +52,11 @@ class ClientController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-    
+
         $user = Client::where('email', $email)
                       ->where('password', $password)
                       ->first();
-    
+
         if ($user) {
             return response()->json([
                 'message' => 'Client logged in successfully',
@@ -69,5 +69,4 @@ class ClientController extends Controller
             ], 404);
         }
     }
-    
 }

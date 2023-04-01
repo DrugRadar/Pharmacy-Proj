@@ -22,14 +22,14 @@
 
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-            <input type="text" name="password" class="form-control w-50" id="exampleFormControlInput1"placeholder="Pharmacy Password">
+            <input type="text" name="password" class="form-control w-50" id="exampleFormControlInput1"placeholder="Pharmacy Password" value="{{old('password')}}">
             @error('password')
                 <p class="text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">national_id</label>
+            <label for="exampleFormControlTextarea1" class="form-label">National id</label>
             <input type="text" name="national_id" class="form-control w-50" id="exampleFormControlInput1" placeholder="Pharmacy National id"
                 value="{{old('national_id')}}">
             @error('national_id')
@@ -38,7 +38,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">area</label>
+            <label for="exampleFormControlTextarea1" class="form-label">Area</label>
             <select name="area_id" class="form-control w-50" id="creator">
                 @foreach($areas as $area)
                 <option value="{{$area->id}}">{{$area->name}}</option>
@@ -54,7 +54,7 @@
         @error('avatar_image')
             <p class="text-danger mt-1">{{ $message }}</p>
         @enderror
-        
+
         <br>
         <button type="submit" class="btn btn-success">Create</button>
     </form>

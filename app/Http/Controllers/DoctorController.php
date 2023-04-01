@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
@@ -12,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
 use Yajra\DataTables\DataTables;
+use App\Http\Requests\UpdateDoctorRequest;
+use App\Http\Requests\StoreDoctorRequest;
 
 
 class DoctorController extends Controller
@@ -21,6 +21,9 @@ class DoctorController extends Controller
         $this->middleware('permission:delete doctor', ['only' => ['delete']]);
         $this->middleware('permission:create doctor', ['only' => ['create','store']]);
         $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
+
+        //  $this->middleware('role:admin', ['only' => ['show','edit','delete','create','update','store']]);
+        //  $this->middleware('role:pharmacy', ['only' => ['show','edit','delete','create','update','store']]);
     }
 
     public function index(Request $request){
@@ -34,7 +37,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal" 
+                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
                     return $actionBtn;
                 })
@@ -49,7 +52,7 @@ class DoctorController extends Controller
         return view('dashboard.doctor.create',['pharmacies' => $pharmacies]);
     }
 
-    public function store(UpdateDoctorRequest $request){
+    public function store(StoreDoctorRequest $request){
         $newDoctor = Doctor::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -68,14 +71,14 @@ class DoctorController extends Controller
 
         if($newDoctor){
             $user = User::create([
-                'name'=> $request->name , 
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'name'=> request()->name ,
+                'email' => request()->email,
+                'password' => Hash::make(request()->password),
             ]);
             $user->assignRole(['doctor']);
             $newDoctor->user()->save($user);
         }
-
+        
         return to_route('doctor.index');
     }
 
@@ -83,11 +86,9 @@ class DoctorController extends Controller
         $doctor= Doctor::find($id);
         $pharmacies = Pharmacy::all();
         return view('dashboard.doctor.edit',['doctor' => $doctor],['pharmacies' => $pharmacies]);
-    //    return response()->json($doctor);
     }
 
     public function update(UpdateDoctorRequest $request, $id){
-        dd($this);
         $doctor = Doctor::find($id);
         if ($request->hasFile('avatar_image')) {
             $this->updateAvatarImage($request, $doctor);
@@ -107,7 +108,7 @@ class DoctorController extends Controller
         }
 
         $doctor->avatar_image = $imageName;
-        $doctor->save(); 
+        $doctor->save();
     }
 
     private function updateDoctor($request, $doctor) {
@@ -115,19 +116,24 @@ class DoctorController extends Controller
         $doctor->email = $request->email;
         $doctor->password = $request->password;
         $doctor->national_id = $request->national_id;
-        $doctor->pharmacy_id = $request->pharmacy;
+        $doctor->pharmacy_id = $request->pharmacy_id;
         $doctor->save();
     }
 
     public function destroy($id){
-
         $FoundDoctor = Doctor::findOrFail($id);
+
         if ($FoundDoctor->image) {
             $imagePath = 'image/' . $FoundDoctor->image;
             Storage::delete($imagePath);
         }
         $FoundDoctor->delete();
         return redirect()->route('doctor.index');
+    }
+
+    public function profile(){
+        $doctor = Doctor::find(Auth::user()->userable_id);
+        return view('dashboard.doctor.profile', ['doctor' => $doctor]);
     }
 
 }

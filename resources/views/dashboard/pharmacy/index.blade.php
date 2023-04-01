@@ -2,7 +2,7 @@
 @section('content')
 <div>
     <h1>Pharmacies</h1>
-    {{Auth::user()->hasrole('pharmacy')?'hi':''}}
+
     <div class="text-center">
         <a href="{{route('pharmacy.create')}}" class="mt-4 btn btn-success">Create Pharmacy</a>
     </div>
@@ -17,6 +17,9 @@
                 <th scope="col">Actions</th>
             </tr>
         </thead>
+        <tbody>
+
+        </tbody>
     </table>
     <x-modal role="pharmacy"></x-modal>
 </div>
