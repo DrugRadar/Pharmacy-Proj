@@ -138,7 +138,6 @@ class OrderController extends Controller
         $this-> SendOrderConfirmationMail($order);
         return to_route('order.index'); 
     }
-
     public function SendOrderConfirmationMail( $orderData)
     {
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));

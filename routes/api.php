@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{id}',[OrderController::class,'show']);
     
     // Route::post('/orders', [OrderController::class, 'store']);
-
+    Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::post('/address', [AddressController::class, 'create']);
     Route::get('/address/{id}', [AddressController::class, 'index']);
     Route::put('/client/{clientId}/address/{addressId}',[AddressController::class,'update']);

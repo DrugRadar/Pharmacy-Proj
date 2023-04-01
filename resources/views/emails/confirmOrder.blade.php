@@ -5,7 +5,6 @@
   $imageSrc = 'data:'.mime_content_type($imagePath).';base64,'.$imageData;
 @endphp
 @component('mail::header', ['url' => ""])
-<img src="{{ embed(public_path('/gifs/logo.jpg')) }}"alt="logo" width="60px" height="60px">
 @endcomponent
 <center>
 <table>
@@ -21,7 +20,7 @@
       <table>
         <tr>
           <td bgcolor="#008000" style="border-radius: 4px;cursor:pointer">
-            <a href="" style="color: white; display: inline-block; font-size: 16px; font-weight: 400; line-height: 48px; text-align: center; text-decoration: none; width: 200px;">Confirm Order</a>
+            <a href="{{route('order.orderConfirm' , $order->id)}}" style="color: white; display: inline-block; font-size: 16px; font-weight: 400; line-height: 48px; text-align: center; text-decoration: none; width: 200px;">Confirm Order</a>
           </td>
         </tr>
       </table>
