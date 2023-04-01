@@ -16,13 +16,21 @@ use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
     
-    public function register(ClientRegisterRequest $request)
+    public function register(Request $request)
     {
-        $validated = $request->validated();
-        // $data = $request->all();
-        $validated['password'] = Hash::make($validated['password']);
+        
+   
+        $data = $request->all();
+        $avatarImage = $request->file('avatar_image');
+        $avatar = $avatarImage->getClientOriginalName();
+    
+        $avatarImage->storeAs('public/image', $avatar);
+        $data['password'] = Hash::make($data['password']);
         $client = new Client();
-        $client->fill($validated);
+        $avatar_url = url($avatar);
+        $data['avatar_image'] = $avatar_url;
+        
+        $client->fill($data);
         $client->save();
 
         if ($client instanceof MustVerifyEmail && ! $client->hasVerifiedEmail()) {

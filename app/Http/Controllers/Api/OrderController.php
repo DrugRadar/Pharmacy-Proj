@@ -91,6 +91,7 @@ class OrderController extends Controller
         $client = auth()->user();
         $order = Order::find($id);
         $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        $avatar_url = url($pharmacyInfo->avatar_image);
         $formattedOrder = [
             'id' => $order->id,
             'order_total_price' => $order->total_price,
@@ -100,7 +101,7 @@ class OrderController extends Controller
                 'id' => $pharmacyInfo->id,
                 'name' => $pharmacyInfo->name,
                 'area_id' => $pharmacyInfo->area_id,
-                'avatar_image' => $pharmacyInfo->avatar_image,
+                'avatar_image' => $avatar_url,
             ]
         ];
         return response()->json( $formattedOrder, 200);
