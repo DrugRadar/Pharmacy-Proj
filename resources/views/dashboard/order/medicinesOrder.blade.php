@@ -19,9 +19,7 @@
   </div>
   @endforeach
   <label for="total">Total Price:</label>
-        <!-- <output id="total"></output> -->
         <input  name="total" id="total" value="">
-
     </div>
 <button type="submit" id="submit-button" class="btn btn-success align-self-end">Send</button>
 </form>
