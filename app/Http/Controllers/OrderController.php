@@ -22,21 +22,21 @@ class OrderController extends Controller
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
-            $data = Order::with('doctor')->latest()->get();
+            $data = Order::withTrashed()->with('doctor')->latest()->get();
         }
         else if(Auth::user()->roles[0]->name=='pharmacy'){
-            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
         else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
             $pharmacyId=$doctor->Pharmacy->id;
-            $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('client_name', function ($row) {
-                   return $row->client->name;
+                    return $row->client->name;
                 })
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
@@ -45,8 +45,15 @@ class OrderController extends Controller
                     return $row->creator_type;
                     })
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
+                    // $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    // data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -263,4 +270,10 @@ class OrderController extends Controller
         // code for payment
         return view('confirmOrder.payment',['id'=>$id]);
     }
+    public function restore($id){
+        Order::withTrashed()->find($id)->restore();
+        return back();
+    }
 }
+
+

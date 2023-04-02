@@ -5,15 +5,15 @@
     <div class="text-center">
         <a href="{{route('address.create')}}" class="mt-4 btn btn-success">Create Address</a>
     </div>
-    <table class="table mt-4 yajra-datatable table-bordered" id="address-table">
+    <table class="table mt-4 yajra-datatable table-bordered" id="address-table" style="width:500px !important;">
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Area ID</th>
                 <th scope="col">Street name</th>
-                <th scope="col">Building number</th>
-                <th scope="col">floor_number</th>
-                <th scope="col">flat_number</th>
+                <th scope="col">Building No.</th>
+                <th scope="col">floor No.</th>
+                <th scope="col">flat No.</th>
                 <th scope="col">Client ID</th>
                 <th scope="col">action</th>
             </tr>

@@ -60,13 +60,19 @@
     </style>
 
 <div class="card align-self-center bg-gradient-dark">
-         <img src="{{$doctor->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture">
-         <div class="text">
+        @if($doctor->getFirstMediaUrl('avatar_image', 'thumb')){
+            <img src="{{$doctor->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture">
+        }
+        @else{
+            <img src="{{asset('assets/gifs/user.png')}}" alt="profile picture" class="profile__picture">
+        }
+        @endif
+        <div class="text">
             <h3>Doctor Name</h3>
             <p>{{$doctor->name}}</p>
             <hr>
-         </div>
-         <div class="contact row ">
+        </div>
+        <div class="contact row ">
             <hr>
             <div class="col-6 ">
                 <h5>Email</h5>
