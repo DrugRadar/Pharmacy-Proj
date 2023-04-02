@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
+use App\Http\Requests\Api\UpdateOrderRequest;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Medicine;
@@ -13,62 +14,59 @@ use App\Models\OrderPrescription;
 use App\Models\Pharmacy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
     public function create(CreateOrderRequest $request){
-    
-    $client = auth()->user();
-    $validated = $request->validated();
+        $client = auth()->user();
+        $validated = $request->validated();
+        $is_insured = $validated['is_insured'];
 
-    $is_insured = $validated['is_insured'];
-    
-    $is_insured = filter_var($is_insured, FILTER_VALIDATE_BOOLEAN);
-    $prescriptions = $validated['prescription'];
-    $delivering_address_id = $request->input('delivering_address_id');
-    $clientAddress = Address::find($delivering_address_id);
-    $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();
-    
+        $is_insured = filter_var($is_insured, FILTER_VALIDATE_BOOLEAN);
+        $prescriptions = $validated['prescription'];
+        $delivering_address_id = $request->input('delivering_address_id');
+        $clientAddress = Address::find($delivering_address_id);
+        $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();
 
-    $order = new Order([
-        'client_address_id' => $delivering_address_id,
-        'assigned_pharmacy_id'=> $pharmacy->id,
-        'doctor_id'=>null,
-        'is_insured' => $is_insured,
-        'status'=> "new",
-        'creator_type'=>"client",
-        'total_price'=>null,
-        'client_id'=> $client->id
-        
-    ]);
-    
-    $order->save();
-    $this->fillPrescription($prescriptions,$order->id);
-    return response()->json([
-        'message' => 'Order created successfully',
-       'data' => $order
-    ], 200);
-        
+        $order = new Order([
+            'client_address_id' => $delivering_address_id,
+            'assigned_pharmacy_id'=> $pharmacy->id,
+            'doctor_id'=>null,
+            'is_insured' => $is_insured,
+            'status'=> "new",
+            'creator_type'=>"client",
+            'total_price'=>null,
+            'client_id'=> $client->id
+
+        ]);
+
+        $order->save();
+        $this->fillPrescription($prescriptions,$order->id);
+        return response()->json([
+            'message' => 'Order created successfully',
+            'data' => $order
+        ], 200);
     }
 
     private function fillPrescription($prescriptions, $order_id) {
-       foreach ($prescriptions as $prescription) {
+        foreach ($prescriptions as $prescription) {
             $prescriptionName = $prescription->getClientOriginalName();
             $prescriptionPath = $prescription->storeAs('public/image', $prescriptionName);
-    
+
             $orderPrescription = new OrderPrescription([
                 'prescription' => $prescriptionName,
                 'order_id' => $order_id
             ]);
             $orderPrescription->save();
-       }
+        }
     }
+
     public function index() {
         $client = auth()->user();
         $orders = Order::where('client_id', $client->id)->get();
         $formattedOrders = [];
-        
+
         foreach ($orders as $order) {
             $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
             $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
@@ -97,9 +95,8 @@ class OrderController extends Controller
                 ]
             ];
             $formattedOrders[] = $formattedOrder;
-            // $formattedOrders[] = $formattedOrder;
         }
-        
+
         return response()->json($formattedOrders, 200);
     }
 
@@ -135,6 +132,51 @@ class OrderController extends Controller
         ];
         return response()->json($formattedOrder, 200);
     }
+
+    public function edit(UpdateOrderRequest $request,$id){
+        $order = Order::find($id);
+
+        if($order->status == "new"){
+            if( $this->checkForClientAddress($request->delivering_address_id , $id) ){
+            
+                $order->is_insured = $request->is_insured;
+                $order->client_address_id = $request->delivering_address_id;
+                
+                if($request->hasFile('prescription')){
+                    $this->deletePrescription($id);
+                    $this->fillPrescription($request->prescription, $id);
+                }
+
+                return response()->json( ['message' => 'Order updated successfully',
+                    'data' => $order], 202);
+            }else{
+                return response()->json("The entered address id ($request->delivering_address_id) does not exist for the client", 400);
+            }
+        }else{
+            return response()->json( "Your order is in processing, you cant update it", 400);
+        }
+    }
+
+    private function checkForClientAddress($delivering_address_id, $client_id){
+        $address = Address::find($delivering_address_id);
+        
+        if($address != null){
+            if($address->client_id == $client_id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function deletePrescription($order_id) {
+        $rows = OrderPrescription::where("order_id", $order_id)->get();
+        foreach ($rows as $row) {
+            $imagePath = 'image/'.$row->prescription;
+            Storage::delete($imagePath);
+        }
+        $rows = OrderPrescription::where("order_id", $order_id)->delete();
+    }
+    
     // public function confirmOrder($id){
     //     $order = Order::find($id);
     //     if ($order) {
