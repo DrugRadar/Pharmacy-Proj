@@ -12,7 +12,6 @@
                 <th scope="col">Medicine Name</th>
                 <th scope="col">Medicine Type</th>
                 <th scope="col">Medicine Price</th>
-                <th scope="col">Medicine Quantity</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -44,10 +43,6 @@ $(function() {
             {
                 data: 'price',
                 name: 'price'
-            },
-            {
-                data: 'quantity',
-                name: 'quantity'
             },
             {
                 data: 'action',

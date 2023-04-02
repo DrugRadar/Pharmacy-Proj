@@ -29,14 +29,6 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea3" class="form-label">Medicine Quantity</label>
-            <input type="Number" name="quantity" class="form-control w-50" id="exampleFormControlInput3" placeholder="Medicine quantity" value="{{ old('quantity', $medecine->quantity) }}">
-            @error('quantity')
-                <p class="text-danger mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
         <br>
         <button type="submit" class="btn btn-success">Update</button>
     </form>

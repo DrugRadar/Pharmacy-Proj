@@ -42,7 +42,6 @@ class MedicineController extends Controller
         $newMedicine= Medicine::create([
             'name' => $request->name,
             'type' => $request->type,
-            'quantity' =>  $request->quantity,
             'price' =>  $request->price,
         ]);
 
@@ -68,7 +67,6 @@ class MedicineController extends Controller
         $medicine->name = $request->name;
         $medicine->type = $request->type;
         $medicine->price = $request->price;
-        $medicine->quantity = $request->quantity;
         $medicine->save();
     }
 }
