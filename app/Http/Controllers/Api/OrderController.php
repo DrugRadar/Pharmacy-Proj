@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Http\Requests\Api\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Medicine;
@@ -94,6 +95,7 @@ class OrderController extends Controller
                     'avatar_image' => $pharmacyInfo->avatar_image,
                 ]
             ];
+          //  $formattedOrder = new OrderResource($formattedOrder);
             $formattedOrders[] = $formattedOrder;
         }
 
