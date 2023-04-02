@@ -133,7 +133,7 @@ class OrderController extends Controller
         return response()->json($formattedOrder, 200);
     }
 
-    public function edit(CreateOrderRequest $request,$id){
+    public function edit(UpdateOrderRequest $request,$id){
         $order = Order::find($id);
 
         if($order->status == "new"){
@@ -176,4 +176,16 @@ class OrderController extends Controller
         }
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
     }
+    
+    // public function confirmOrder($id){
+    //     $order = Order::find($id);
+    //     if ($order) {
+    //         $order->status = 'confirmed';
+    //         $order->save();
+    //         return view('confirmed');
+    //     } else {
+    //         abort(404);
+    //     }
+    //     // return response()->json("order confirmed" , 200);
+    // }
 }

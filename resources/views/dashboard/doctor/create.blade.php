@@ -35,13 +35,17 @@
                 <p class="text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
-
+    
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Pharmacy Name</label>
             <select name="pharmacy_id" class="form-control w-50">
+            @if(Auth::user()->hasRole('admin'))
                 @foreach($pharmacies as $pharmacy)
                 <option value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
                 @endforeach
+            @else
+                <option value="{{Auth::user()->userable_id}}">{{Auth::user()->name}}</option>
+            @endif    
             </select>
             @error('pharmacy_id')
                 <p class="text-danger mt-1">{{ $message }}</p>

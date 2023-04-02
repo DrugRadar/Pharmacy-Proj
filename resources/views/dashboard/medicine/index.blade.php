@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div>
-    <h1>Medicines</h1>
-    <div class="text-center">
+    <h2 style="margin-top: 5px;">Medicines</h2>
+    <div style="margin-top: -50px;" class="text-center">
         <a href="{{route('medicine.create')}}" class="mt-4 btn btn-success">Create Medicine</a>
     </div>
     <table class="table mt-4 yajra-datatable table-bordered" id="medicine-table">
@@ -12,7 +12,6 @@
                 <th scope="col">Medicine Name</th>
                 <th scope="col">Medicine Type</th>
                 <th scope="col">Medicine Price</th>
-                <th scope="col">Medicine Quantity</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -44,10 +43,6 @@ $(function() {
             {
                 data: 'price',
                 name: 'price'
-            },
-            {
-                data: 'quantity',
-                name: 'quantity'
             },
             {
                 data: 'action',

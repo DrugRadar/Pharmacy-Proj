@@ -43,8 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{id}',[OrderController::class,'show']);
     Route::put('/orders/{id}', [OrderController::class, 'edit']);
     
-    // Route::post('/orders', [OrderController::class, 'store']);
+    Route::put('/client/{id}',[ClientController::class,'update']);
+    Route::get('/client/{id}',[ClientController::class,'show']);
 
+    // Route::post('/orders', [OrderController::class, 'store']);
     Route::post('/address', [AddressController::class, 'create']);
     Route::get('/address/{id}', [AddressController::class, 'index']);
     Route::put('/client/{clientId}/address/{addressId}',[AddressController::class,'update']);

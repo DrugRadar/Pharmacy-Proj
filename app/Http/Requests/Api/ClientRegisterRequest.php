@@ -28,10 +28,9 @@ class ClientRegisterRequest extends FormRequest
             'gender' => 'required|in:male,female',
             'password' => 'required|string|min:6',
             'date_of_birth' => 'required|date|before_or_equal:today',
-            // 'avatar_image' => 'nullable|string|max:2048',
-            'avatar_image' => 'required',
+            'avatar_image' => 'required|image|max:2048',
             'mobile_number' => 'required|string|max:20',
-            'national_id' => 'required|string|max:20|unique:clients,national_id',
+            'national_id' => 'required|integer|digits:14|unique:clients,national_id',
         ];
     }
 }
