@@ -44,7 +44,7 @@ class UpdatePharmacyRequest extends FormRequest
     }
 
     public function getDoctorIdInUser($id) {
-        $user =  User::where('userable_id', $id)
+        $user = User::where('userable_id', $id)
             ->where('userable_type', 'App\Models\Pharmacy')
             ->get();
         return $user->first()->id;
