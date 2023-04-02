@@ -32,7 +32,7 @@ $(function() {
                 render: function(data, type, full, meta) {
                     if (data) {
                         return '<img src="' + data +
-                            '" alt="profile picture" class="profile__picture">';;
+                            '" alt="profile picture" class="profile__picture">';
                     } else {
                         return '';
                     }
@@ -43,10 +43,27 @@ $(function() {
                 name: 'name'
             },
             {
-                data: 'email',
-                name: 'email'
+                data: 'totalOrders',
+                name: 'totalOrders',
+                render: function(data, type, full, meta) {
+                    if (data) {
+                        return data;
+                    } else {
+                        return '';
+                    }
+                }
             },
-
+            {
+                data: 'totalRevenue',
+                name: 'totalRevenue',
+                render: function(data, type, full, meta) {
+                    if (data) {
+                        return data;
+                    } else {
+                        return '';
+                    }
+                }
+            },
 
         ]
     });

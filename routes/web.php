@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
+    //Route::get('/revenue/{id}', [RevenueController::class, 'pharmacy'])->name("revenue.index");
 
 
 });
