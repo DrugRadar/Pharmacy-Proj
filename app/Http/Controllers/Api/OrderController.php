@@ -175,5 +175,5 @@ class OrderController extends Controller
             Storage::delete($imagePath);
         }
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
-            }
+    }
 }
