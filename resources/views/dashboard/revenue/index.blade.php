@@ -32,7 +32,7 @@ $(function() {
                 render: function(data, type, full, meta) {
                     if (data) {
                         return '<img src="' + data +
-                            '" alt="profile picture" class="profile__picture" style="border-radius:50%;">';
+                            '" alt="profile picture" class="profile__picture" style="border-radius:50%; width:50px; height:50px;">';
                     } else {
                         return '';
                     }
