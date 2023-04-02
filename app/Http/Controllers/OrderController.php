@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -28,21 +29,21 @@ class OrderController extends Controller
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
-            $data = Order::with('doctor')->latest()->get();
+            $data = Order::withTrashed()->with('doctor')->latest()->get();
         }
         else if(Auth::user()->roles[0]->name=='pharmacy'){
-            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
         else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
             $pharmacyId=$doctor->Pharmacy->id;
-            $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('client_name', function ($row) {
-                   return $row->client->name;
+                    return $row->client->name;
                 })
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
@@ -51,8 +52,15 @@ class OrderController extends Controller
                     return $row->creator_type;
                     })
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
+                    // $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    // data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -246,27 +254,43 @@ class OrderController extends Controller
 
     public function confirmOrder($id){
         $order = Order::find($id);
+     
         if ($order) {
-            $order->status = 'confirmed';
-            $order->save();
-            return view('confirmOrder.confirmed');
+            if($order->status == 'canceled'){
+                Session::flash('success', 'This order has been canceled before');
+                return back();
+            }
+            else if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'confirmed';
+                $order->save();
+                return view('confirmOrder.confirmed');
+           }
+           else{
+                Session::flash('success', 'This order has been confirmed before ');
+                return back();
+           }
         } else {
             abort(404);
         }
-        // return response()->json("order confirmed" , 200);
     }
     public function cancelOrder($id){
         $order = Order::find($id);
-        if ($order) {
-            $order->status = 'canceled';
-            $order->save();
-            return view('confirmOrder.canceledOrder');
+        if ($order) {          
+             if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'canceled';
+                $order->save();
+                return view('confirmOrder.canceledOrder',["message"=> "Order canceled"]);
+            }
+            else {
+                Session::flash('success', 'This order has been confirmed before tou can not cancel it');
+                // return back();
+                return view('confirmOrder.canceledOrder',["message"=> "can not cancel order"]);
+
+            }
         } else {
             abort(404);
         }
     }
-    public function payOrder($id){
-        // code for payment
-        return view('confirmOrder.payment',['id'=>$id]);
-    }
 }
+
+

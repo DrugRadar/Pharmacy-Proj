@@ -19,12 +19,17 @@ class AreaController extends Controller
     }
     public function index(Request $request){
          if ($request->ajax()) {
-            $data = Area::latest()->get();
+            $data = Area::withTrashed()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('area.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('area.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('area.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('area.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -63,7 +68,10 @@ class AreaController extends Controller
 
         $area->save();
     }
-
+    public function restore($id){
+        Area::withTrashed()->find($id)->restore();
+        return back();
+    }
 
     //  public function getArea(Request $request)
     // {

@@ -25,7 +25,7 @@ class DoctorController extends Controller
 
     public function index(Request $request){
         if(Auth::user()->roles[0]->name=='admin'){
-            $data = Doctor::latest()->get();
+            $data = Doctor::withTrashed()->latest()->get();
         }
         else if(Auth::user()->roles[0]->name=='pharmacy'){
             $data = Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
@@ -34,8 +34,15 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm"><i class=\'bx bx-edit\'></i></a><a href="/doctor/ban/'.$row->id.'" class="ban btn btn-dark btn-sm">ban</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('doctor.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a> <a href="/doctor/ban/'.$row->id.'" class="ban btn btn-dark btn-sm">ban</a> <a id="$row->id" class="btn btn-success" href="' . route('doctor.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('doctor.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a> <a href="/doctor/ban/'.$row->id.'" class="ban btn btn-dark btn-sm">ban</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
+                    // $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm"><i class=\'bx bx-edit\'></i></a><a href="/doctor/ban/'.$row->id.'" class="ban btn btn-dark btn-sm">ban</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    // data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -130,6 +137,11 @@ class DoctorController extends Controller
     public function profile(){
         $doctor = Doctor::find(Auth::user()->userable_id);
         return view('dashboard.doctor.profile', ['doctor' => $doctor]);
+    }
+
+       public function restore($id){
+        Doctor::withTrashed()->find($id)->restore();
+        return back();
     }
 
 }

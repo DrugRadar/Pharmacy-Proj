@@ -24,6 +24,7 @@ class UpdatePharmacyRequest extends FormRequest
     public function rules()
     {
         $id = $this->headers->get('upgrade-insecure-requests');
+        // dd($id);
         return [
             'name' => ['required', "max:255"],
             'email' => ['required', "max:255", 'email', Rule::unique('users')->ignore($this->getDoctorIdInUser($id))],
