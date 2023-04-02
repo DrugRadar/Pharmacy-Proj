@@ -75,7 +75,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
 
-
     Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
@@ -85,7 +84,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name("order.update");
     Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
     Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
-
+    
     Route::get('/orders/payment/{id}',[OrderController::class, 'payOrder'])->name('order.payOrder');
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');

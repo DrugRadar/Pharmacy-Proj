@@ -19,6 +19,12 @@ use Yajra\DataTables\DataTables;
 class OrderController extends Controller
 {
     //
+    function __construct()
+    {
+        $this->middleware('permission:see all orders', ['all']);
+
+
+    }
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
