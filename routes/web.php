@@ -86,11 +86,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
     Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 
-    Route::get('/orders/payment/{id}',[OrderController::class, 'payOrder'])->name('order.payOrder');
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
 
-    Route::get('stripe', [StripeController::class, 'stripe']);
+    Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
     Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 

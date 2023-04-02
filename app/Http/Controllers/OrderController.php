@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -188,28 +189,42 @@ class OrderController extends Controller
 
     public function confirmOrder($id){
         $order = Order::find($id);
+     
         if ($order) {
-            $order->status = 'confirmed';
-            $order->save();
-            return view('confirmOrder.confirmed');
+            if($order->status == 'canceled'){
+                Session::flash('success', 'This order has been canceled before');
+                return back();
+            }
+            else if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'confirmed';
+                $order->save();
+                return view('confirmOrder.confirmed');
+           }
+           else{
+                Session::flash('success', 'This order has been confirmed before ');
+                return back();
+           }
         } else {
             abort(404);
         }
-        // return response()->json("order confirmed" , 200);
     }
     public function cancelOrder($id){
         $order = Order::find($id);
-        if ($order) {
-            $order->status = 'canceled';
-            $order->save();
-            return view('confirmOrder.canceledOrder');
+        if ($order) {          
+             if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'canceled';
+                $order->save();
+                return view('confirmOrder.canceledOrder',["message"=> "Order canceled"]);
+            }
+            else {
+                Session::flash('success', 'This order has been confirmed before tou can not cancel it');
+                // return back();
+                return view('confirmOrder.canceledOrder',["message"=> "can not cancel order"]);
+
+            }
         } else {
             abort(404);
         }
-    }
-    public function payOrder($id){
-        // code for payment
-        return view('confirmOrder.payment',['id'=>$id]);
     }
 }
 
