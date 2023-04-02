@@ -1,10 +1,14 @@
 @extends('layouts.app')
 @section('content')
+<?php use App\Models\Medicine; ?>
+<?php use App\Models\Doctor; ?>
+<?php use App\Models\Pharmacy; ?>
 <div class="">
-    <h1>Process Order</h1>
+    <h1>Edit Order</h1>
 
     <form method="POST" action="{{route('order.update',[$order->id])}}" enctype="multipart/form-data">
         @csrf
+        @method('put')
         @if($order->orderPrescription )
         <div class="mb-3 mt-3 col-4 p-0">
             @foreach($order->orderPrescription as $orderPrescription)
@@ -13,30 +17,55 @@
             @endforeach
         </div>
         @endif
+        <div class="mb-3 mt-3 col-4 p-0">
+            <label for="exampleFormControlInput1" class="form-label">Order Total price</label>
+                    <input class="form-control w-50" style="width: 50%" name="client_id" id="exampleFormControlInput1" value="{{$order->total_price}}" disabled>
+                    </input>
+        </div>
         <div class="d-flex justify-content-between">
+
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Name</label>
                     <input class="form-control w-50" style="width: 50%" name="client_id" id="exampleFormControlInput1" value="{{$client->name}}" disabled>
-              
                     </input>
         </div>
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Address</label>
-                    <input class="form-control w-50" style="width: 50%" name="client_address" id="exampleFormControlInput1" value="{{$clientAddress->street_name}}" disabled>
+            <!-- <input class="form-control w-50" style="width: 50%" name="client_address" id="exampleFormControlInput1" value="{{$clientAddress->street_name}}" disabled> -->
+            <select class="js-example-basic-single js-example-responsive form-control w-50" style="width: 50%" name="client_address_id" value="{{$clientAddress->street_name}}">        
+            @foreach($addresses as $address)
+                            <option  value="{{$address->id}}">{{
+                              $address->street_name . ' ' . $address->building_number     
+                            }}</option>
+                    @endforeach
+            </select>
         </div>
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client insured?</label>
-                    <input class="form-control w-50" style="width: 50%" name="is_insured" id="exampleFormControlInput1" value="{{$order->is_insured}}" disabled>
-              
-                    </input>
+            <select class="js-example-basic-single js-example-responsive" style="width: 50%" name="is_insured">
+               
+               <option value="0">
+                 No  
+               </option>
+               <option value="1">
+                 Yes  
+               </option>
+ 
+       </select>
         </div>
         </div>
         <div class="mb-3 mt-3">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Medicines</label>
                     <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]">
-                    @foreach($medicines as $medicine)
-                            <option value="{{$medicine->id}}">{{
-                                $medicine->name    
+                    @foreach($order->orderMedicine as  $key =>  $medicine)
+                            <option  value="{{$medicine->medicine_id?$medicine->medicine_id:$medicine->medicine_name}}" selected="selected">{{  
+                                $medicine->medicine_name?$medicine->medicine_name:Medicine::find($medicine->medicine_id)->name
+                            }}</option>
+
+                    @endforeach
+                    @foreach($medicines as  $medicine)
+                            <option  value="{{$medicine->id}}">{{  
+                               $medicine->name
                             }}</option>
                     @endforeach
                     </select>
@@ -45,6 +74,9 @@
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Assigned Pharmacy</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
+                    <option value="{{$order->assigned_pharmacy_id}}">{{
+                        Pharmacy::find($order->assigned_pharmacy_id)->name   
+                            }}</option>
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
                                 $pharmacy->name    
@@ -53,9 +85,13 @@
                     </select>
         </div>
         @endif
+        @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Doctor</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
+                    <option value="{{$order->doctor_id}}">{{
+                        Doctor::find($order->doctor_id)->name   
+                            }}</option>
                     @foreach($doctors as $doctor)
                             <option value="{{$doctor->id}}">{{
                                 $doctor->name    
@@ -63,6 +99,7 @@
                     @endforeach
                     </select>
         </div>
+        @endif
         @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
@@ -102,11 +139,7 @@
                            </option>
                     </select>
         </div>
-        <div class="mb-3 p-0">
-            <label for="exampleFormControlTextarea1" class="form-label col-2 p-0 text-2xl">Total Price</label>
-            <input type="number" name="total_price" class="form-control w-50 col-8" id="exampleFormControlInput1" placeholder="Total Price">
-        </div>
-        <button type="submit" class="btn btn-success align-self-end">Send</button>
+        <button type="submit" class="btn btn-success align-self-end">continue</button>
     </form>
 </div>
 @endsection
@@ -117,7 +150,9 @@ $('#pharmacy').change(function(){
     assigned_pharmacy_id=$(this).val();
 })
 $(document).ready(function() {
-    $('.js-example-basic-single-tags').select2({  tags: true});
+    $('.js-example-basic-single-tags').select2({
+        tags: true,
+    tokenSeparators: [',']});
     $('.js-example-basic-single').select2();
 });
 
