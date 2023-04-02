@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div>
-    <h1>Areas</h1>
-    <div class="text-center">
+    <h2 style="margin-top: 5px;">Areas</h2>
+    <div style="margin-top: -50px;" class="text-center">
         <a href="{{route('area.create')}}" class="mt-4 btn btn-success">Create Area</a>
     </div>
     <table class="table mt-4 yajra-datatable table-bordered" id="area-table">

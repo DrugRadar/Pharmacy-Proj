@@ -22,8 +22,8 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-           "is_insured" => 'required|boolean',
-           "prescription.*" => 'required|mimes:jpeg,jpg,png',
+            "is_insured" => 'required|boolean',
+            "prescription.*" => 'required|mimes:jpeg,jpg,png',
         ];
     }
 }

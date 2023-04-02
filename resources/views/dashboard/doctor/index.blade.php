@@ -2,8 +2,8 @@
 @section('content')
 
 {{Auth::user()->hasrole('pharmacy')}}
-<h1>Doctors</h1>
-<div class="text-center">
+<h2 style="margin-top: 5px;">Doctors</h2>
+<div style="margin-top: -50px;" class="text-center">
     <a href="{{route('doctor.create')}}" class="mt-4 btn btn-success">Create Doctor</a>
 </div>
 <table id="doctors-table" class="table table-bordered yajra-datatable">

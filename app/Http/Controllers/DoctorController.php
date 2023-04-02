@@ -21,24 +21,21 @@ class DoctorController extends Controller
         $this->middleware('permission:delete doctor', ['only' => ['delete']]);
         $this->middleware('permission:create doctor', ['only' => ['create','store']]);
         $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
-
-        //  $this->middleware('role:admin', ['only' => ['show','edit','delete','create','update','store']]);
-        //  $this->middleware('role:pharmacy', ['only' => ['show','edit','delete','create','update','store']]);
     }
 
     public function index(Request $request){
-        if(Auth::user()->hasrole('admin')){
+        if(Auth::user()->roles[0]->name=='admin'){
             $data = Doctor::latest()->get();
         }
-        else if(Auth::user()->hasrole('pharmacy')){
+        else if(Auth::user()->roles[0]->name=='pharmacy'){
             $data = Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
+                    $actionBtn = '<a href="/doctor/'.$row->id.'/edit" class="edit btn btn-success btn-sm"><i class=\'bx bx-edit\'></i></a><a href="/doctor/ban/'.$row->id.'" class="ban btn btn-dark btn-sm">ban</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -116,7 +113,16 @@ class DoctorController extends Controller
         $FoundDoctor->delete();
         return redirect()->route('doctor.index');
     }
-
+    public function ban($id){
+        $bannedDoctor=Doctor::find($id);
+        $bannedDoctor->ban();
+        return redirect()->route('doctor.index');
+    }
+    public function unBan($id){
+        $bannedDoctor=Doctor::find($id);
+        $bannedDoctor->unban();
+        return redirect()->route('doctor.index');
+    }
     public function profile(){
         $doctor = Doctor::find(Auth::user()->userable_id);
         return view('dashboard.doctor.profile', ['doctor' => $doctor]);

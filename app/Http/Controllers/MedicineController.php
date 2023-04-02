@@ -23,8 +23,8 @@ class MedicineController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="/medicine/'.$row->id.'/edit" class="edit btn btn-success btn-sm">Edit</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal" 
-                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
+                    $actionBtn = '<a href="/medicine/'.$row->id.'/edit" class="edit btn btn-success btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -42,7 +42,6 @@ class MedicineController extends Controller
         $newMedicine= Medicine::create([
             'name' => $request->name,
             'type' => $request->type,
-            'quantity' =>  $request->quantity,
             'price' =>  $request->price,
         ]);
 
@@ -68,7 +67,6 @@ class MedicineController extends Controller
         $medicine->name = $request->name;
         $medicine->type = $request->type;
         $medicine->price = $request->price;
-        $medicine->quantity = $request->quantity;
         $medicine->save();
     }
 }

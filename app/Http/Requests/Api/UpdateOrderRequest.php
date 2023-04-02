@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMedicineRequest extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class StoreMedicineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ["required", "max:255"],
-            'type' => ["required", "max:255"],
-            'price' => ["required", "numeric", "min:0"],
+            "is_insured" => ['required', 'boolean'],
+            "prescription.*" => ['required', 'mimes:jpeg,jpg,png'],
+            "delivering_address_id" => ["required", "exists:addresses,id"]
         ];
     }
 }

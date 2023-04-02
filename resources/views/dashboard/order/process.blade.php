@@ -53,6 +53,7 @@
                     </select>
         </div>
         @endif
+        @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Doctor</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
@@ -63,6 +64,7 @@
                     @endforeach
                     </select>
         </div>
+        @endif
         @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
