@@ -93,7 +93,7 @@ class OrderController extends Controller
             $creator_type = 'pharmacy';
             $assigned_pharmacy = $user->userable_id;
         }
-       $newOrder= Order::create([
+        $newOrder= Order::create([
             'client_id' => $request->client_id,
             'client_address_id' => $request->client_address_id,
             'assigned_pharmacy_id' => $assigned_pharmacy,

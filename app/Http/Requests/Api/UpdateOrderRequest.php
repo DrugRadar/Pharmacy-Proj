@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateOrderRequest extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "is_insured" => 'required|boolean',
-            "prescription.*" => 'required|mimes:jpeg,jpg,png',
+            "is_insured" => ['required', 'boolean'],
+            "prescription.*" => ['required', 'mimes:jpeg,jpg,png'],
+            "delivering_address_id" => ["required", "exists:addresses,id"]
         ];
     }
 }
