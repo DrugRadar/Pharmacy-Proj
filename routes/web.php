@@ -9,6 +9,7 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StripeController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -95,9 +96,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::get('/orders/restore/{id}', [AddressController::class, 'restore'])->name('order.restore');
 
-    Route::get('/orders/payment/{id}',[OrderController::class, 'payOrder'])->name('order.payOrder');
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
+
+    Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
+    Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 
     Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
