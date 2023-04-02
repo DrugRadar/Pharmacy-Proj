@@ -23,12 +23,24 @@ class PharmacyController extends Controller
     }
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Pharmacy::latest()->get();
+            $data = Pharmacy::withTrashed()->latest()->get();
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $actionBtn = '<a id="'.$row->id.'" class="btn btn-primary" href="' . route("pharmacy.edit", $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('pharmacy.edit', $row->id) . '">
+                        <i class=\'bx bx-edit\'></i></a>
+                        <a id="$row->id" class="btn btn-success" href="' . route('pharmacy.restore', $row->id) . '">
+                        <i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('pharmacy.edit', $row->id) . '">
+                        <i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
+
                 return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -131,5 +143,10 @@ class PharmacyController extends Controller
         public function profile(){
         $pharmacy = Pharmacy::find(Auth::user()->userable_id);
         return view('dashboard.pharmacy.profile', ['pharmacy' => $pharmacy]);
+    }
+
+    public function restore($id){
+        Pharmacy::withTrashed()->find($id)->restore();
+        return back();
     }
 }
