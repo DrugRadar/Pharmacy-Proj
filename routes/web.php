@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/orders/payment/{id}',[OrderController::class, 'payOrder'])->name('order.payOrder');
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
+
+
+    Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
+
 
 
 });
