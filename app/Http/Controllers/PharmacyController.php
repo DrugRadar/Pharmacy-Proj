@@ -52,11 +52,7 @@ class PharmacyController extends Controller
         ]);
 
         if ($request->hasFile('avatar_image')) {
-            $image = $request->file('avatar_image');
-            $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-            $imageName = $image->getClientOriginalName();
-            $newPharmacy->avatar_image = $imageName;
-            $newPharmacy->save();
+            $newPharmacy->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
 
         if($newPharmacy){
@@ -81,8 +77,12 @@ class PharmacyController extends Controller
     public function update(UpdatePharmacyRequest $request ,$id){
         $pharmacy = Pharmacy::find($id);
         if ($request->hasFile('avatar_image')) {
-            $this->updateAvatarImage($request, $pharmacy);
+            foreach($pharmacy->getMedia('avatar_image') as $image){
+                $image->delete();
+            }
+            $pharmacy->addMediaFromRequest('avatar_image')->toMediaCollection('avatar_image');
         }
+
 
         $this->updatePharmacy($request, $pharmacy);
         return redirect()->route('pharmacy.index');
