@@ -24,7 +24,6 @@ class Pharmacy extends Model implements HasMedia
         'name',
         'email',
         'password',
-        // 'avatar_image',
         'national_id',
         'area_id',
     ];
