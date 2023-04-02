@@ -28,13 +28,6 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea3" class="form-label">Medicine Quantity</label>
-            <input type="Number" name="quantity" class="form-control w-50" id="exampleFormControlInput3" placeholder="Medicine Quantity" value="{{old('quantity')}}">
-            @error('quantity')
-                <p class="text-danger mt-1">{{ $message }}</p>
-            @enderror
-        </div>
 
         <button type="submit" class="btn btn-success">Create</button>
     </form>
