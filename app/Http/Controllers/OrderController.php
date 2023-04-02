@@ -22,15 +22,15 @@ class OrderController extends Controller
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
-            $data = Order::with('doctor')->latest()->get();
+            $data = Order::withTrashed()->with('doctor')->latest()->get();
         }
         else if(Auth::user()->roles[0]->name=='pharmacy'){
-            $data = Order::where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', Auth::user()->userable_id)->with('doctor')->get();
         }
         else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
             $pharmacyId=$doctor->Pharmacy->id;
-            $data = Order::where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
+            $data = Order::withTrashed()->where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -45,8 +45,15 @@ class OrderController extends Controller
                     return $row->creator_type;
                     })
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
+                    // $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    // data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -121,6 +128,7 @@ class OrderController extends Controller
     public function continue(Request $request,$orderId){
         $medicine_id= $request->medicine_id;
         $medicines =array() ;
+        // dd($medicine_id);
         foreach ($medicine_id as $key => $value) {
             $medicine=Medicine::find($value);
             if($medicine)
@@ -153,6 +161,53 @@ class OrderController extends Controller
         return to_route('order.index');
     }
 
+    public function edit($id)
+    {
+        $order=Order::find($id);
+        $client=Client::find($order->client_id);
+        $clientAddress=Address::find($order->client_address_id);
+        $addresses=Address::all();
+        $medicines=Medicine::all();
+        $pharmacies='';
+        $doctors='';
+        // dd($order->orderMedicine);
+        if(Auth::user()->roles[0]->name=='pharmacy')
+        {
+            $doctors=Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
+        }
+        if(Auth::user()->roles[0]->name=='admin')
+        {
+            $pharmacies=Pharmacy::all();
+            $doctors=Doctor::all();
+        }
+        return view('dashboard.order.edit',['order' => $order,'medicines'=>$medicines,'pharmacies'=>$pharmacies,'doctors'=>$doctors,'client'=>$client,'clientAddress'=>$clientAddress,'addresses'=>$addresses]);
+
+    }
+    public function update(Request $request,$id)
+    {
+        $order=Order::find($id);
+        $user = Auth::user();
+        $creator_type=$request->creator_type;
+        $doctor_id = $request->doctor_id;
+        $assigned_pharmacy=$request->assigned_pharmacy_id;
+        if ($user->roles[0]->name=='doctor') {
+            $doctor = Doctor::find($user->userable_id);
+            $creator_type = 'doctor';
+            $assigned_pharmacy = $doctor->pharmacy_id;
+            $doctor_id = $doctor->id;
+        } elseif ($user->roles[0]->name=='pharmacy') {
+            $creator_type = 'pharmacy';
+            $assigned_pharmacy = $user->userable_id;
+        }
+        $order->client_address_id = $request->client_address_id;
+        $order->assigned_pharmacy_id =$assigned_pharmacy;
+        $order->doctor_id =$doctor_id;
+        $order->status = $request->status;
+        $order->is_insured = $request->is_insured;
+        $order->creator_type = $creator_type;
+        $order->save();
+        return $this->continue($request,$order->id);
+    }
 
     public function destroy($id){
         $order = Order::find($id);
@@ -162,6 +217,10 @@ class OrderController extends Controller
 
     private function pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities){
     try {
+        if(OrderMedicine::find($order->id))
+        {
+            $order->orderMedicine()->delete();
+        }
     foreach ($orderInfo['medicine_id'] as $key => $medicine_id) {
         $medicine=Medicine::find($medicine_id);
         if ($medicine) {
@@ -211,5 +270,10 @@ class OrderController extends Controller
         // code for payment
         return view('confirmOrder.payment',['id'=>$id]);
     }
+    public function restore($id){
+        Order::withTrashed()->find($id)->restore();
+        return back();
+    }
 }
+
 

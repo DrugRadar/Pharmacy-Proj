@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'area_id',
         'street_name',

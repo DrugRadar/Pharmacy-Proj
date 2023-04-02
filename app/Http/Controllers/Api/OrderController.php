@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Http\Requests\Api\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Medicine;
@@ -27,11 +28,11 @@ class OrderController extends Controller
         $prescriptions = $validated['prescription'];
         $delivering_address_id = $request->input('delivering_address_id');
         $clientAddress = Address::find($delivering_address_id);
-        $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();
+        // $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();
 
         $order = new Order([
             'client_address_id' => $delivering_address_id,
-            'assigned_pharmacy_id'=> $pharmacy->id,
+            // 'assigned_pharmacy_id'=> $pharmacy->id,
             'doctor_id'=>null,
             'is_insured' => $is_insured,
             'status'=> "new",
@@ -94,6 +95,7 @@ class OrderController extends Controller
                     'avatar_image' => $pharmacyInfo->avatar_image,
                 ]
             ];
+          //  $formattedOrder = new OrderResource($formattedOrder);
             $formattedOrders[] = $formattedOrder;
         }
 
