@@ -8,8 +8,60 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     </head>
-    <body>
-    <div class="container ">
+    <style>
+    body{
+        height: 100vh;
+    }
+    .card, .card-header, .card-body {
+        background: transparent !important;
+        font-family: monospace !important;
+        font-size: 20px !important;
+    }
+    .blurred-box{
+        position: relative;
+        width: 400px;
+        height: 350px;
+        top: calc(50% - 175px);
+        left: calc(50% - 270px);
+        background: transparent;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .blurred-box:after{
+        content: '';
+        width: 300px;
+        height: 300px;
+        background: inherit;
+        position: absolute;
+        left: -25px;
+        left: position;
+        right: 0;
+        top: -25px;
+        top :position;
+        bottom: 0;
+        box-shadow: inset 0 0 0 200px rgba(255,255,255,0.05);
+        filter: blur(10px);
+    }
+    .bulb svg {
+        display: block;
+        height: 90px;
+        transform-origin: center top;
+        animation: swing_31 1.3s ease-in-out infinite alternate;
+    }
+
+    @keyframes swing_31 {
+        0% {
+            transform: rotate(18deg);
+        }
+
+        100% {
+            transform: rotate(-18deg);
+        }
+    }
+    </style>
+    <body class="d-flex justify-content-center align-items-center">
+    <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card blurred-box">

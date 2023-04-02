@@ -17,6 +17,7 @@
         "laravel/ui": "^4.2",
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-permission": "^5.10",
+        "stripe/stripe-php": "^10.12",
         "yajra/laravel-datatables-oracle": "^10.4"
     },
     "require-dev": {
