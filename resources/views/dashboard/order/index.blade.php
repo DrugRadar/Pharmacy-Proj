@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div>
-    <h1>Orders</h1>
+    <h2 style="margin-top: 5px;">Orders</h2>
 
-    <div class="text-center">
+    <div style="margin-top: -50px;" class="text-center">
         <a href="{{route('order.create')}}" class="mt-4 btn btn-success">Create Order</a>
     </div>
 

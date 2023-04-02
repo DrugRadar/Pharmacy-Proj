@@ -29,6 +29,15 @@
 
 
 </head>
+<style>
+    table{
+        text-align: center;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    thead {
+        background: rgba(83, 83, 87, 0.164)   !important;
+    }
+</style>
 
 <body class="g-sidenav-show bg-gray-200">
     <aside
@@ -106,7 +115,7 @@
                                 xlink:href="#path258" />
                     </svg>
 
-                    <div style="font-size:20px; color:whitesmoke;" class="my-auto"> DrugRadar</div>
+                    <div style="font-size:20px; font-weight:650; margin-left:-10px;color:whitesmoke;" class="my-auto"> <span style="color:#fab52e" >D</span>rug<span style="color:#46cec0">R</span>adar</div>
                 </div>
             </a>
         </div>
@@ -159,7 +168,7 @@
                     </a>
                 </li>
                 @endif
-                @if(Auth::user()->hasrole('admin'))
+                {{-- @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -168,7 +177,7 @@
                         <span class="nav-link-text ms-1">Users</span>
                     </a>
                 </li>
-                @endif
+                @endif --}}
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('area.index')}}">

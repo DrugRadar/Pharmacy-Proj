@@ -27,8 +27,8 @@ class PharmacyController extends Controller
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $actionBtn = '<a id="'.$row->id.'" class="btn btn-primary" href="' . route("pharmacy.edit", $row->id) . '">Edit</a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
+                $actionBtn = '<a id="'.$row->id.'" class="btn btn-primary" href="' . route("pharmacy.edit", $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                 return $actionBtn;
                 })
                 ->rawColumns(['action'])
