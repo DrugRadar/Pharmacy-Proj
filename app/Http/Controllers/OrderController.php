@@ -36,7 +36,7 @@ class OrderController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('client_name', function ($row) {
-                    return $row->client->name;
+                   return $row->client->name;
                 })
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
@@ -212,4 +212,3 @@ class OrderController extends Controller
         return view('confirmOrder.payment',['id'=>$id]);
     }
 }
-
