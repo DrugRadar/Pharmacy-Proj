@@ -20,7 +20,7 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
-       
+
         if(Auth::user()->roles[0]->name=='admin'){
             $data = Order::with('doctor')->latest()->get();
         }
@@ -45,8 +45,8 @@ class OrderController extends Controller
                     return $row->creator_type;
                     })
                 ->addColumn('action', function($row) {
-                    $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm">EDIT</a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'">DELETE </button>';
+                    $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -150,14 +150,14 @@ class OrderController extends Controller
             $order->doctor_id=$orderInfo['doctor_id'];
         }
         $order->save();
-        return to_route('order.index'); 
+        return to_route('order.index');
     }
 
 
     public function destroy($id){
         $order = Order::find($id);
         $order->delete();
-        return to_route('order.index'); 
+        return to_route('order.index');
     }
 
     private function pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities){
@@ -208,7 +208,7 @@ class OrderController extends Controller
         }
     }
     public function payOrder($id){
-        // code for payment 
+        // code for payment
         return view('confirmOrder.payment',['id'=>$id]);
     }
 }

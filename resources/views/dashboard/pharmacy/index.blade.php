@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div>
-    <h1>Pharmacies</h1>
-
-    <div class="text-center">
+    <h2 style="margin-top: 5px;">Pharmacies</h2>
+    <div class="text-center" style="margin-top: -50px;">
         <a href="{{route('pharmacy.create')}}" class="mt-4 btn btn-success">Create Pharmacy</a>
     </div>
     <table class="table mt-4 table-bordered" id="pharmacy-table">
