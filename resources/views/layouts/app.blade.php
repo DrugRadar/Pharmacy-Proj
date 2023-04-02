@@ -30,13 +30,14 @@
 
 </head>
 <style>
-    table{
-        text-align: center;
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
-    }
-    thead {
-        background: rgba(83, 83, 87, 0.164)   !important;
-    }
+table {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+thead {
+    background: rgba(83, 83, 87, 0.164) !important;
+}
 </style>
 
 <body class="g-sidenav-show bg-gray-200">
@@ -115,7 +116,9 @@
                                 xlink:href="#path258" />
                     </svg>
 
-                    <div style="font-size:20px; font-weight:650; margin-left:-10px;color:whitesmoke;" class="my-auto"> <span style="color:#fab52e" >D</span>rug<span style="color:#46cec0">R</span>adar</div>
+                    <div style="font-size:20px; font-weight:650; margin-left:-10px;color:whitesmoke;" class="my-auto">
+                        <span style="color:#fab52e">D</span>rug<span style="color:#46cec0">R</span>adar
+                    </div>
                 </div>
             </a>
         </div>
@@ -123,30 +126,32 @@
         <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                @if(Auth::user()->hasrole('admin'))
+                    @if(Auth::user()->hasrole('admin'))
                     <a class="nav-link text-white" href="{{route('dashboard.admin.profile' )}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
 
-                            <span class="nav-link-text ms-1">Admin</span>
+                        <span class="nav-link-text ms-1">Admin</span>
 
                     </a>
                     @elseif(Auth::user()->hasrole('doctor'))
-                        <a class="nav-link text-white" href="{{route('dashboard.doctor.profile', Auth::user()->userable_id)}}">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class='bx bx-user-pin' style="font-size: 25px;"></i>
-                            </div>
-                                <span class="nav-link-text ms-1">Profile</span>
-                        </a>
+                    <a class="nav-link text-white"
+                        href="{{route('dashboard.doctor.profile', Auth::user()->userable_id)}}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class='bx bx-user-pin' style="font-size: 25px;"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile</span>
+                    </a>
                     @elseif(Auth::user()->hasrole('pharmacy'))
-                        <a class="nav-link text-white" href="{{route('dashboard.pharmacy.profile', Auth::user()->userable_id)}}">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class='bx bx-user-pin' style="font-size: 25px;"></i>
-                            </div>
-                                <span class="nav-link-text ms-1">Profile</span>
-                        </a>
-                        @endif
+                    <a class="nav-link text-white"
+                        href="{{route('dashboard.pharmacy.profile', Auth::user()->userable_id)}}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class='bx bx-user-pin' style="font-size: 25px;"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile</span>
+                    </a>
+                    @endif
                 </li>
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
@@ -218,7 +223,7 @@
                 </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="">
+                    <a class="nav-link text-white" href="{{route('revenue.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
                         </div>
@@ -232,7 +237,8 @@
     {{-- nav --}}
 
     <main class=" main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <nav style="background-color: #5f67697a" class=" navbar navbar-main navbar-expand-lg px-0 mx-1 shadow-none border-radius-sm" id="navbarBlur"
+        <nav style="background-color: #5f67697a"
+            class=" navbar navbar-main navbar-expand-lg px-0 mx-1 shadow-none border-radius-sm" id="navbarBlur"
             navbar-scroll="true">
             <div class="container-fluid  px-3">
                 <nav aria-label="breadcrumb" class="ms-2">
@@ -244,18 +250,21 @@
                     <h6 class="font-weight-bolder mb-0">{{Auth::user()->name}}</h6>
                     @endif
                 </nav>
-                <li class="nav-item dropdown list-unstyled " >
-                    <a id="navbarDropdown" class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="padding: 0px 5px !important; margin-top:5px;">
-                        <i class='bx bx-log-out-circle' style="font-size:20px" ></i>
+                <li class="nav-item dropdown list-unstyled ">
+                    <a id="navbarDropdown" class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" v-pre
+                        style="padding: 0px 5px !important; margin-top:5px;">
+                        <i class='bx bx-log-out-circle' style="font-size:20px"></i>
                     </a>
-                    <div style="left:-70px !important; top:20px !important;"class="dropdown-menu dropdown-menu-end d-flex justify-content-center" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
+                    <div style="left:-70px !important; top:20px !important;"
+                        class="dropdown-menu dropdown-menu-end d-flex justify-content-center"
+                        aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
+                            @csrf
                         </form>
                     </div>
                 </li>
@@ -282,14 +291,16 @@
                 <a class="text-white text-decoration-none" href="{{route('dashboard.index')}}"
                     target="_parent">DrugRadar</a>
                 <svg width="50" height="50" style="background:transparent;" viewBox="120 140 790 700">
-                        <defs id="defs6">
-                            <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">
-                                <path id="path20" d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0 Z"/>
-                            </clipPath>
-                            <clipPath id="clipPath24" clipPathUnits="userSpaceOnUse">
-                                <path id="path26" d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0"/>
-                            </clipPath>
-                        </defs>
+                    <defs id="defs6">
+                        <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse">
+                            <path id="path20"
+                                d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0 Z" />
+                        </clipPath>
+                        <clipPath id="clipPath24" clipPathUnits="userSpaceOnUse">
+                            <path id="path26"
+                                d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0" />
+                        </clipPath>
+                    </defs>
 
 
                     <g xmlns="http://www.w3.org/2000/svg" transform="matrix(1.25,0,0,-1.25,0,1000)" id="g10">
@@ -369,4 +380,5 @@
     @yield('modal')
     @yield('scripts')
 </body>
+
 </html>

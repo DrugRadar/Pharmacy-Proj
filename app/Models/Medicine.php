@@ -17,7 +17,6 @@ class Medicine extends Model
         'name',
         'type',
         'price',
-        'quantity'   
     ];
 
     public function orderMedicine()
