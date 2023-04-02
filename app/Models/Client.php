@@ -24,7 +24,6 @@ class Client extends Authenticatable  implements MustVerifyEmail, HasMedia
         "date_of_birth",
         "national_id",
         "mobile_number",
-        // "avatar_image",
         "last_visit",
     ];
 

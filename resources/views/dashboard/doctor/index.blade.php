@@ -6,7 +6,7 @@
 <div style="margin-top: -50px;" class="text-center">
     <a href="{{route('doctor.create')}}" class="mt-4 btn btn-success">Create Doctor</a>
 </div>
-<table id="doctors-table" class="table table-bordered yajra-datatable">
+<table id="doctors-table" class="table table-bordered yajra-datatable" >
     <thead>
         <tr>
             <th scope="col">ID</th>

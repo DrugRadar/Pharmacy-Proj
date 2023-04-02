@@ -19,12 +19,17 @@ class MedicineController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Medicine::latest()->get();
+            $data = Medicine::withTrashed()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="/medicine/'.$row->id.'/edit" class="edit btn btn-success btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
+                    if($row['deleted_at']){
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('medicine.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('medicine.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                    }
+                    else{
+                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('medicine.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+                    }
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -69,4 +74,10 @@ class MedicineController extends Controller
         $medicine->price = $request->price;
         $medicine->save();
     }
+
+    public function restore($id){
+        Medicine::withTrashed()->find($id)->restore();
+        return back();
+    }
+
 }
