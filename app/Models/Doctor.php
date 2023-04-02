@@ -5,6 +5,7 @@ use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cog\Contracts\Ban\Bannable as BannableContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -13,10 +14,11 @@ class Doctor extends Model implements BannableContract, HasMedia
 {
     use HasFactory;
     use Bannable;
-    use HasRoles, InteractsWithMedia;
+    use HasRoles, InteractsWithMedia ,SoftDeletes;
     protected $guard_name = 'doctor';
     protected $table = 'doctors';
     protected $morphClass = 'doctor';
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'name',
