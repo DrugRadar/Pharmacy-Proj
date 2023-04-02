@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -46,10 +47,12 @@ class OrderController extends Controller
                     })
                 ->addColumn('action', function($row) {
                     if($row['deleted_at']){
-                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                        $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a>
+                        <a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
                     }
                     else{
-                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a>
+                        <a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
                     }
                     // $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
@@ -247,32 +250,42 @@ class OrderController extends Controller
 
     public function confirmOrder($id){
         $order = Order::find($id);
+     
         if ($order) {
-            $order->status = 'confirmed';
-            $order->save();
-            return view('confirmOrder.confirmed');
+            if($order->status == 'canceled'){
+                Session::flash('success', 'This order has been canceled before');
+                return back();
+            }
+            else if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'confirmed';
+                $order->save();
+                return view('confirmOrder.confirmed');
+           }
+           else{
+                Session::flash('success', 'This order has been confirmed before ');
+                return back();
+           }
         } else {
             abort(404);
         }
-        // return response()->json("order confirmed" , 200);
     }
     public function cancelOrder($id){
         $order = Order::find($id);
-        if ($order) {
-            $order->status = 'canceled';
-            $order->save();
-            return view('confirmOrder.canceledOrder');
+        if ($order) {          
+             if($order->status == 'WaitingForUserConfirmation'){ 
+                $order->status = 'canceled';
+                $order->save();
+                return view('confirmOrder.canceledOrder',["message"=> "Order canceled"]);
+            }
+            else {
+                Session::flash('success', 'This order has been confirmed before tou can not cancel it');
+                // return back();
+                return view('confirmOrder.canceledOrder',["message"=> "can not cancel order"]);
+
+            }
         } else {
             abort(404);
         }
-    }
-    public function payOrder($id){
-        // code for payment
-        return view('confirmOrder.payment',['id'=>$id]);
-    }
-    public function restore($id){
-        Order::withTrashed()->find($id)->restore();
-        return back();
     }
 }
 
