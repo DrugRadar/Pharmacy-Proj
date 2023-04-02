@@ -74,9 +74,11 @@
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Assigned Pharmacy</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
+                    @if($order->assigned_pharmacy_id)
                     <option value="{{$order->assigned_pharmacy_id}}">{{
                         Pharmacy::find($order->assigned_pharmacy_id)->name   
                             }}</option>
+                    @endif        
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
                                 $pharmacy->name    
@@ -89,9 +91,11 @@
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Doctor</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
+                    @if($order->doctor_id)
                     <option value="{{$order->doctor_id}}">{{
                         Doctor::find($order->doctor_id)->name   
                             }}</option>
+                    @endif        
                     @foreach($doctors as $doctor)
                             <option value="{{$doctor->id}}">{{
                                 $doctor->name    

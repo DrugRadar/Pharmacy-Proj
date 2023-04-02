@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('app:notify-inactive-clients')->daily();
         $schedule->command('app:notify-inactive-clients')->everyMinute();
+        $schedule->command('orders:scan-new-orders')->everyMinute();
+
     }
     protected $commands = [
         // ...
