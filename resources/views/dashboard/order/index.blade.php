@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <x-modal role="doctor"></x-modal>
+            <x-modal role="order"></x-modal>
         </tbody>
     </table>
 </div>
