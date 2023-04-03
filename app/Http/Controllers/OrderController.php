@@ -19,10 +19,7 @@ use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
-    //
-    function __construct(){
-        $this->middleware('permission:order', ['only' => ['index','create','update','store','process','continue','send','edit','destroy']]);
-    }
+    
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
@@ -33,7 +30,7 @@ class OrderController extends Controller
         }
         else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
-            $pharmacyId=$doctor->Pharmacy->id;
+            $pharmacyId=$doctor->pharmacy->id;
             $data = Order::withTrashed()->where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {
@@ -45,24 +42,11 @@ class OrderController extends Controller
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
                 })
-                ->addColumn('creator_type', function ($row) {
-                    return $row->creator_type;
-                    })
-                ->addColumn('action', function($row) {
+                ->addColumn('is_insured', function ($row) {
                     
-                    if($row['deleted_at']){
-                        $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a>
-                        <a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
-                    }
-                    else{
-                        $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1">Process</a>
-                        <a id="$row->id" class="btn btn-primary" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
-                    }
-                    // $actionBtn = '<a href="/orders/process/'.$row->id.'" class="edit btn btn-success btn-sm me-1"><i class=\'bx bxs-cog\'></i></a><a href="/orders/edit/'.$row->id.'" class="edit btn btn-dark me-1 btn-sm"><i class=\'bx bx-edit\'></i></a> <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                    // data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i> </button>';
-                    return $actionBtn;
+                    return $row->is_insured?"true":"false";
                 })
+                ->addColumn('action',function ($row) {return $this->showActionBtns($row);})
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -76,6 +60,7 @@ class OrderController extends Controller
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
+        $doctors='';
         if($user->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
@@ -83,10 +68,6 @@ class OrderController extends Controller
         if($user->roles[0]->name=='admin')
         {
             $doctors=Doctor::all();
-        }
-        if($user->roles[0]->name=='doctor')
-        {
-            $doctors='';
         }
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
@@ -135,7 +116,6 @@ class OrderController extends Controller
     public function continue(Request $request,$orderId){
         $medicine_id= $request->medicine_id;
         $medicines =array() ;
-        // dd($medicine_id);
         foreach ($medicine_id as $key => $value) {
             $medicine=Medicine::find($value);
             if($medicine)
@@ -177,7 +157,6 @@ class OrderController extends Controller
         $medicines=Medicine::all();
         $pharmacies='';
         $doctors='';
-        // dd($order->orderMedicine);
         if(Auth::user()->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
@@ -251,44 +230,35 @@ class OrderController extends Controller
     {
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
-
-    public function confirmOrder($id){
+    public function deliveringOrder($id){
         $order = Order::find($id);
-     
-        if ($order) {
-            if($order->status == 'canceled'){
-                Session::flash('success', 'This order has been canceled before');
-                return back();
-            }
-            else if($order->status == 'WaitingForUserConfirmation'){ 
-                $order->status = 'confirmed';
-                $order->save();
-                return view('confirmOrder.confirmed');
-           }
-           else{
-                Session::flash('success', 'This order has been confirmed before ');
-                return back();
-           }
-        } else {
-            abort(404);
-        }
+        $order->status='delivered';
+        $order->save();
+        return back();
     }
-    public function cancelOrder($id){
-        $order = Order::find($id);
-        if ($order) {          
-             if($order->status == 'WaitingForUserConfirmation'){ 
-                $order->status = 'canceled';
-                $order->save();
-                return view('confirmOrder.canceledOrder',["message"=> "Order canceled"]);
+    private function showActionBtns($row){
+        if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered'){
+            $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
+            $actionBtn .= '<a id="$row->id" class="btn btn-primary disabled" title="unable to edit" href=""><i class=\'bx bx-edit\'></i></a>  ';
+            if($row['deleted_at']){
+                $actionBtn .= '<a id="$row->id" class="btn btn-success disabled" title="unable to restore" href=""><i class=\'bx bx-recycle\'></i></a>';
             }
-            else {
-                Session::flash('success', 'This order has been confirmed before tou can not cancel it');
-                // return back();
-                return view('confirmOrder.canceledOrder',["message"=> "can not cancel order"]);
+            else{
+                $actionBtn .= '<button type="button"  class="delete btn btn-danger disabled" title="unable to delete" data-bs-toggle="modal"
+                data-bs-target="" id="'.$row->id.'disabled"><i class=\'bx bxs-trash-alt\'></i></a>';
+            }
+        }else{
+            $actionBtn  = '<a href="'.route('order.send', $row->id).'" class="edit btn btn-success" title="Click to process order"><i class=\'bx bx-cog\'></i></a>  ';    
+            $actionBtn .= '<a id="$row->id" class="btn btn-primary" title="Click to edit order" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+            if($row['deleted_at']){
+                $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore order" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+            }
+            else{
+                $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete order" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+            }
+       }
 
-            }
-        } else {
-            abort(404);
-        }
+        return $actionBtn;
     }
 }

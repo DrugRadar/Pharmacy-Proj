@@ -35,9 +35,9 @@ class ScanNewOrders extends Command
             $pharmacy = null;
             foreach ($pharmacies as $p) {
                 if ($p->area_id == $order->client_address_id) {
-                    // if ($pharmacy == null || $p->priority > $pharmacy->priority) {
+                    if ($pharmacy == null || $p->priority > $pharmacy->priority) {
                     $pharmacy = $p;
-                    // }
+                    }
                 }
             }
             if ($pharmacy != null) {

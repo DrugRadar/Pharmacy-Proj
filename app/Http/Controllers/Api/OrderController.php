@@ -108,7 +108,6 @@ class OrderController extends Controller
                     'avatar_image' => $pharmacyInfo->avatar_image,
                 ]
             ];
-          //  $formattedOrder = new OrderResource($formattedOrder);
             $formattedOrders[] = $formattedOrder;
         }
 
@@ -205,4 +204,5 @@ class OrderController extends Controller
         }
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
     }
+
 }

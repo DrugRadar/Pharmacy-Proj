@@ -17,7 +17,7 @@ class RevenueController extends Controller
                 return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('avatar_image_url', function ($row) {
-                    return  $row->getFirstMediaUrl('avatar_image', 'thumb');
+                  return $row->getFirstMediaUrl('avatar_image', 'thumb') ? $row->getFirstMediaUrl('avatar_image', 'thumb') : asset('assets/gifs/user.png');
                 })
                 ->addColumn('totalOrders', function (Pharmacy $pharmacy) {
                     $ordersCount = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)->count();
@@ -34,10 +34,12 @@ class RevenueController extends Controller
             }
             return view('dashboard.revenue.index');
             }else if(Auth::user()->roles[0]->name == 'pharmacy'){
-                $pharmacy_id = Auth::user()->id;
+                $pharmacy_id = Auth::user()->userable_id;
                 $PharmacyRevenue = DB::table('orders')->where('assigned_pharmacy_id',$pharmacy_id)
                                                             ->sum('total_price');
-                return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue]);
+               $pharmacy = Pharmacy::find(Auth::user()->userable_id);
+               $pharmacyName = $pharmacy->name;
+                return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue,'pharmacyName'=>$pharmacyName]);
             }
         }
     }
