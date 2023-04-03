@@ -2,17 +2,9 @@
 @section('content')
 <div class="col-12">
     <h1>Pharmacy</h1>
-    <form method="POST" action="{{route('pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
+    <form method="POST" action="{{route(Auth::user()->hasrole('pharmacy')?'pharmacy.profile.update':'pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
         @csrf
         @method('put')
-        <!-- <div class="col-4">
-            @if($pharmacy->getFirstMediaUrl('avatar_image', 'thumb'))
-                <img src="{{$pharmacy->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture" style="width:200px; height:200px;">
-            @else
-                <img src="{{asset('/public/assets/gifs/admin.png')}}" alt="profile picture" class="profile__picture" style="width:200px; height:200px;">
-            @endif
-        </div> -->
-
         <div class="col-7 row">
             <div class="mb-2 col-6">
                 <label for="nameInput" class="form-label">Name</label>
@@ -49,22 +41,21 @@
 
             <div class="mb-3 col-6">
                 <label for="PriorityInput" class="form-label">Priority</label>
-                @if(Auth::user()->hasrole('admin'))
-                <input type="text" name="priority" class="form-control w-100" id="PriorityInput"placeholder="Pharmacy priority" value="{{$pharmacy->priority}}">
-                @else
-                <input type="text" name="priority" disabled class="form-control w-100" id="PriorityInput"placeholder="Pharmacy priority" value="{{$pharmacy->priority}}">
-                @endif
+                <input type="text" name="priority" {{Auth::user()->hasrole('admin')?'':'disabled'}} class="form-control w-100" id="PriorityInput"placeholder="Pharmacy priority" value="{{$pharmacy->priority}}">                
                 @error('priority')
                     <p class="text-danger mt-1">{{ $message }}</p>
                 @enderror
             </div>
-
             <div class="mb-2 col-6">
                 <label for="AreaInput" class="form-label">area</label>
-                <select name="area_id" class="form-control w-100" id="AreaInput">
+                <select name="area_id" class="form-control w-100 p-1" id="AreaInput" {{Auth::user()->hasrole('admin')?' ':'disabled'}} >
+                <option value="{{$pharmacy->area->id}}" >{{$pharmacy->area->name}}</option>
+                    {{Auth::user()->hasrole('admin')?' ':''}} 
+                    @if(Auth::user()->hasrole('admin'))
                     @foreach($areas as $area)
                     <option value="{{$area->id}}" {{ old('area_id', $area->id) == '1' ? 'selected' : '' }}>{{$area->name}}</option>
                     @endforeach
+                    @endif
                 </select>
                 @error('area_id')
                     <p class="text-danger mt-1">{{ $message }}</p>

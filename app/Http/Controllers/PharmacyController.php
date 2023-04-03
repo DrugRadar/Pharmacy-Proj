@@ -83,6 +83,10 @@ class PharmacyController extends Controller
 
 
         $this->updatePharmacy($request, $pharmacy);
+        if(Auth::user()->roles[0]->name=='pharmacy')
+        {
+            return redirect()->route('pharmacy.profile',Auth::user()->userable_id);
+        }
         return redirect()->route('pharmacy.index');
     }
     private function updatePharmacy($request, $pharmacy) {

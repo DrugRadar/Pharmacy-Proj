@@ -81,6 +81,10 @@ class DoctorController extends Controller
         }
 
         $this->updateDoctor($request, $doctor);
+        if(Auth::user()->roles[0]->name=='doctor')
+        {
+            return redirect()->route('doctor.profile',Auth::user()->userable_id);
+        }
         return redirect()->route('doctor.index');
     }
 
