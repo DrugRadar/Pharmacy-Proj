@@ -23,11 +23,12 @@ class MedicineController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
+                    $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('medicine.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
                     if($row['deleted_at']){
-                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('medicine.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('medicine.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+                        $actionBtn .= '<a id="$row->id" class="btn btn-success" href="' . route('medicine.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
                     }
                     else{
-                        $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('medicine.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
+                        $actionBtn .= '<button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
                     }
                     return $actionBtn;

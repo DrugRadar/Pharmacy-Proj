@@ -34,10 +34,6 @@ table {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
-thead {
-    background: rgba(83, 83, 87, 0.164) !important;
-}
 </style>
 
 <body class="g-sidenav-show bg-gray-200">

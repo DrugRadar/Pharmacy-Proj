@@ -28,9 +28,9 @@ class StripeController extends Controller
                 "source" => $request->stripeToken,
                 "description" => "pay for medicines order" 
         ]);
-      
+        
         Session::flash('success', 'Payment successful!');
-              
+        
         return to_route('order.orderConfirm' , ['id'=>$request->order_id]);
     }
 }
