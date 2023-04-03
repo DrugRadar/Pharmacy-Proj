@@ -83,7 +83,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
     Route::get('/medicine/restore/{id}', [AddressController::class, 'restore'])->name('medicine.restore');
 
-
+    // Route::group(['middleware' => ['can:create order']], function () {
+    //     //
+    // });
     Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");

@@ -48,8 +48,6 @@ class PermissionsSeeder extends Seeder
         $pharmacy = Role::firstOrCreate(['name' => 'pharmacy']);
         $doctor = Role::firstOrCreate(['name' => 'doctor']);
   
-
-
         $admin->syncPermissions(['edit pharmacy','delete pharmacy','create pharmacy','edit doctor','delete doctor','create doctor','see all doctors','edit area','delete area','create area','see all areas','edit medicine','delete medicine','create medicine', 'see all medicines']);
         $pharmacy->syncPermissions(['edit doctor','delete doctor','create doctor','see all doctors']);
     }
