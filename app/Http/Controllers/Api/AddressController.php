@@ -82,7 +82,5 @@ class AddressController extends Controller
     public function delete($clientId, $addressId){
         $address = Address::where('client_id', $clientId)->where('id', $addressId)->delete();
         return response()->json( "Message deleted successfully", 200);
-        // $address->delete();
-
     }
 }

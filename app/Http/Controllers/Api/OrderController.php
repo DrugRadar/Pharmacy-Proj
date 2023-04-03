@@ -95,7 +95,6 @@ class OrderController extends Controller
                     'avatar_image' => $pharmacyInfo->avatar_image,
                 ]
             ];
-          //  $formattedOrder = new OrderResource($formattedOrder);
             $formattedOrders[] = $formattedOrder;
         }
 
@@ -179,15 +178,4 @@ class OrderController extends Controller
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
     }
 
-    // public function confirmOrder($id){
-    //     $order = Order::find($id);
-    //     if ($order) {
-    //         $order->status = 'confirmed';
-    //         $order->save();
-    //         return view('confirmed');
-    //     } else {
-    //         abort(404);
-    //     }
-    //     // return response()->json("order confirmed" , 200);
-    // }
 }

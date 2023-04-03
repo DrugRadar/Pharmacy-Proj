@@ -16,12 +16,6 @@ use App\Http\Requests\StoreDoctorRequest;
 
 class DoctorController extends Controller
 {
-    function __construct(){
-        $this->middleware('permission:see all doctors', ['only' => ['index']]);
-        $this->middleware('permission:delete doctor', ['only' => ['delete']]);
-        $this->middleware('permission:create doctor', ['only' => ['create','store']]);
-        $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
-    }
 
     public function index(Request $request){
         if(Auth::user()->roles[0]->name=='admin'){
