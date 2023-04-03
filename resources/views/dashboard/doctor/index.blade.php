@@ -31,7 +31,8 @@ $(function() {
         processing: true,
         serverSide: true,
         ajax: '{{ route("doctor.index") }}',
-        columns: [{
+        columns: [
+            {
                 data: 'DT_RowIndex',
                 name: 'DT_RowIndex'
             },
