@@ -119,7 +119,6 @@ class OrderController extends Controller
     public function continue(Request $request,$orderId){
         $medicine_id= $request->medicine_id;
         $medicines =array() ;
-        // dd($medicine_id);
         foreach ($medicine_id as $key => $value) {
             $medicine=Medicine::find($value);
             if($medicine)
@@ -161,7 +160,6 @@ class OrderController extends Controller
         $medicines=Medicine::all();
         $pharmacies='';
         $doctors='';
-        // dd($order->orderMedicine);
         if(Auth::user()->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', Auth::user()->userable_id)->get();
@@ -237,7 +235,7 @@ class OrderController extends Controller
     }
     public function deliveringOrder($id){
         $order = Order::find($id);
-        $order->status='Delivered';
+        $order->status='delivered';
         $order->save();
         return back();
     }

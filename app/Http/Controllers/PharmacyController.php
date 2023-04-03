@@ -31,9 +31,7 @@ class PharmacyController extends Controller
             ->addColumn('area_name', function ($row) {
                     return $row->area->name;
                 })
-            ->addColumn('action', function($row){
-                return $this->showActionBtns($row);
-                })
+            ->addColumn('action', function($row){return $this->showActionBtns($row);})
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -91,20 +89,6 @@ class PharmacyController extends Controller
         $this->updatePharmacy($request, $pharmacy);
         return redirect()->route('pharmacy.index');
     }
-
-    private function updateAvatarImage($request, $pharmacy) {
-        $image = $request->file('avatar_image');
-        $imagePath = $image->storeAs('public/image', $image->getClientOriginalName());
-        $imageName = $image->getClientOriginalName();
-
-        if ($pharmacy->avatar_image != null) {
-            Storage::delete('public/image/' . $pharmacy->avatar_image);
-        }
-
-        $pharmacy->avatar_image = $imageName;
-        $pharmacy->save();
-    }
-
     private function updatePharmacy($request, $pharmacy) {
         $pharmacy->name = $request->name;
         $pharmacy->email = $request->email;

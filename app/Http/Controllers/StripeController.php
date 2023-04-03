@@ -10,14 +10,9 @@ class StripeController extends Controller
 {
     public function stripe(Request $request)
     {
-        // dd($request);
-        // dd($request->query('id'));
         $order = Order::where('id', $request->query('id'))->firstOrFail();
-        // dd($order);
         return view('stripe' , ["order" => $order]);
-    }
-    
-
+    }    
     public function stripePost(Request $request)
     {
         $order = Order::find( $request->order_id); 

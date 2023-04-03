@@ -51,51 +51,51 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/area', [AreaController::class, 'index'])->name("area.index");
     Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
     Route::post('/area', [AreaController::class, 'store'])->name('area.store');
-    Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
+    Route::delete('/area/{id}/destroy', [AreaController::class, 'destroy'])->name('area.destroy');
     Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
-    Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
-    Route::get('/area/restore/{id}', [AreaController::class, 'restore'])->name('area.restore');
+    Route::get('/area/{id}/edit', [AreaController::class, 'edit'])->name('area.edit');
+    Route::get('/area/{id}/restore', [AreaController::class, 'restore'])->name('area.restore');
 
     Route::get('/address', [AddressController::class, 'index'])->name("address.index");
     Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
     Route::post('/address', [AddressController::class, 'store'])->name('address.store');
-    Route::delete('/address/destroy/{id}', [AddressController::class, 'destroy'])->name('address.destroy');
+    Route::delete('/address/{id}/destroy', [AddressController::class, 'destroy'])->name('address.destroy');
     Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
-    Route::get('/address/edit/{id}', [AddressController::class, 'edit'])->name('address.edit');
-    Route::get('/address/restore/{id}', [AddressController::class, 'restore'])->name('address.restore');
+    Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
+    Route::get('/address/{id}/restore', [AddressController::class, 'restore'])->name('address.restore');
 
 
     Route::get('/doctor', [DoctorController::class, 'index'])->name("doctor.index");
     Route::get('/doctor/create', [DoctorController::class, 'create'])->name("doctor.create");
     Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
     Route::get('/doctor/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
-    Route::delete('/doctor/destroy/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+    Route::delete('/doctor/{id}/destroy', [DoctorController::class, 'destroy'])->name('doctor.destroy');
     Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
-    Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
-    Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
+    Route::get('/doctor/{id}/ban', [DoctorController::class, 'ban'])->name('doctor.ban');
+    Route::get('/doctor/{id}/unBan', [DoctorController::class, 'unBan'])->name('doctor.unBan');
     Route::get('/doctor/profile/{id}' , [DoctorController::class, 'profile'])->name('dashboard.doctor.profile');
-    Route::get('/doctor/restore/{id}', [DoctorController::class, 'restore'])->name('doctor.restore');
+    Route::get('/doctor/{id}/restore', [DoctorController::class, 'restore'])->name('doctor.restore');
 
 
 
     Route::get('/medicine', [MedicineController::class, 'index'])->name("medicine.index");
     Route::get('/medicine/create', [MedicineController::class, 'create'])->name("medicine.create");
     Route::post('/medicine', [MedicineController::class, 'store'])->name('medicine.store');
-    Route::delete('/medicine/destroy/{id}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
+    Route::delete('/medicine/{id}/destroy', [MedicineController::class, 'destroy'])->name('medicine.destroy');
     Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
-    Route::get('/medicine/restore/{id}', [MedicineController::class, 'restore'])->name('medicine.restore');
+    Route::get('/medicine/{id}/restore', [MedicineController::class, 'restore'])->name('medicine.restore');
 
     Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
-    Route::get('/orders/process/{id}', [OrderController::class, 'process'])->name("order.process");
-    Route::post('/orders/continue/{id}', [OrderController::class, 'continue'])->name("order.continue");
-    Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name("order.edit");
+    Route::get('/orders/{id}/process', [OrderController::class, 'process'])->name("order.process");
+    Route::post('/orders/{id}/continue', [OrderController::class, 'continue'])->name("order.continue");
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name("order.edit");
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name("order.update");
-    Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
-    Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
-    Route::get('/orders/restore/{id}', [OrderController::class, 'restore'])->name('order.restore');
+    Route::post('/orders/{id}/process', [OrderController::class, 'send'])->name("order.send");
+    Route::delete('/orders/{id}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
+    Route::get('/orders/{id}/restore', [OrderController::class, 'restore'])->name('order.restore');
 
 
 
