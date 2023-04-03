@@ -85,8 +85,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
     Route::get('/medicine/restore/{id}', [MedicineController::class, 'restore'])->name('medicine.restore');
 
-
-
     Route::get('/orders', [OrderController::class, 'index'])->name("order.index");
     Route::get('/orders/create', [OrderController::class, 'create'])->name("order.create");
     Route::post('/orders', [OrderController::class, 'store'])->name("order.store");
@@ -98,6 +96,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::get('/orders/restore/{id}', [OrderController::class, 'restore'])->name('order.restore');
 
+
+
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
 
@@ -106,8 +106,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
+    Route::match(['get', 'put'], 'orders/export', [PharmacyController::class, 'export'])->name("orders.export");
 
-
+    
 
 });
 

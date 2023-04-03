@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PharmacyExport;
 use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Area;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PharmacyController extends Controller
 {
@@ -151,7 +153,13 @@ class PharmacyController extends Controller
     }
 
     public function restore($id){
-        Pharmacy::withTrashed()->find($id)->restore();
-        return back();
-    }
+    Pharmacy::withTrashed()->find($id)->restore();
+    return back();
+} 
+
+
+public function export() {
+    $pharmacy = Pharmacy::find(Auth::user()->userable_id);
+    return Excel::download(new PharmacyExport($pharmacy), 'orders.xlsx');
+}
 }
