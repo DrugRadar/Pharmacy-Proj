@@ -6,11 +6,13 @@ use App\Exports\PharmacyExport;
 use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Area;
+use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -99,8 +101,18 @@ class PharmacyController extends Controller
     }
 
     public function destroy($id){
-        Pharmacy::destroy($id);
-        return redirect()->route('pharmacy.index');
+        $pharmacyOrders = Order::where([['assigned_pharmacy_id',$id],['status' , '!=', 'delivered']])->get();
+        // dd($pharmacyOrders); 
+
+        if(!$pharmacyOrders){
+            Pharmacy::destroy($id);
+            return redirect()->route('pharmacy.index');
+        }
+        else{
+            Session::flash('error', 'You can not delete this pharmacy ');
+            return back();
+        }
+        
     }
 
     public function getPharmacy(Request $request){
