@@ -7,8 +7,6 @@
 </head>
 
 <style>
-/** Start Generl **/
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,32 +22,23 @@ body {
   margin: 0 auto;
 }
 
-/** End Generl **/
-
-/*** Start Parent & Son ***/
-
 .parent {
   margin: 0 auto;
   width: 100%;
-  padding: 30px 0;
   border-radius: 5px;
-  box-shadow: 23px 27px 28px -20px rgba(0,0,0,0.75);
-  height: 100vh;
-  min-height: 670px
-
+  max-height: 100vh;
+  transform: translatey(50px);
 }
 
 .parent .son {
   width: 100%;
   max-width: 900px;
-  height: 100%;
-  padding: 80px 0 55px 0;
+  height: 90%;
+  /* padding: 80px 0 55px 0; */
   margin: 0 auto;
   /* background-image: linear-gradient(to right, #2c73d2, #6d6fd2, #9869cc, #ba63c1, #d65db1); */
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 5px;
-  box-shadow:  0px 1px 25px 0px rgba(50, 50, 50, 0.91);
-
 }
 
 .parent .son .container {
@@ -198,17 +187,18 @@ body {
 /*== Start Right ==*/
 
 .parent .son .right {
-  height: auto;
-  width: 380px;
-  position: relative;
-  top: -12px;
-  right: 55px;
-  /*position: absolute;
-  top: 40px;
-  right: 140px;*/
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow:  0px 1px 25px 0px rgba(50, 50, 50, 0.91);
+    margin: auto;
+    height: auto;
+    width: 380px;
+    position: relative;
+    top: -12px;
+    right: 55px;
+    /*position: absolute;
+    top: 40px;
+    right: 140px;*/
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow:  0px 1px 25px 0px rgba(50, 50, 50, 0.91);
 
 }
 
@@ -216,12 +206,13 @@ body {
   width: 100%;
   height: 43%;
   background-image: linear-gradient(to right top, #ecf0f1, #e7f5f4, #e6faf1, #eefde8, #fefedf);
-  padding: 40px 40px 0 80px;
-  border-radius: 5px 5px 0 0
+  padding: 40px 30px 0 30px;
+  border-radius: 5px 5px 0 0;
+  text-align: center;
 }
 
 .son .right .up ul:first-of-type li:first-of-type{
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   color: #2A3350;
   font-weight: bold;
   font-size: 23px;
@@ -257,9 +248,10 @@ body {
 }
 
 .son .right .down {
-  width: 100%;
-  height: calc(100% - 43%);
-  padding: 30px 0 40px 80px;
+    margin: auto;
+    width: 77%;
+    height: calc(100% - 43%);
+    padding: 2px 0 10px 0px;
 }
 
 .son .right .down .payment form label {
@@ -275,7 +267,7 @@ body {
   border: 1px solid transparent;
   box-shadow: 0px 0px 17px 0px rgba(50, 50, 50, 0.12);
   padding: 7px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   color: #34495e;
   border: 1px solid #ecf0f1;
   border-radius: 3px
@@ -345,7 +337,7 @@ body {
   border-bottom: 1.5px solid transparent
 }
 
-.btn {
+.sbtn {
   margin-top: 5px
 }
 .son .right .down .payment form button {
@@ -362,7 +354,7 @@ body {
 }
 
 .right .down .payment form button:after {
-  content:'Donate Now!';
+  content:'Proceed!';
   display: inline-block;
   color: #fff;
   font-size: 18px;
@@ -479,13 +471,11 @@ body {
 <div class="parent">
     <div class="son">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-default credit-card-box">
+            <div class="right">
                         <div class="up">
                             <ul>
                                 <li>
-                                    <h3 class="panel-title">Payment Details</h3>
+                                    <h3 class="panel-title" style="font-size: 21px; font-weight:600;">Payment Details</h3>
                                 </li>
                             </ul>
                             <ul>
@@ -532,7 +522,7 @@ body {
                                                 <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
                                             </div>
                                             <div class='col-xs-4 form-group expiration required'>
-                                                <label class='control-label'> </label>
+                                                <label class='control-label'>Year </label>
                                                 <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
                                             </div>
                                         </div>
@@ -545,7 +535,7 @@ body {
                                         </div>
                                         <div class="form-row row">
                                             <div class="col-xs-12">
-                                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{ number_format($order->total_price, 2) }})</button>
+                                                <button class="sbtn btn-block" type="submit">Pay Now (${{ number_format($order->total_price, 2) }})</button>
                                             </div>
                                         </div>
                                     </form>
@@ -555,8 +545,6 @@ body {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 </body>
 

@@ -11,9 +11,6 @@ use App\Http\Controllers\OrderConfirmationController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
-use App\Mail\InactiveClientMail;
-use App\Models\Client;
-use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +39,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
 
     Route::group(['middleware' => ['auth','role:admin']], function(){
         Route::get('/admin/profile' , [AdminController::class, 'profile'])->name('dashboard.admin.profile');
-    
+
         Route::get('/medicine', [MedicineController::class, 'index'])->name("medicine.index");
         Route::get('/medicine/create', [MedicineController::class, 'create'])->name("medicine.create");
         Route::post('/medicine', [MedicineController::class, 'store'])->name('medicine.store');
@@ -50,7 +47,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
         Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
         Route::get('/medicine/{id}/restore', [MedicineController::class, 'restore'])->name('medicine.restore');
-    
+
         Route::get('/area', [AreaController::class, 'index'])->name("area.index");
         Route::get('/area/create', [AreaController::class, 'create'])->name("area.create");
         Route::post('/area', [AreaController::class, 'store'])->name('area.store');
@@ -58,7 +55,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
         Route::get('/area/{id}/edit', [AreaController::class, 'edit'])->name('area.edit');
         Route::get('/area/{id}/restore', [AreaController::class, 'restore'])->name('area.restore');
-    
+
         Route::get('/address', [AddressController::class, 'index'])->name("address.index");
         Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
         Route::post('/address', [AddressController::class, 'store'])->name('address.store');
@@ -66,7 +63,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
         Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
         Route::get('/address/{id}/restore', [AddressController::class, 'restore'])->name('address.restore');
-    
+
         Route::resource('pharmacy', PharmacyController::class);
 
         Route::get('/pharmacy/restore/{id}', [PharmacyController::class, 'restore'])->name('pharmacy.restore');
