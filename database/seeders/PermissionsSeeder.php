@@ -29,6 +29,8 @@ class PermissionsSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'edit serving area for pharmacy']);
         Permission::firstOrCreate(['name' => 'edit priority for pharmacy']);
        
+        
+    
         Permission::firstOrCreate(['name' => 'edit doctor']);
         Permission::firstOrCreate(['name' => 'delete doctor']);
         Permission::firstOrCreate(['name' => 'create doctor']);
@@ -44,12 +46,15 @@ class PermissionsSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'create medicine']);
         Permission::firstOrCreate(['name' => 'see all medicines']);
 
+        Permission::firstOrCreate(['name' => 'order']);
+
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $pharmacy = Role::firstOrCreate(['name' => 'pharmacy']);
         $doctor = Role::firstOrCreate(['name' => 'doctor']);
+        $banned = Role::firstOrCreate(['name' => 'banned']);
 
-
-        $admin->syncPermissions(['edit pharmacy','delete pharmacy','create pharmacy','edit doctor','delete doctor','create doctor','see all doctors','edit area','delete area','create area','see all areas','edit medicine','delete medicine','create medicine', 'see all medicines']);
-        $pharmacy->syncPermissions(['edit doctor','delete doctor','create doctor','see all doctors']);
+        $admin->syncPermissions(['edit pharmacy','delete pharmacy','create pharmacy','edit doctor','delete doctor','create doctor','see all doctors','edit area','delete area','create area','see all areas','edit medicine','delete medicine','create medicine', 'see all medicines','order']);
+        $pharmacy->syncPermissions(['edit doctor','delete doctor','create doctor','see all doctors','order']);
+        $doctor->syncPermissions(['order']);
     }
 }
