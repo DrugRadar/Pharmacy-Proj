@@ -9,16 +9,15 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 
-
 class AreaController extends Controller
 {
     function __construct()
     {
-         $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
+        $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
 
     }
     public function index(Request $request){
-         if ($request->ajax()) {
+        if ($request->ajax()) {
             $data = Area::withTrashed()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -72,20 +71,4 @@ class AreaController extends Controller
         Area::withTrashed()->find($id)->restore();
         return back();
     }
-
-    //  public function getArea(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $data = Area::latest()->get();
-    //         return DataTables::of($data)
-    //             ->addIndexColumn()
-    //             ->addColumn('action', function($row){
-    //                 $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-    //                 return $actionBtn;
-    //             })
-    //             ->rawColumns(['action'])
-    //             ->make(true);
-    //     }
-    //     return view('dashboard.area.index');
-    // }
 }

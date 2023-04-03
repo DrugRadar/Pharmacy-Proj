@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Webpatser\Countries\CountriesServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -201,6 +202,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+
     ],
 
     /*
@@ -217,6 +219,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Countries' => Webpatser\Countries\CountriesFacade::class
     ])->toArray(),
 
 ];
