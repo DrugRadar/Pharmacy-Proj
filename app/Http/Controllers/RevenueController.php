@@ -37,7 +37,10 @@ class RevenueController extends Controller
                 $pharmacy_id = Auth::user()->id;
                 $PharmacyRevenue = DB::table('orders')->where('assigned_pharmacy_id',$pharmacy_id)
                                                             ->sum('total_price');
-                return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue]);
+               
+               $pharmacy = Pharmacy::find(Auth::user()->userable_id);
+               $pharmacyName = $pharmacy->name;
+                return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue,'pharmacyName'=>$pharmacyName]);
             }
         }
     }
