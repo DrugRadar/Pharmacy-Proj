@@ -11,8 +11,74 @@
     <style>
     body{
         height: 100vh;
-    }
-    .card, .card-header, .card-body {
+         }
+            .view {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: #F4F6F6;
+          height: 100vh
+        }
+
+        .card {
+          display: flex;
+          flex-shrink: 1;
+          flex-direction: row;
+          width: calc(100vh - 2 * 1rem);
+          height: calc(55vh - 2 * 1.25rem);
+          background-color: #fff;
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+          border-radius: 1.5rem;
+          padding: 1.25rem 1rem;
+        }
+
+        .wraper {
+          display: flex;
+          flex-direction: row;
+          flex: 1
+        }
+
+        .left-panel {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .media-wrapper {
+          display: flex;
+          height: 35vh;
+          width: 35vh;
+        }
+
+        .media {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          height: 100%
+        }
+
+        .figure {
+          display: flex;
+          flex: 1;
+          margin: 0;
+          background: no-repeat center/contain
+        }
+
+        .right-panel {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          margin-top: 1.5rem;
+          align-items: center;
+        }
+
+        .right-panel > p {
+          text-align: center;
+        }
+
+    /* .card, .card-header, .card-body {
         background: transparent !important;
         font-family: monospace !important;
         font-size: 20px !important;
@@ -58,11 +124,11 @@
         100% {
             transform: rotate(-18deg);
         }
-    }
+    } */
     </style>
     <body class="d-flex justify-content-center align-items-center">
     <div class="container">
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card blurred-box">
                 {{-- <div class="card-header">{{ __('Dashboard') }}</div> --}}
@@ -89,7 +155,24 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+        <div class='view'>
+          <div class='card'>
+            <div class='wraper'>
+              <div class='left-panel'>
+                <div class='media-wrapper'>
+                  <div class='media'>
+                    <figure class='figure' style='background-image: url("https://js2.pngtree.com/v3/images/home/paradrop.png");'></figure>
+                  </div>
+                </div>
+              </div>
+              <div class='right-panel'>
+                <h3>Confirmação de email</h3>
+                <p>Guilherme Oliveira sua conta foi registrada com sucesso. Para realizar o acesso confirme o email que enviamos para guilhermefos.compras@gmail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
     </script>
