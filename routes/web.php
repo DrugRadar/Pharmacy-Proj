@@ -10,6 +10,8 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
+use App\Mail\InactiveClientMail;
+use App\Models\Client;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -120,6 +122,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // // welcome on login
-// Route::get('/email', function(){
-
-// });
+Route::get('/email', function(){
+});
