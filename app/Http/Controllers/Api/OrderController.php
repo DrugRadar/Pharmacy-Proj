@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
+    /**
+ * Create a new order.
+ *
+ * @param CreateOrderRequest $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+
     public function create(CreateOrderRequest $request){
         $client = auth()->user();
         $validated = $request->validated();
@@ -63,6 +70,12 @@ class OrderController extends Controller
         }
     }
 
+    /**
+ * Retrieve a list of orders for the authenticated client.
+ *
+ * @return \Illuminate\Http\JsonResponse
+ */
+
     public function index() {
         $client = auth()->user();
         $orders = Order::where('client_id', $client->id)->get();
@@ -101,6 +114,12 @@ class OrderController extends Controller
         return response()->json($formattedOrders, 200);
     }
 
+    /**
+ * Display the specified order.
+ *
+ * @param  int  $id
+ */
+
     public function show($id){
         $client = auth()->user();
         $order = Order::find($id);
@@ -133,6 +152,14 @@ class OrderController extends Controller
         ];
         return response()->json(new OrderResource($formattedOrder), 200);
     }
+
+
+/**
+ * Update an existing order.
+ *
+ * @param UpdateOrderRequest $request
+ * @param int $id
+ */
 
     public function edit(UpdateOrderRequest $request,$id){
         $order = Order::find($id);

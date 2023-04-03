@@ -1,0 +1,2962 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Laravel Documentation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+    <script>
+        var baseUrl = "http://localhost:8000";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-4.17.0.js"></script>
+
+    <script src="../docs/js/theme-default-4.17.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image"/>
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                    <ul id="tocify-header-introduction" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introduction">
+                    <a href="#introduction">Introduction</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authenticating-requests">
+                    <a href="#authenticating-requests">Authenticating requests</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-addresses" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="addresses">
+                    <a href="#addresses">Addresses</a>
+                </li>
+                                    <ul id="tocify-subheader-addresses" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="addresses-PUTapi-client--clientId--address--addressId-">
+                                <a href="#addresses-PUTapi-client--clientId--address--addressId-">Update the specified address of a client</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-address-management" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="address-management">
+                    <a href="#address-management">Address management</a>
+                </li>
+                                    <ul id="tocify-subheader-address-management" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="address-management-POSTapi-address">
+                                <a href="#address-management-POSTapi-address">POST api/address</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="address-management-GETapi-address--id-">
+                                <a href="#address-management-GETapi-address--id-">GET api/address/{id}</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-client-management" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="client-management">
+                    <a href="#client-management">Client management</a>
+                </li>
+                                    <ul id="tocify-subheader-client-management" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="client-management-POSTapi-client-register">
+                                <a href="#client-management-POSTapi-client-register">Register a new client.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="client-management-POSTapi-client-login">
+                                <a href="#client-management-POSTapi-client-login">Log in a client.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="client-management-GETapi-verify-email--id---hash-">
+                                <a href="#client-management-GETapi-verify-email--id---hash-">Verify a client's email address using a verification hash.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="client-management-PUTapi-client--id-">
+                                <a href="#client-management-PUTapi-client--id-">Update a client's profile.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="client-management-GETapi-client--id-">
+                                <a href="#client-management-GETapi-client--id-">Get the specified client.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
+                                <a href="#endpoints-GETapi-user">GET api/user</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-email-verify--id---hash-">
+                                <a href="#endpoints-GETapi-email-verify--id---hash-">GET api/email/verify/{id}/{hash}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-orders">
+                                <a href="#endpoints-POSTapi-orders">Create a new order.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-orders">
+                                <a href="#endpoints-GETapi-orders">Retrieve a list of orders for the authenticated client.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-orders--id-">
+                                <a href="#endpoints-GETapi-orders--id-">Display the specified order.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-orders--id-">
+                                <a href="#endpoints-PUTapi-orders--id-">Update an existing order.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-address" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="address">
+                    <a href="#address">address</a>
+                </li>
+                                    <ul id="tocify-subheader-address" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="address-DELETEapi-client--clientId--address--addressId-">
+                                <a href="#address-DELETEapi-client--clientId--address--addressId-">Delete a specific address for a client.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
+
+    <ul class="toc-footer" id="toc-footer">
+                    <li style="padding-bottom: 5px;"><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li style="padding-bottom: 5px;"><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+    </ul>
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Last updated: April 3, 2023</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<aside>
+    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+</aside>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>This API is not authenticated.</p>
+
+        <h1 id="addresses">Addresses</h1>
+
+    
+
+                                <h2 id="addresses-PUTapi-client--clientId--address--addressId-">Update the specified address of a client</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-PUTapi-client--clientId--address--addressId-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/client/1/address/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"street_name\": \"quia\",
+    \"building_number\": \"accusantium\",
+    \"floor_number\": \"non\",
+    \"flat_number\": \"excepturi\",
+    \"is_main\": false
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/1/address/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "street_name": "quia",
+    "building_number": "accusantium",
+    "floor_number": "non",
+    "flat_number": "excepturi",
+    "is_main": false
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-client--clientId--address--addressId-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;street_name&quot;: &quot;123 Main St&quot;,
+        &quot;building_number&quot;: &quot;5&quot;,
+        &quot;floor_number&quot;: &quot;3&quot;,
+        &quot;flat_number&quot;: &quot;10&quot;,
+        &quot;is_main&quot;: true,
+        &quot;client_id&quot;: 1
+    },
+    &quot;message&quot;: &quot;Address updated successfully&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: &quot;Address not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-client--clientId--address--addressId-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-client--clientId--address--addressId-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-client--clientId--address--addressId-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-client--clientId--address--addressId-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-client--clientId--address--addressId-"></code></pre>
+</span>
+<form id="form-PUTapi-client--clientId--address--addressId-" data-method="PUT"
+      data-path="api/client/{clientId}/address/{addressId}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-client--clientId--address--addressId-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-client--clientId--address--addressId-"
+                    onclick="tryItOut('PUTapi-client--clientId--address--addressId-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-client--clientId--address--addressId-"
+                    onclick="cancelTryOut('PUTapi-client--clientId--address--addressId-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-client--clientId--address--addressId-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/client/{clientId}/address/{addressId}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>clientId</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="clientId"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="1"
+               data-component="url">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>addressId</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="addressId"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="1"
+               data-component="url">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>street_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="street_name"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="quia"
+               data-component="body">
+    <br>
+<p>The street name of the address. Example: <code>quia</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>building_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="building_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="accusantium"
+               data-component="body">
+    <br>
+<p>The building number of the address. Example: <code>accusantium</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>floor_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="floor_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="non"
+               data-component="body">
+    <br>
+<p>The floor number of the address. Example: <code>non</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>flat_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="flat_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
+               value="excepturi"
+               data-component="body">
+    <br>
+<p>The flat number of the address. Example: <code>excepturi</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_main</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+                <label data-endpoint="PUTapi-client--clientId--address--addressId-" style="display: none">
+            <input type="radio" name="is_main"
+                   value="true"
+                   data-endpoint="PUTapi-client--clientId--address--addressId-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PUTapi-client--clientId--address--addressId-" style="display: none">
+            <input type="radio" name="is_main"
+                   value="false"
+                   data-endpoint="PUTapi-client--clientId--address--addressId-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Whether the address is the main address of the client. Example: <code>false</code></p>
+        </div>
+        </form>
+
+                <h1 id="address-management">Address management</h1>
+
+    <p>APIs for managing addresses of clients</p>
+
+                                <h2 id="address-management-POSTapi-address">POST api/address</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-address">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/address" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/address"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-address">
+</span>
+<span id="execution-results-POSTapi-address" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-address"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-address" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-address" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-address"></code></pre>
+</span>
+<form id="form-POSTapi-address" data-method="POST"
+      data-path="api/address"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-address', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-address"
+                    onclick="tryItOut('POSTapi-address');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-address"
+                    onclick="cancelTryOut('POSTapi-address');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-address" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/address</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="POSTapi-address"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="POSTapi-address"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="address-management-GETapi-address--id-">GET api/address/{id}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-address--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/address/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/address/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-address--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-address--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-address--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-address--id-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-address--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-address--id-"></code></pre>
+</span>
+<form id="form-GETapi-address--id-" data-method="GET"
+      data-path="api/address/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-address--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-address--id-"
+                    onclick="tryItOut('GETapi-address--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-address--id-"
+                    onclick="cancelTryOut('GETapi-address--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-address--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/address/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-address--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-address--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="id"                data-endpoint="GETapi-address--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the address. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="client-management">Client management</h1>
+
+    <p>APIs for managing clients</p>
+
+                                <h2 id="client-management-POSTapi-client-register">Register a new client.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-client-register">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/client/register" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "name=John Doe" \
+    --form "email=john.doe@example.com" \
+    --form "gender=female" \
+    --form "password=secret" \
+    --form "date_of_birth=2010-01-17" \
+    --form "mobile_number=wcgdbfjcwuxuxnku" \
+    --form "national_id=17850698088476" \
+    --form "phone=+1234567890" \
+    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\php77AF.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/register"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('name', 'John Doe');
+body.append('email', 'john.doe@example.com');
+body.append('gender', 'female');
+body.append('password', 'secret');
+body.append('date_of_birth', '2010-01-17');
+body.append('mobile_number', 'wcgdbfjcwuxuxnku');
+body.append('national_id', '17850698088476');
+body.append('phone', '+1234567890');
+body.append('avatar_image', document.querySelector('input[name="avatar_image"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-client-register">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Client created successfully&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;John Doe&quot;,
+        &quot;email&quot;: &quot;john.doe@example.com&quot;,
+        &quot;phone&quot;: &quot;+1234567890&quot;,
+        &quot;avatar_image_url&quot;: &quot;https://example.com/storage/avatars/1/avatar.png&quot;,
+        &quot;email_verified_at&quot;: null,
+        &quot;created_at&quot;: &quot;2023-04-03T10:00:00.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2023-04-03T10:00:00.000000Z&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-client-register" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-client-register"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-client-register" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-client-register" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-client-register"></code></pre>
+</span>
+<form id="form-POSTapi-client-register" data-method="POST"
+      data-path="api/client/register"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-client-register', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-client-register"
+                    onclick="tryItOut('POSTapi-client-register');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-client-register"
+                    onclick="cancelTryOut('POSTapi-client-register');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-client-register" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/client/register</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="POSTapi-client-register"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="POSTapi-client-register"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="name"                data-endpoint="POSTapi-client-register"
+               value="John Doe"
+               data-component="body">
+    <br>
+<p>The name of the client. Example: <code>John Doe</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="email"                data-endpoint="POSTapi-client-register"
+               value="john.doe@example.com"
+               data-component="body">
+    <br>
+<p>The email address of the client. Example: <code>john.doe@example.com</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="gender"                data-endpoint="POSTapi-client-register"
+               value="female"
+               data-component="body">
+    <br>
+<p>Must be one of <code>male</code> or <code>female</code>. Example: <code>female</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="password"                data-endpoint="POSTapi-client-register"
+               value="secret"
+               data-component="body">
+    <br>
+<p>The password of the client. Example: <code>secret</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="date_of_birth"                data-endpoint="POSTapi-client-register"
+               value="2010-01-17"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>2010-01-17</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>avatar_image</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+               name="avatar_image"                data-endpoint="POSTapi-client-register"
+               value=""
+               data-component="body">
+    <br>
+<p>The avatar image of the client. Example: <code>C:\Users\radwa\AppData\Local\Temp\php77AF.tmp</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>mobile_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="mobile_number"                data-endpoint="POSTapi-client-register"
+               value="wcgdbfjcwuxuxnku"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>wcgdbfjcwuxuxnku</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>national_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="national_id"                data-endpoint="POSTapi-client-register"
+               value="17850698088476"
+               data-component="body">
+    <br>
+<p>Must be 14 digits. Example: <code>17850698088476</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="phone"                data-endpoint="POSTapi-client-register"
+               value="+1234567890"
+               data-component="body">
+    <br>
+<p>The phone number of the client. Example: <code>+1234567890</code></p>
+        </div>
+        </form>
+
+                    <h2 id="client-management-POSTapi-client-login">Log in a client.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-client-login">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/client/login" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"email\": \"mdare@example.org\",
+    \"password\": \"v8.b*EO2!:v\",
+    \"device_name\": \"suscipit\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/login"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "mdare@example.org",
+    "password": "v8.b*EO2!:v",
+    "device_name": "suscipit"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-client-login">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Client logged in successfully&quot;,
+    &quot;data&quot;: {
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;John Doe&quot;,
+            &quot;email&quot;: &quot;john.doe@example.com&quot;,
+            &quot;avatar_url&quot;: &quot;http://example.com/avatar.png&quot;,
+            &quot;created_at&quot;: &quot;2022-04-01T15:00:00.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2022-04-01T15:00:00.000000Z&quot;
+        },
+        &quot;access_token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Incorrect password&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Email not verified&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Client not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-client-login" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-client-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-client-login" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-client-login" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-client-login"></code></pre>
+</span>
+<form id="form-POSTapi-client-login" data-method="POST"
+      data-path="api/client/login"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-client-login', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-client-login"
+                    onclick="tryItOut('POSTapi-client-login');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-client-login"
+                    onclick="cancelTryOut('POSTapi-client-login');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-client-login" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/client/login</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="POSTapi-client-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="POSTapi-client-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="email"                data-endpoint="POSTapi-client-login"
+               value="mdare@example.org"
+               data-component="body">
+    <br>
+<p>The email of the client. Example: <code>mdare@example.org</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="password"                data-endpoint="POSTapi-client-login"
+               value="v8.b*EO2!:v"
+               data-component="body">
+    <br>
+<p>The password of the client. Example: <code>v8.b*EO2!:v</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>device_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="device_name"                data-endpoint="POSTapi-client-login"
+               value="suscipit"
+               data-component="body">
+    <br>
+<p>The name of the device. Example: <code>suscipit</code></p>
+        </div>
+        </form>
+
+                    <h2 id="client-management-GETapi-verify-email--id---hash-">Verify a client&#039;s email address using a verification hash.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-verify-email--id---hash-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/verify-email/recusandae/et" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/verify-email/recusandae/et"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-verify-email--id---hash-">
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Client] recusandae&quot;,
+    &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
+    &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php&quot;,
+    &quot;line&quot;: 408,
+    &quot;trace&quot;: [
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php&quot;,
+            &quot;line&quot;: 384,
+            &quot;function&quot;: &quot;prepareException&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\nunomaduro\\collision\\src\\Adapters\\Laravel\\ExceptionHandler.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;render&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php&quot;,
+            &quot;line&quot;: 51,
+            &quot;function&quot;: &quot;render&quot;,
+            &quot;class&quot;: &quot;NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 143,
+            &quot;function&quot;: &quot;handleException&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php&quot;,
+            &quot;line&quot;: 50,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php&quot;,
+            &quot;line&quot;: 126,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php&quot;,
+            &quot;line&quot;: 92,
+            &quot;function&quot;: &quot;handleRequest&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;handleRequestUsingNamedLimiter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php&quot;,
+            &quot;line&quot;: 797,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php&quot;,
+            &quot;line&quot;: 776,
+            &quot;function&quot;: &quot;runRouteWithinStack&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php&quot;,
+            &quot;line&quot;: 740,
+            &quot;function&quot;: &quot;runRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php&quot;,
+            &quot;line&quot;: 729,
+            &quot;function&quot;: &quot;dispatchToRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php&quot;,
+            &quot;line&quot;: 200,
+            &quot;function&quot;: &quot;dispatch&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 141,
+            &quot;function&quot;: &quot;Illuminate\\Foundation\\Http\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php&quot;,
+            &quot;line&quot;: 31,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php&quot;,
+            &quot;line&quot;: 40,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TrimStrings&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php&quot;,
+            &quot;line&quot;: 27,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php&quot;,
+            &quot;line&quot;: 86,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php&quot;,
+            &quot;line&quot;: 62,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\HandleCors&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php&quot;,
+            &quot;line&quot;: 39,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\TrustProxies&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php&quot;,
+            &quot;line&quot;: 175,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php&quot;,
+            &quot;line&quot;: 144,
+            &quot;function&quot;: &quot;sendRequestThroughRouter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php&quot;,
+            &quot;line&quot;: 299,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php&quot;,
+            &quot;line&quot;: 287,
+            &quot;function&quot;: &quot;callLaravelOrLumenRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php&quot;,
+            &quot;line&quot;: 92,
+            &quot;function&quot;: &quot;makeApiCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php&quot;,
+            &quot;line&quot;: 45,
+            &quot;function&quot;: &quot;makeResponseCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php&quot;,
+            &quot;line&quot;: 35,
+            &quot;function&quot;: &quot;makeResponseCallIfConditionsPass&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php&quot;,
+            &quot;line&quot;: 209,
+            &quot;function&quot;: &quot;__invoke&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php&quot;,
+            &quot;line&quot;: 163,
+            &quot;function&quot;: &quot;iterateThroughStrategies&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php&quot;,
+            &quot;line&quot;: 95,
+            &quot;function&quot;: &quot;fetchResponses&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 124,
+            &quot;function&quot;: &quot;processRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 71,
+            &quot;function&quot;: &quot;extractEndpointsInfoFromLaravelApp&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 49,
+            &quot;function&quot;: &quot;extractEndpointsInfoAndWriteToDisk&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Commands\\GenerateDocumentation.php&quot;,
+            &quot;line&quot;: 51,
+            &quot;function&quot;: &quot;get&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php&quot;,
+            &quot;line&quot;: 36,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Commands\\GenerateDocumentation&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php&quot;,
+            &quot;line&quot;: 41,
+            &quot;function&quot;: &quot;Illuminate\\Container\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php&quot;,
+            &quot;line&quot;: 93,
+            &quot;function&quot;: &quot;unwrapIfClosure&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Util&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php&quot;,
+            &quot;line&quot;: 35,
+            &quot;function&quot;: &quot;callBoundMethod&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php&quot;,
+            &quot;line&quot;: 661,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php&quot;,
+            &quot;line&quot;: 194,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Container&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Command\\Command.php&quot;,
+            &quot;line&quot;: 312,
+            &quot;function&quot;: &quot;execute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php&quot;,
+            &quot;line&quot;: 163,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Command\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php&quot;,
+            &quot;line&quot;: 1040,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php&quot;,
+            &quot;line&quot;: 314,
+            &quot;function&quot;: &quot;doRunCommand&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php&quot;,
+            &quot;line&quot;: 168,
+            &quot;function&quot;: &quot;doRun&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php&quot;,
+            &quot;line&quot;: 200,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\artisan&quot;,
+            &quot;line&quot;: 35,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Console\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-verify-email--id---hash-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-verify-email--id---hash-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-verify-email--id---hash-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-verify-email--id---hash-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-verify-email--id---hash-"></code></pre>
+</span>
+<form id="form-GETapi-verify-email--id---hash-" data-method="GET"
+      data-path="api/verify-email/{id}/{hash}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-verify-email--id---hash-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-verify-email--id---hash-"
+                    onclick="tryItOut('GETapi-verify-email--id---hash-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-verify-email--id---hash-"
+                    onclick="cancelTryOut('GETapi-verify-email--id---hash-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-verify-email--id---hash-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/verify-email/{id}/{hash}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-verify-email--id---hash-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-verify-email--id---hash-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="id"                data-endpoint="GETapi-verify-email--id---hash-"
+               value="recusandae"
+               data-component="url">
+    <br>
+<p>The ID of the verify email. Example: <code>recusandae</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="hash"                data-endpoint="GETapi-verify-email--id---hash-"
+               value="et"
+               data-component="url">
+    <br>
+<p>Example: <code>et</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="client-management-PUTapi-client--id-">Update a client&#039;s profile.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-PUTapi-client--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/client/1" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "name=njwrt" \
+    --form "gender=female" \
+    --form "date_of_birth=2003-02-15" \
+    --form "mobile_number=chavkpqdbxiqfz" \
+    --form "national_id=pouahngjrlqxsvi" \
+    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\php77EF.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/1"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('name', 'njwrt');
+body.append('gender', 'female');
+body.append('date_of_birth', '2003-02-15');
+body.append('mobile_number', 'chavkpqdbxiqfz');
+body.append('national_id', 'pouahngjrlqxsvi');
+body.append('avatar_image', document.querySelector('input[name="avatar_image"]').files[0]);
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-client--id-">
+</span>
+<span id="execution-results-PUTapi-client--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-client--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-client--id-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-client--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-client--id-"></code></pre>
+</span>
+<form id="form-PUTapi-client--id-" data-method="PUT"
+      data-path="api/client/{id}"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-client--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-client--id-"
+                    onclick="tryItOut('PUTapi-client--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-client--id-"
+                    onclick="cancelTryOut('PUTapi-client--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-client--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/client/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="PUTapi-client--id-"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="PUTapi-client--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="id"                data-endpoint="PUTapi-client--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the client. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="name"                data-endpoint="PUTapi-client--id-"
+               value="njwrt"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>njwrt</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="gender"                data-endpoint="PUTapi-client--id-"
+               value="female"
+               data-component="body">
+    <br>
+<p>Must be one of <code>male</code> or <code>female</code>. Example: <code>female</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="date_of_birth"                data-endpoint="PUTapi-client--id-"
+               value="2003-02-15"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>2003-02-15</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>avatar_image</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="file" style="display: none"
+               name="avatar_image"                data-endpoint="PUTapi-client--id-"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\radwa\AppData\Local\Temp\php77EF.tmp</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>mobile_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="mobile_number"                data-endpoint="PUTapi-client--id-"
+               value="chavkpqdbxiqfz"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>chavkpqdbxiqfz</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>national_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="national_id"                data-endpoint="PUTapi-client--id-"
+               value="pouahngjrlqxsvi"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>pouahngjrlqxsvi</code></p>
+        </div>
+        </form>
+
+                    <h2 id="client-management-GETapi-client--id-">Get the specified client.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-client--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/client/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-client--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-client--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-client--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-client--id-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-client--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-client--id-"></code></pre>
+</span>
+<form id="form-GETapi-client--id-" data-method="GET"
+      data-path="api/client/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-client--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-client--id-"
+                    onclick="tryItOut('GETapi-client--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-client--id-"
+                    onclick="cancelTryOut('GETapi-client--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-client--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/client/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-client--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-client--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="id"                data-endpoint="GETapi-client--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the client. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-GETapi-user">GET api/user</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-user">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/user" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/user"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-user">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-user" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-user"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-user" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-user" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-user"></code></pre>
+</span>
+<form id="form-GETapi-user" data-method="GET"
+      data-path="api/user"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-user"
+                    onclick="tryItOut('GETapi-user');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-user"
+                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-user" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/user</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-user"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-user"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="endpoints-GETapi-email-verify--id---hash-">GET api/email/verify/{id}/{hash}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-email-verify--id---hash-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/email/verify/ut/dignissimos" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/email/verify/ut/dignissimos"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-email-verify--id---hash-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-email-verify--id---hash-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-email-verify--id---hash-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-email-verify--id---hash-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-email-verify--id---hash-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-email-verify--id---hash-"></code></pre>
+</span>
+<form id="form-GETapi-email-verify--id---hash-" data-method="GET"
+      data-path="api/email/verify/{id}/{hash}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-email-verify--id---hash-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-email-verify--id---hash-"
+                    onclick="tryItOut('GETapi-email-verify--id---hash-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-email-verify--id---hash-"
+                    onclick="cancelTryOut('GETapi-email-verify--id---hash-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-email-verify--id---hash-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/email/verify/{id}/{hash}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-email-verify--id---hash-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-email-verify--id---hash-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="id"                data-endpoint="GETapi-email-verify--id---hash-"
+               value="ut"
+               data-component="url">
+    <br>
+<p>The ID of the verify. Example: <code>ut</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="hash"                data-endpoint="GETapi-email-verify--id---hash-"
+               value="dignissimos"
+               data-component="url">
+    <br>
+<p>Example: <code>dignissimos</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-POSTapi-orders">Create a new order.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-orders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/orders" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"is_insured\": false,
+    \"delivering_address_id\": \"modi\",
+    \"prescription\": [
+        \"ducimus\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/orders"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "is_insured": false,
+    "delivering_address_id": "modi",
+    "prescription": [
+        "ducimus"
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-orders">
+</span>
+<span id="execution-results-POSTapi-orders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-orders" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-orders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-orders"></code></pre>
+</span>
+<form id="form-POSTapi-orders" data-method="POST"
+      data-path="api/orders"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-orders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-orders"
+                    onclick="tryItOut('POSTapi-orders');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-orders"
+                    onclick="cancelTryOut('POSTapi-orders');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-orders" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="POSTapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="POSTapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_insured</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-orders" style="display: none">
+            <input type="radio" name="is_insured"
+                   value="true"
+                   data-endpoint="POSTapi-orders"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-orders" style="display: none">
+            <input type="radio" name="is_insured"
+                   value="false"
+                   data-endpoint="POSTapi-orders"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Example: <code>false</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>delivering_address_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="delivering_address_id"                data-endpoint="POSTapi-orders"
+               value="modi"
+               data-component="body">
+    <br>
+<p>Example: <code>modi</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>prescription</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="prescription[0]"                data-endpoint="POSTapi-orders"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="prescription[1]"                data-endpoint="POSTapi-orders"
+               data-component="body">
+    <br>
+
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-orders">Retrieve a list of orders for the authenticated client.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-orders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/orders" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/orders"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-orders">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-orders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-orders" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-orders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-orders"></code></pre>
+</span>
+<form id="form-GETapi-orders" data-method="GET"
+      data-path="api/orders"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-orders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-orders"
+                    onclick="tryItOut('GETapi-orders');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-orders"
+                    onclick="cancelTryOut('GETapi-orders');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-orders" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="endpoints-GETapi-orders--id-">Display the specified order.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-orders--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/orders/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/orders/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-orders--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-orders--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-orders--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-orders--id-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-orders--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-orders--id-"></code></pre>
+</span>
+<form id="form-GETapi-orders--id-" data-method="GET"
+      data-path="api/orders/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-orders--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-orders--id-"
+                    onclick="tryItOut('GETapi-orders--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-orders--id-"
+                    onclick="cancelTryOut('GETapi-orders--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-orders--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/orders/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-orders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-orders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="id"                data-endpoint="GETapi-orders--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the order. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-PUTapi-orders--id-">Update an existing order.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-PUTapi-orders--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/orders/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"is_insured\": false,
+    \"delivering_address_id\": \"dolor\",
+    \"prescription\": [
+        \"cupiditate\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/orders/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "is_insured": false,
+    "delivering_address_id": "dolor",
+    "prescription": [
+        "cupiditate"
+    ]
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-orders--id-">
+</span>
+<span id="execution-results-PUTapi-orders--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-orders--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-orders--id-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-orders--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-orders--id-"></code></pre>
+</span>
+<form id="form-PUTapi-orders--id-" data-method="PUT"
+      data-path="api/orders/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-orders--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-orders--id-"
+                    onclick="tryItOut('PUTapi-orders--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-orders--id-"
+                    onclick="cancelTryOut('PUTapi-orders--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-orders--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/orders/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="PUTapi-orders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="PUTapi-orders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="id"                data-endpoint="PUTapi-orders--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the order. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_insured</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+                <label data-endpoint="PUTapi-orders--id-" style="display: none">
+            <input type="radio" name="is_insured"
+                   value="true"
+                   data-endpoint="PUTapi-orders--id-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PUTapi-orders--id-" style="display: none">
+            <input type="radio" name="is_insured"
+                   value="false"
+                   data-endpoint="PUTapi-orders--id-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Example: <code>false</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>delivering_address_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="delivering_address_id"                data-endpoint="PUTapi-orders--id-"
+               value="dolor"
+               data-component="body">
+    <br>
+<p>Example: <code>dolor</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>prescription</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="prescription[0]"                data-endpoint="PUTapi-orders--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="prescription[1]"                data-endpoint="PUTapi-orders--id-"
+               data-component="body">
+    <br>
+
+        </div>
+        </form>
+
+                <h1 id="address">address</h1>
+
+    
+
+                                <h2 id="address-DELETEapi-client--clientId--address--addressId-">Delete a specific address for a client.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-client--clientId--address--addressId-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/client/atque/address/quibusdam" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/atque/address/quibusdam"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-client--clientId--address--addressId-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Address deleted successfully&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Address not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-client--clientId--address--addressId-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-client--clientId--address--addressId-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-client--clientId--address--addressId-" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-client--clientId--address--addressId-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-client--clientId--address--addressId-"></code></pre>
+</span>
+<form id="form-DELETEapi-client--clientId--address--addressId-" data-method="DELETE"
+      data-path="api/client/{clientId}/address/{addressId}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-client--clientId--address--addressId-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-client--clientId--address--addressId-"
+                    onclick="tryItOut('DELETEapi-client--clientId--address--addressId-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-client--clientId--address--addressId-"
+                    onclick="cancelTryOut('DELETEapi-client--clientId--address--addressId-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-client--clientId--address--addressId-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/client/{clientId}/address/{addressId}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>clientId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="clientId"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
+               value="atque"
+               data-component="url">
+    <br>
+<p>The ID of the client who owns the address. Example: <code>atque</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>addressId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="addressId"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
+               value="quibusdam"
+               data-component="url">
+    <br>
+<p>The ID of the address to be deleted. Example: <code>quibusdam</code></p>
+            </div>
+                    </form>
+
+            
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>
