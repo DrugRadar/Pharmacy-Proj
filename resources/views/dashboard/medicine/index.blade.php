@@ -5,13 +5,13 @@
     <div style="margin-top: -50px;" class="text-center">
         <a href="{{route('medicine.create')}}" class="mt-4 btn btn-success">Create Medicine</a>
     </div>
-    <table class="table mt-4 yajra-datatable table-bordered" id="medicine-table">
+    <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="medicine-table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Medicine Name</th>
-                <th scope="col">Medicine Type</th>
-                <th scope="col">Medicine Price</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Price</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>

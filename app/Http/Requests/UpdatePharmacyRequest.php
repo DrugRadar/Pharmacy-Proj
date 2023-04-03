@@ -23,16 +23,14 @@ class UpdatePharmacyRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->headers->get('upgrade-insecure-requests');
-        // dd($id);
         return [
             'name' => ['required', "max:255"],
-            'email' => ['required', "max:255", 'email', Rule::unique('users')->ignore($this->getDoctorIdInUser($id))],
+            'email' => ['required', "max:255", 'email', Rule::unique('users')->ignore($this->getDoctorIdInUser())],
             'password' => ['required', "max:255",'min:6'],
-            'national_id' => ['required','integer','digits:14', Rule::unique('pharmacies')->ignore($id)],
+            'national_id' => ['required','integer','digits:14', Rule::unique('pharmacies')->ignore($this->pharmacy)],
             'avatar_image' => ['image',"max:255",'mimes:jpeg,jpg,png'],
             'area_id' => ["required", "exists:areas,id"],
-            // 'priority' => ['required', 'in:0,1']
+            'priority' => ['required', 'integer', 'min:0']
         ];
     }
 
@@ -44,8 +42,8 @@ class UpdatePharmacyRequest extends FormRequest
         ];
     }
 
-    public function getDoctorIdInUser($id) {
-        $user = User::where('userable_id', $id)
+    public function getDoctorIdInUser() {
+        $user = User::where('userable_id', $this->pharmacy)
             ->where('userable_type', 'App\Models\Pharmacy')
             ->get();
         return $user->first()->id;

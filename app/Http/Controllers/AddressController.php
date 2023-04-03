@@ -22,6 +22,9 @@ class AddressController extends Controller
             $data = Address::withTrashed()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('area_name', function ($row) {
+                    return $row->area->name;
+                })
                 ->addColumn('action', function($row){
                     if($row['deleted_at']){
                         $actionBtn = '<a id="$row->id" class="btn btn-primary" href="' . route('address.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  <a id="$row->id" class="btn btn-success" href="' . route('address.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';

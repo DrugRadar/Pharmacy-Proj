@@ -279,12 +279,12 @@ thead {
         </nav>
 
 
-        <div class="container container d-flex flex-column justify-content-center" style="min-height: 71vh; padding-right:25px !important;">
+        <div class="container container d-flex flex-column justify-content-center" style="min-height: 75.7vh; padding-right:25px !important;">
             @yield('content')
         </div>
 
         {{-- footer --}}
-        <footer class="text-center text-white mt-auto me-3 bg-gradient-dark footer">
+        <footer class="text-center text-white mt-auto me-1 bg-gradient-dark footer">
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright:

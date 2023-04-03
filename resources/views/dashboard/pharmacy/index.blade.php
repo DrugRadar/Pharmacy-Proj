@@ -5,7 +5,7 @@
     <div class="text-center" style="margin-top: -50px;">
         <a href="{{route('pharmacy.create')}}" class="mt-4 btn btn-success">Create Pharmacy</a>
     </div>
-    <table class="table mt-4 table-bordered" id="pharmacy-table">
+    <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="pharmacy-table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -50,8 +50,8 @@
                         name: 'national_id'
                     },
                     {
-                        data: 'area_id',
-                        name: 'area_id'
+                        data: 'area_name',
+                        name: 'area_name'
                     },
                     {
                         data: 'action',

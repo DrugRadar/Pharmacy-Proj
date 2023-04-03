@@ -28,7 +28,7 @@ class StorePharmacyRequest extends FormRequest
             'national_id' => ['required','integer','digits:14','unique:pharmacies,national_id'],
             'avatar_image' => ['image', "max:255",'mimes:jpeg,jpg,png'],
             'area_id' => ["required", "exists:areas,id"],
-            // 'priority' => ['required', 'in:0,1']
+            'priority' => ['required', 'integer', "min:0"]
         ];
     }
 

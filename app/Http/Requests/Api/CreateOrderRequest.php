@@ -24,6 +24,7 @@ class CreateOrderRequest extends FormRequest
         return [
             "is_insured" => 'required|boolean',
             "prescription.*" => 'required|mimes:jpeg,jpg,png',
+            "delivering_address_id" => ["required", "exists:addresses,id"]
         ];
     }
 }

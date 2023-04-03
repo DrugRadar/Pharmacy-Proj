@@ -27705,4 +27705,13 @@ pre[class*="language-"] {
   }
 }
 
+.table tbody td{
+    vertical-align: middle !important;
+}
+
+.table tbody td a,
+.table tbody td button{
+    margin: auto !important;
+}
+
 /*# sourceMappingURL=dashboard-free.css.map */
