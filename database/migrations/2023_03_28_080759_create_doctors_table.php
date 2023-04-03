@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('national_id')->unique();
             $table->string('avatar_image')->nullable()->default(null);
-            $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
+            // $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
