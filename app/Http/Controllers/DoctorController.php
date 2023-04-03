@@ -37,9 +37,9 @@ class DoctorController extends Controller
                     $actionBtn  = '<a id="$row->id" class="btn btn-primary" href="' . route('doctor.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
                     
                     if($row['banned_at']){
-                        $actionBtn .= '<a href="'.route('doctor.unBan', $row->id).'" class="ban btn btn-dark btn-sm">unban</a>  ';
+                        $actionBtn .= '<a href="'.route('doctor.unBan', $row->id).'" class="ban btn btn-dark"><i class=\'bx bx-user-check\' style="font-size:20px;"></i></a>  ';
                     }else{
-                        $actionBtn .= '<a href="'.route('doctor.ban', $row->id).'" class="ban btn btn-dark btn-sm">ban</a>  ';
+                        $actionBtn .= '<a href="'.route('doctor.ban', $row->id).'" class="ban btn btn-dark"><i class=\'bx bx-block\'></i></a>  ';
                     }
 
                     if($row['deleted_at']){
