@@ -106,8 +106,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
+    Route::match(['get', 'put'], 'orders/export', [PharmacyController::class, 'export'])->name("orders.export");
 
-
+    
 
 });
 
