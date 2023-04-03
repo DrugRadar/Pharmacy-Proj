@@ -73,6 +73,7 @@ class OrderController extends Controller
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
+        $doctors='';
         if($user->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
@@ -80,10 +81,6 @@ class OrderController extends Controller
         if($user->roles[0]->name=='admin')
         {
             $doctors=Doctor::all();
-        }
-        if($user->roles[0]->name=='doctor')
-        {
-            $doctors='';
         }
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
