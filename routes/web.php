@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::post('/orders/{id}/process', [OrderController::class, 'send'])->name("order.send");
         Route::delete('/orders/{id}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
         Route::get('/orders/{id}/restore', [OrderController::class, 'restore'])->name('order.restore');
-
+        Route::get('/orders/{id}/delivered', [OrderController::class, 'deliveringOrder'])->name('order.delivered');
     });
     Route::get('/orders/confirm/{id}',[OrderConfirmationController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderConfirmationController::class, 'cancelOrder'])->name('order.orderCancel');

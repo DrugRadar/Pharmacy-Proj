@@ -237,7 +237,11 @@ class OrderController extends Controller
         return back();
     }
     private function showActionBtns($row){
-        if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered' || $row->status =='WaitingForUserConfirmation'){
+        if($row->status =='confirmed')
+        {
+            $actionBtn  = '<a href="' . route('order.delivered', $row->id) . '" class="edit btn btn-success" title="delivered" >delivered</a>  ';
+        }
+        elseif($row->status == 'WaitingForUserConfirmation' || $row->status == 'canceled' || $row->status == 'delivered'){
             $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
             $actionBtn .= '<a id="$row->id" class="btn btn-primary disabled" title="unable to edit" href=""><i class=\'bx bx-edit\'></i></a>  ';
             if($row['deleted_at']){
