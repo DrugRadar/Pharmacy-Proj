@@ -222,6 +222,8 @@ thead {
                     </a>
                 </li>
                 @endif
+
+                @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('revenue.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -230,6 +232,7 @@ thead {
                         <span class="nav-link-text ms-1">Revenue</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </aside>
@@ -279,7 +282,8 @@ thead {
         </nav>
 
 
-        <div class="container container d-flex flex-column justify-content-center" style="min-height: 71vh; padding-right:25px !important;">
+        <div class="container container d-flex flex-column justify-content-center"
+            style="min-height: 71vh; padding-right:25px !important;">
             @yield('content')
         </div>
 

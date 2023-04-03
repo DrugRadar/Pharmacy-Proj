@@ -132,7 +132,7 @@ class OrderController extends Controller
                 'avatar_image_url' => $avatar_url,
             ]
         ];
-        return response()->json($formattedOrder, 200);
+        return response()->json(new OrderResource($formattedOrder), 200);
     }
 
     public function edit(UpdateOrderRequest $request,$id){
