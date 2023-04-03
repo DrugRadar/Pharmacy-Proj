@@ -25,17 +25,7 @@ class AddressController extends Controller
                 ->addColumn('area_name', function ($row) {
                     return $row->area->name;
                 })
-                ->addColumn('action', function($row){
-                    $actionBtn = '<a id="$row->id" class="btn btn-primary" title="Click to edit address" href="' . route('address.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
-                    if($row['deleted_at']){
-                        $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore address" href="' . route('address.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
-                    }
-                    else{
-                        $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete address" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
-                    }
-                    return $actionBtn;
-                })
+                ->addColumn('action', function($row) {return $this->showActionBtns($row);})
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -95,5 +85,15 @@ class AddressController extends Controller
         Address::withTrashed()->find($id)->restore();
         return back();
     }
-
+    private function showActionBtns($row){
+        $actionBtn = '<a id="$row->id" class="btn btn-primary" title="Click to edit address" href="' . route('address.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+        if($row['deleted_at']){
+            $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore address" href="' . route('address.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+        }
+        else{
+            $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete address" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+        }
+        return $actionBtn;
+    }
 }
