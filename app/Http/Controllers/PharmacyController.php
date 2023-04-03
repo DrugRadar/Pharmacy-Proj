@@ -32,17 +32,7 @@ class PharmacyController extends Controller
                     return $row->area->name;
                 })
             ->addColumn('action', function($row){
-                    $actionBtn = '<a id="$row->id" class="btn btn-primary" title="click to edit pharmacy" href="' . route('pharmacy.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
-                    if($row['deleted_at']){
-                        $actionBtn .= '<a id="$row->id" class="btn btn-success" title="click to restore pharmacy" href="' . route('pharmacy.restore', $row->id) . '">
-                        <i class=\'bx bx-recycle\'></i></a>';
-                    }
-                    else{
-                        $actionBtn .= '<button type="button" class="delete btn btn-danger" title="click to delete pharmacy" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
-                    }
-
-                return $actionBtn;
+                return $this->showActionBtns($row);
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -157,5 +147,19 @@ class PharmacyController extends Controller
 public function export() {
     $pharmacy = Pharmacy::find(Auth::user()->userable_id);
     return Excel::download(new PharmacyExport($pharmacy), 'orders.xlsx');
+}
+
+private function showActionBtns($row){
+    $actionBtn = '<a id="$row->id" class="btn btn-primary" title="click to edit pharmacy" href="' . route('pharmacy.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+    if($row['deleted_at']){
+        $actionBtn .= '<a id="$row->id" class="btn btn-success" title="click to restore pharmacy" href="' . route('pharmacy.restore', $row->id) . '">
+        <i class=\'bx bx-recycle\'></i></a>';
+    }
+    else{
+        $actionBtn .= '<button type="button" class="delete btn btn-danger" title="click to delete pharmacy" data-bs-toggle="modal"
+        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+    }
+
+return $actionBtn;
 }
 }

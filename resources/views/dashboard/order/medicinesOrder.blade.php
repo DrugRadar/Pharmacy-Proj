@@ -4,17 +4,18 @@
 <form method="POST" action="{{route('order.send',[$orderId])}}" enctype="multipart/form-data">
   @csrf
   <div class="d-flex">
-            <p type="text" name="medicineName"class="col-4 me-2">Medicine Name </p>
-            <p  class="col-4 me-2">Medicine Price</p>
-            <p  class="col-4 me-2"> Medicine quantity</p>
+            <p type="text" name="medicineName"class="col-3 me-2">Medicine Name </p>
+            <p  class="col-3 me-2">Medicine Price</p>
+            <p  class="col-3 me-2"> Medicine Quantity</p>
+            <p  class="col-3 me-2"> Medicine Type</p>
             </div>
   @foreach($medicines as $index => $medicine )
   <div class="mb-3 mt-3  p-0">    
             <div class="d-flex">
-            <input type="text"class="form-control col-4 me-2" value="{{is_object($medicine) ? $medicine->name  : $medicine}}">
-            <input type="number" id="price{{ $index }}" name="price[]" class="form-control col-4 me-2 price" value="{{is_object($medicine) ?$medicine->price:''}}" > 
-            <input type="number"id="quantity{{ $index }}" name="quantity[]" value=""class="form-control col-4 me-2 quantity" placeholder="Medicine quantity"> 
-     
+            <input type="text"class="form-control col-3 me-2" value="{{is_object($medicine) ? $medicine->name  : $medicine}}">
+            <input type="number" id="price{{ $index }}" name="price[]" class="form-control col-3 me-2 price" value="{{is_object($medicine) ?$medicine->price:''}}" > 
+            <input type="number"id="quantity{{ $index }}" name="quantity[]" value=""class="form-control col-3 me-2 quantity" placeholder="Medicine quantity"> 
+            <input type="text" class="form-control col-3 me-2"  value="{{is_object($medicine) ?$medicine->type:''}}" disabled>
             </div>
   </div>
   @endforeach
