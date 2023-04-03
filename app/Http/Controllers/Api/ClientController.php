@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ClientRegisterRequest;
 use App\Http\Requests\Api\ClientUpdateProfileRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\OrderResource;
 use App\Models\Client;
+use App\Models\Order;
 use App\Notifications\ClientVerified;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -101,4 +103,13 @@ public function login(Request $request)
         ], 202);
 
     }
+
+    public function clientOrders(Request $request, $id){
+        $orders = Order::where('client_id', $id)->get();;
+        return response()->json([            
+            'data' =>  OrderResource::collection($orders),
+        ], 201);
+
+    }
+      
 }

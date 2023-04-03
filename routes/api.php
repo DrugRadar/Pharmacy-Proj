@@ -42,9 +42,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}',[OrderController::class,'show']);
     Route::put('/orders/{id}', [OrderController::class, 'edit']);
-    
+
     Route::put('/client/{id}',[ClientController::class,'update']);
     Route::get('/client/{id}',[ClientController::class,'show']);
+    Route::get('/client/{clientId}/orders',[ClientController::class,'clientOrders']);
 
     // Route::post('/orders', [OrderController::class, 'store']);
     Route::post('/address', [AddressController::class, 'create']);
