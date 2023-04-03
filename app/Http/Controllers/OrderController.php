@@ -45,9 +45,6 @@ class OrderController extends Controller
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
                 })
-                ->addColumn('creator_type', function ($row) {
-                    return $row->creator_type;
-                })
                 ->addColumn('is_insured', function ($row) {
                     
                     return $row->is_insured?"true":"false";
@@ -238,7 +235,12 @@ class OrderController extends Controller
     {
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
-
+    public function deliveringOrder($id){
+        $order = Order::find($id);
+        $order->status='Delivered';
+        $order->save();
+        return back();
+    }
     private function showActionBtns($row){
         if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered' || $row->status =='WaitingForUserConfirmation'){
             $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    

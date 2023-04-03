@@ -34,10 +34,9 @@ class RevenueController extends Controller
             }
             return view('dashboard.revenue.index');
             }else if(Auth::user()->roles[0]->name == 'pharmacy'){
-                $pharmacy_id = Auth::user()->id;
+                $pharmacy_id = Auth::user()->userable_id;
                 $PharmacyRevenue = DB::table('orders')->where('assigned_pharmacy_id',$pharmacy_id)
                                                             ->sum('total_price');
-               
                $pharmacy = Pharmacy::find(Auth::user()->userable_id);
                $pharmacyName = $pharmacy->name;
                 return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue,'pharmacyName'=>$pharmacyName]);
