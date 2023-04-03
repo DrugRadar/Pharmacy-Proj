@@ -63,11 +63,10 @@
         @if($pharmacy->getFirstMediaUrl('avatar_image', 'thumb')){
             <img src="{{$pharmacy->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture">
         }
-        @else{
+        @else
             <img src="{{asset('assets/gifs/user.png')}}" alt="profile picture" class="profile__picture">
-        }
         @endif
-        
+
         <div class="text">
             <h3>Doctor Name</h3>
             <p>{{$pharmacy->name}}</p>
