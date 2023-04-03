@@ -133,7 +133,7 @@ table {
                     </a>
                     @elseif(Auth::user()->hasrole('doctor'))
                     <a class="nav-link text-white"
-                        href="{{route('dashboard.doctor.profile', Auth::user()->userable_id)}}">
+                        href="{{route('doctor.profile', Auth::user()->userable_id)}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
@@ -141,7 +141,7 @@ table {
                     </a>
                     @elseif(Auth::user()->hasrole('pharmacy'))
                     <a class="nav-link text-white"
-                        href="{{route('dashboard.pharmacy.profile', Auth::user()->userable_id)}}">
+                        href="{{route('pharmacy.profile', Auth::user()->userable_id)}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>

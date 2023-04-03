@@ -2,7 +2,9 @@
 @section('content')
 <div class="col-12">
     <h1>Doctor</h1>
-    <form method="POST" action="{{route('doctor.update',$doctor->id)}}" enctype="multipart/form-data" class="w-lg-50 row mx-auto">
+
+    <form method="POST" action="{{route(Auth::user()->hasrole('doctor')?'doctor.profile.update':'doctor.update',$doctor->id)}}" enctype="multipart/form-data" class="w-lg-50 row mx-auto">
+
         @csrf
         @method('put')
         <div class="mb-3 col-6">
@@ -40,10 +42,14 @@
 
         <div class="mb-3 col-6">
             <label for="exampleFormControlTextarea1" class="form-label">Pharmacy Name</label>
-            <select name="pharmacy_id" class="form-control w-100">
+            <select name="pharmacy_id" class="form-control w-100 p-1">
+            <option value="{{$doctor->pharmacy->id}}" >{{$doctor->pharmacy->name}}</option>
+            {{Auth::user()->hasrole('admin')?' ':''}} 
+                @if(Auth::user()->hasrole('admin'))
                 @foreach($pharmacies as $pharmacy)
                 <option value="{{$pharmacy->id}}" {{ old('pharmacy_id', $pharmacy->id) == '1' ? 'selected' : '' }}>{{$pharmacy->name}}</option>
                 @endforeach
+                @endif
             </select>
             @error('pharmacy_id')
                 <p class="text-danger mt-1">{{ $message }}</p>

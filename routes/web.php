@@ -86,7 +86,15 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
     });
     Route::group(['middleware' => ['auth','role:pharmacy']], function(){
 
-        Route::get('/pharmacy/profile/{id}' , [PharmacyController::class, 'profile'])->name('dashboard.pharmacy.profile');
+        Route::get('/pharmacy/profile/{id}' , [PharmacyController::class, 'profile'])->name('pharmacy.profile');
+        Route::get('/pharmacy/profile/{id}/edit', [PharmacyController::class, 'edit'])->name('pharmacy.profile.edit');
+        Route::put('/pharmacy/profile/{id}', [PharmacyController::class, 'update'])->name('pharmacy.profile.update');
+    });
+
+    Route::group(['middleware' => ['auth','role:doctor']], function(){
+        Route::get('/doctor/profile/{id}' , [DoctorController::class, 'profile'])->name('doctor.profile');
+        Route::get('/doctor/profile/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.profile.edit');
+        Route::put('/doctor/profile/{id}', [DoctorController::class, 'update'])->name('doctor.profile.update');
 
     });
     Route::group(['middleware' => ['auth','role:admin|pharmacy|doctor']], function(){
@@ -100,7 +108,6 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::post('/orders/{id}/process', [OrderController::class, 'send'])->name("order.send");
         Route::delete('/orders/{id}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
         Route::get('/orders/{id}/restore', [OrderController::class, 'restore'])->name('order.restore');
-        Route::get('/doctor/profile/{id}' , [DoctorController::class, 'profile'])->name('dashboard.doctor.profile');
 
     });
     Route::get('/orders/confirm/{id}',[OrderConfirmationController::class, 'confirmOrder'])->name('order.orderConfirm');
