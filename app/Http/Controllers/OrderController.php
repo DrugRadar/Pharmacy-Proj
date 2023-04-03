@@ -110,7 +110,7 @@ class OrderController extends Controller
             'is_insured'=>$request->is_insured,
             'creator_type'=>$creator_type,
         ]);
-       return $this->continue($request,$newOrder->id);
+        return $this->continue($request,$newOrder->id);
     }
     public function process($id){
         $user = Auth::user();

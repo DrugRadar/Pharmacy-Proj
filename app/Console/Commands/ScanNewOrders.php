@@ -31,20 +31,20 @@ class ScanNewOrders extends Command
         $new_orders = DB::table('orders')
         ->where('status', 'new')
         ->get();
-    foreach ($new_orders as $order) {
-        $pharmacy = null;
-        foreach ($pharmacies as $p) {
-            if ($p->area_id == $order->client_address_id) {
-                // if ($pharmacy == null || $p->priority > $pharmacy->priority) {
+        foreach ($new_orders as $order) {
+            $pharmacy = null;
+            foreach ($pharmacies as $p) {
+                if ($p->area_id == $order->client_address_id) {
+                    // if ($pharmacy == null || $p->priority > $pharmacy->priority) {
                     $pharmacy = $p;
-                // }
+                    // }
+                }
+            }
+            if ($pharmacy != null) {
+                DB::table('orders')
+                    ->where('id', $order->id)
+                    ->update(['status' => 'processing', 'assigned_pharmacy_id' => $pharmacy->id]);
             }
         }
-        if ($pharmacy != null) {
-            DB::table('orders')
-                ->where('id', $order->id)
-                ->update(['status' => 'processing', 'assigned_pharmacy_id' => $pharmacy->id]);
-        } 
-    }
     }
 }
