@@ -27,27 +27,27 @@ class OrderController extends Controller
         $is_insured = filter_var($is_insured, FILTER_VALIDATE_BOOLEAN);
         $prescriptions = $validated['prescription'];
         $delivering_address_id = $request->input('delivering_address_id');
-        $clientAddress = Address::find($delivering_address_id);
-        // $pharmacy = Pharmacy::where('area_id', $clientAddress->area_id)->first();
 
-        $order = new Order([
-            'client_address_id' => $delivering_address_id,
-            // 'assigned_pharmacy_id'=> $pharmacy->id,
-            'doctor_id'=>null,
-            'is_insured' => $is_insured,
-            'status'=> "new",
-            'creator_type'=>"client",
-            'total_price'=>null,
-            'client_id'=> $client->id
+        if( $this->checkForClientAddress($delivering_address_id , $client->id) ){
+            $order = new Order([
+                'client_address_id' => $delivering_address_id,
+                'doctor_id'=>null,
+                'is_insured' => $is_insured,
+                'status'=> "new",
+                'creator_type'=>"client",
+                'total_price'=>null,
+                'client_id'=> $client->id
+            ]);
 
-        ]);
-
-        $order->save();
-        $this->fillPrescription($prescriptions,$order->id);
-        return response()->json([
-            'message' => 'Order created successfully',
-            'data' => $order
-        ], 200);
+            $order->save();
+            $this->fillPrescription($prescriptions,$order->id);
+            return response()->json([
+                'message' => 'Order created successfully',
+                'data' => $order
+            ], 200);
+        }else{
+            return response()->json("The entered address id ($request->delivering_address_id) does not exist for the client", 400);
+        }
     }
 
     private function fillPrescription($prescriptions, $order_id) {
@@ -140,10 +140,10 @@ class OrderController extends Controller
 
         if($order->status == "new"){
             if( $this->checkForClientAddress($request->delivering_address_id , $id) ){
-            
+
                 $order->is_insured = $request->is_insured;
                 $order->client_address_id = $request->delivering_address_id;
-                
+
                 if($request->hasFile('prescription')){
                     $this->deletePrescription($id);
                     $this->fillPrescription($request->prescription, $id);
@@ -161,7 +161,7 @@ class OrderController extends Controller
 
     private function checkForClientAddress($delivering_address_id, $client_id){
         $address = Address::find($delivering_address_id);
-        
+
         if($address != null){
             if($address->client_id == $client_id){
                 return true;
@@ -178,7 +178,7 @@ class OrderController extends Controller
         }
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
     }
-    
+
     // public function confirmOrder($id){
     //     $order = Order::find($id);
     //     if ($order) {

@@ -205,9 +205,9 @@ thead {
                 @endif
                 @if(Auth::user()->hasrole('banned'))
                     <div class="alert alert-success">
-                         This Account banned for 3 days 
+                        This Account banned for 3 days
                     </div>
-                @else    
+                @else
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('order.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -297,12 +297,12 @@ thead {
 
 
         <div class="container container d-flex flex-column justify-content-center"
-            style="min-height: 71vh; padding-right:25px !important;">
+            style="min-height: 75.7vh; padding-right:25px !important;">
             @yield('content')
         </div>
 
         {{-- footer --}}
-        <footer class="text-center text-white mt-auto me-3 bg-gradient-dark footer">
+        <footer class="text-center text-white mt-auto me-1 bg-gradient-dark footer">
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright:

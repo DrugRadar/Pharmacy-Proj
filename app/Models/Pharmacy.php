@@ -29,6 +29,7 @@ class Pharmacy extends Model implements HasMedia
         'password',
         'national_id',
         'area_id',
+        'priority',
     ];
     public function area()
     {

@@ -7,13 +7,13 @@
         <a href="{{route('order.create')}}" class="mt-4 btn btn-success">Create Order</a>
     </div>
 
-    <table id="orders-table" class="table table-bordered yajra-datatable">
+    <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="orders-table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">client_name</th>
-                <th scope="col">doctor_name</th>
-                <th scope="col">creator_name</th>
+                <th scope="col">client</th>
+                <th scope="col">doctor</th>
+                <th scope="col">creator</th>
                 <th scope="col">status</th>
                 <th scope="col">is_insured</th>
                 <th scope="col">Actions</th>

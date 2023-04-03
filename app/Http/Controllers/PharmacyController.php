@@ -28,6 +28,9 @@ class PharmacyController extends Controller
             $data = Pharmacy::withTrashed()->latest()->get();
             return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('area_name', function ($row) {
+                    return $row->area->name;
+                })
             ->addColumn('action', function($row){
                     if($row['deleted_at']){
 
@@ -62,6 +65,7 @@ class PharmacyController extends Controller
             'email' => $request->email,
             'password' =>  $request->password,
             'national_id' =>  $request->national_id,
+            'priority' => $request->priority,
             'area_id' =>  $request->area_id,
         ]);
 
@@ -119,6 +123,7 @@ class PharmacyController extends Controller
         $pharmacy->name = $request->name;
         $pharmacy->email = $request->email;
         $pharmacy->password = $request->password;
+        $pharmacy->priority = $request->priority;
         $pharmacy->national_id = $request->national_id;
         $pharmacy->save();
     }

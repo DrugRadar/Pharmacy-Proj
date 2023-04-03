@@ -139,7 +139,7 @@ class DoctorController extends Controller
         return view('dashboard.doctor.profile', ['doctor' => $doctor]);
     }
 
-       public function restore($id){
+    public function restore($id){
         Doctor::withTrashed()->find($id)->restore();
         return back();
     }

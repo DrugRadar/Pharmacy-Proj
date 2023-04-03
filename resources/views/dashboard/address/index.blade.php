@@ -5,16 +5,16 @@
     <div class="text-center">
         <a href="{{route('address.create')}}" class="mt-4 btn btn-success">Create Address</a>
     </div>
-    <table class="table mt-4 yajra-datatable table-bordered" id="address-table" style="width:500px !important;">
+    <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="address-table" style="width:500px !important;">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Area ID</th>
-                <th scope="col">Street name</th>
+                <th scope="col">Client ID</th>
+                <th scope="col">Area</th>
+                <th scope="col">Street</th>
                 <th scope="col">Building No.</th>
                 <th scope="col">floor No.</th>
                 <th scope="col">flat No.</th>
-                <th scope="col">Client ID</th>
                 <th scope="col">action</th>
             </tr>
         </thead>
@@ -37,8 +37,12 @@ $(function() {
                 name: 'DT_RowIndex'
             },
             {
-                data: 'area_id',
-                name: 'area_id'
+                data: 'client_id',
+                name: 'client_id'
+            },
+            {
+                data: 'area_name',
+                name: 'area_name'
             },
             {
                 data: 'street_name',
@@ -55,10 +59,6 @@ $(function() {
             {
                 data: 'flat_number',
                 name: 'flat_number'
-            },
-            {
-                data: 'client_id',
-                name: 'client_id'
             },
             {
                 data: 'action',

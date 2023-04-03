@@ -5,12 +5,12 @@
     <div style="margin-top: -50px;" class="text-center">
         <a href="{{route('area.create')}}" class="mt-4 btn btn-success">Create Area</a>
     </div>
-    <table class="table mt-4 yajra-datatable table-bordered" id="area-table">
+    <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="area-table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Area name</th>
-                <th scope="col">Area Address</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>

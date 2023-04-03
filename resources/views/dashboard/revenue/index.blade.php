@@ -4,7 +4,7 @@
 <h2>Revenue</h2>
 <div class="text-center">
 </div>
-<table class="table mt-4 table-bordered" id="revenue">
+<table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="revenue">
     <thead>
         <tr>
             <th scope=" col">Pharmacy Avatar</th>
