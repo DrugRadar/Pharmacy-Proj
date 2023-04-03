@@ -52,31 +52,7 @@ class OrderController extends Controller
                     
                     return $row->is_insured?"true":"false";
                 })
-                ->addColumn('action', function($row) {
-                    if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered'){
-                        $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
-                        $actionBtn .= '<a id="$row->id" class="btn btn-primary disabled" title="unable to edit" href=""><i class=\'bx bx-edit\'></i></a>  ';
-                        if($row['deleted_at']){
-                            $actionBtn .= '<a id="$row->id" class="btn btn-success disabled" title="unable to restore" href=""><i class=\'bx bx-recycle\'></i></a>';
-                        }
-                        else{
-                            $actionBtn .= '<button type="button"  class="delete btn btn-danger disabled" title="unable to delete" data-bs-toggle="modal"
-                            data-bs-target="" id="'.$row->id.'disabled"><i class=\'bx bxs-trash-alt\'></i></a>';
-                        }
-                    }else{
-                        $actionBtn  = '<a href="'.route('order.send', $row->id).'" class="edit btn btn-success" title="Click to process order"><i class=\'bx bx-cog\'></i></a>  ';    
-                        $actionBtn .= '<a id="$row->id" class="btn btn-primary" title="Click to edit order" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
-                        if($row['deleted_at']){
-                            $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore order" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
-                        }
-                        else{
-                            $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete order" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
-                        }
-                   }
-           
-                    return $actionBtn;
-                })
+                ->addColumn('action',function ($row) {return $this->showActionBtns($row);})
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -90,6 +66,7 @@ class OrderController extends Controller
         $clients = Client::all();
         $addresses=Address::all();
         $medicines=Medicine::all();
+        $doctors='';
         if($user->roles[0]->name=='pharmacy')
         {
             $doctors=Doctor::where('pharmacy_id', $user->userable_id)->get();
@@ -97,10 +74,6 @@ class OrderController extends Controller
         if($user->roles[0]->name=='admin')
         {
             $doctors=Doctor::all();
-        }
-        if($user->roles[0]->name=='doctor')
-        {
-            $doctors='';
         }
         return view('dashboard.order.create', ['pharmacies' => $pharmacies,'clients'=>$clients,'addresses'=>$addresses,'medicines'=>$medicines,'doctors'=>$doctors]);
     }
@@ -266,5 +239,29 @@ class OrderController extends Controller
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
 
-    
+    private function showActionBtns($row){
+        if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered'){
+            $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
+            $actionBtn .= '<a id="$row->id" class="btn btn-primary disabled" title="unable to edit" href=""><i class=\'bx bx-edit\'></i></a>  ';
+            if($row['deleted_at']){
+                $actionBtn .= '<a id="$row->id" class="btn btn-success disabled" title="unable to restore" href=""><i class=\'bx bx-recycle\'></i></a>';
+            }
+            else{
+                $actionBtn .= '<button type="button"  class="delete btn btn-danger disabled" title="unable to delete" data-bs-toggle="modal"
+                data-bs-target="" id="'.$row->id.'disabled"><i class=\'bx bxs-trash-alt\'></i></a>';
+            }
+        }else{
+            $actionBtn  = '<a href="'.route('order.send', $row->id).'" class="edit btn btn-success" title="Click to process order"><i class=\'bx bx-cog\'></i></a>  ';    
+            $actionBtn .= '<a id="$row->id" class="btn btn-primary" title="Click to edit order" href="' . route('order.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+            if($row['deleted_at']){
+                $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore order" href="' . route('order.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+            }
+            else{
+                $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete order" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+            }
+       }
+
+        return $actionBtn;
+    }
 }
