@@ -26,14 +26,12 @@
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
-
 </head>
 <style>
-table {
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+    table {
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 </style>
 
 <body class="g-sidenav-show bg-gray-200">
@@ -56,7 +54,6 @@ table {
                                     d="m 0,0 c 1336.44,0 2672.87,0 4009.3,0 1330.23,0 2660.47,0 3990.7,0 0,1330.23 0,2660.47 0,3990.7 0,1336.43 0,2672.86 0,4009.3 -1330.23,0 -2660.47,0 -3990.7,0 -1336.43,0 -2672.86,0 -4009.3,0 C 0,6663.56 0,5327.13 0,3990.7 0,2660.47 0,1330.23 0,0" />
                             </clipPath>
                         </defs>
-
                         <g xmlns="http://www.w3.org/2000/svg" transform="matrix(1.25,0,0,-1.25,0,1000)" id="g10">
                             <g transform="scale(0.1,0.1)" id="g12">
                                 <g id="g14">
@@ -217,7 +214,7 @@ table {
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class='bx bxs-group' style="font-size: 25px;"></i>
+                            <i class='bx bx-stats'style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Statistics</span>
                     </a>
@@ -284,7 +281,6 @@ table {
                         <input type="checkbox" id="dark-mode">
                         <label for="dark-mode" class="Dark-btn"></label>
                     </div>
-
                 </div>
             </div>
         </nav>
@@ -375,9 +371,6 @@ table {
     </main>
 
     <!--   Core JS Files   -->
-    <!-- <script src="assets/js/core/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
