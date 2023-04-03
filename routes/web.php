@@ -10,6 +10,8 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
+use App\Mail\InactiveClientMail;
+use App\Models\Client;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +44,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('pharmacy', PharmacyController::class);
     Route::get('/pharmacy/profile/{id}' , [PharmacyController::class, 'profile'])->name('dashboard.pharmacy.profile');
-    Route::get('/pharmacy/restore/{id}', [AddressController::class, 'restore'])->name('pharmacy.restore');
+    Route::get('/pharmacy/restore/{id}', [PharmacyController::class, 'restore'])->name('pharmacy.restore');
 
 
     Route::get('/area', [AreaController::class, 'index'])->name("area.index");
@@ -51,7 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/area/destroy/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
     Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
     Route::get('/area/edit/{id}', [AreaController::class, 'edit'])->name('area.edit');
-    Route::get('/area/restore/{id}', [AddressController::class, 'restore'])->name('area.restore');
+    Route::get('/area/restore/{id}', [AreaController::class, 'restore'])->name('area.restore');
 
     Route::get('/address', [AddressController::class, 'index'])->name("address.index");
     Route::get('/address/create', [AddressController::class, 'create'])->name("address.create");
@@ -71,7 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/doctor/ban/{id}', [DoctorController::class, 'ban'])->name('doctor.ban');
     Route::get('/doctor/unBan/{id}', [DoctorController::class, 'unBan'])->name('doctor.unBan');
     Route::get('/doctor/profile/{id}' , [DoctorController::class, 'profile'])->name('dashboard.doctor.profile');
-    Route::get('/doctor/restore/{id}', [AddressController::class, 'restore'])->name('doctor.restore');
+    Route::get('/doctor/restore/{id}', [DoctorController::class, 'restore'])->name('doctor.restore');
 
 
 
@@ -81,7 +83,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/medicine/destroy/{id}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
     Route::put('/medicine/{id}', [MedicineController::class, 'update'])->name('medicine.update');
     Route::get('/medicine/{id}/edit', [MedicineController::class, 'edit'])->name('medicine.edit');
-    Route::get('/medicine/restore/{id}', [AddressController::class, 'restore'])->name('medicine.restore');
+    Route::get('/medicine/restore/{id}', [MedicineController::class, 'restore'])->name('medicine.restore');
 
 
 
@@ -94,7 +96,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name("order.update");
     Route::post('/orders/process/{id}', [OrderController::class, 'send'])->name("order.send");
     Route::delete('/orders/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
-    Route::get('/orders/restore/{id}', [AddressController::class, 'restore'])->name('order.restore');
+    Route::get('/orders/restore/{id}', [OrderController::class, 'restore'])->name('order.restore');
 
     Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
@@ -120,6 +122,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // // welcome on login
-// Route::get('/email', function(){
-
-// });
+Route::get('/email', function(){
+});
