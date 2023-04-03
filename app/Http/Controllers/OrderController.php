@@ -235,7 +235,12 @@ class OrderController extends Controller
     {
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
-
+    public function deliveringOrder($id){
+        $order = Order::find($id);
+        $order->status='Delivered';
+        $order->save();
+        return back();
+    }
     private function showActionBtns($row){
         if($row->status == 'confirmed' || $row->status == 'canceled' || $row->status == 'delivered'){
             $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
