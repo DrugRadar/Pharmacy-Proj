@@ -266,43 +266,5 @@ class OrderController extends Controller
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
 
-    public function confirmOrder($id){
-        $order = Order::find($id);
-     
-        if ($order) {
-            if($order->status == 'canceled'){
-                Session::flash('success', 'This order has been canceled before');
-                return back();
-            }
-            else if($order->status == 'WaitingForUserConfirmation'){ 
-                $order->status = 'confirmed';
-                $order->save();
-                return view('confirmOrder.confirmed');
-           }
-           else{
-                Session::flash('success', 'This order has been confirmed before ');
-                return back();
-           }
-        } else {
-            abort(404);
-        }
-    }
-    public function cancelOrder($id){
-        $order = Order::find($id);
-        if ($order) {          
-             if($order->status == 'WaitingForUserConfirmation'){ 
-                $order->status = 'canceled';
-                $order->save();
-                return view('confirmOrder.canceledOrder',["message"=> "Order canceled"]);
-            }
-            else {
-                Session::flash('success', 'This order has been confirmed before tou can not cancel it');
-                // return back();
-                return view('confirmOrder.canceledOrder',["message"=> "can not cancel order"]);
-
-            }
-        } else {
-            abort(404);
-        }
-    }
+    
 }
