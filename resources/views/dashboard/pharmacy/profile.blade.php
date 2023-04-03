@@ -60,13 +60,8 @@
 </style>
 
 <div class="card align-self-center bg-gradient-dark">
-        @if($pharmacy->getFirstMediaUrl('avatar_image', 'thumb')){
-            <img src="{{$pharmacy->getFirstMediaUrl('avatar_image', 'thumb')}}" alt="profile picture" class="profile__picture">
-        }
-        @else
-            <img src="{{asset('assets/gifs/user.png')}}" alt="profile picture" class="profile__picture">
-        @endif
-
+        <img src="{{$pharmacy->getFirstMediaUrl('avatar_image', 'thumb') ? $pharmacy->getFirstMediaUrl('avatar_image', 'thumb') : asset('assets/gifs/user.png')}}" alt="profile picture" class="profile__picture">
+        <a href="" class="w-25 align-self-end mt-1 me-1" style="border:none; background:transparent text-decorations:none; color:inherit;  position:relative; top: 28px; right: 128px;"><i class='bx bx-edit' style="font-size: 33px;"></i></a>
         <div class="text">
             <h3>Doctor Name</h3>
             <p>{{$pharmacy->name}}</p>
