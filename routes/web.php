@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\OrderConfirmationController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
@@ -98,8 +99,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
-    Route::get('/orders/confirm/{id}',[OrderController::class, 'confirmOrder'])->name('order.orderConfirm');
-    Route::get('/orders/cancel/{id}',[OrderController::class, 'cancelOrder'])->name('order.orderCancel');
+    Route::get('/orders/confirm/{id}',[OrderConfirmationController::class, 'confirmOrder'])->name('order.orderConfirm');
+    Route::get('/orders/cancel/{id}',[OrderConfirmationController::class, 'cancelOrder'])->name('order.orderCancel');
 
     Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
     Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
