@@ -17,7 +17,7 @@ class RevenueController extends Controller
                 return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('avatar_image_url', function ($row) {
-                    return  $row->getFirstMediaUrl('avatar_image', 'thumb');
+                  return $row->getFirstMediaUrl('avatar_image', 'thumb') ? $row->getFirstMediaUrl('avatar_image', 'thumb') : asset('assets/gifs/user.png');
                 })
                 ->addColumn('totalOrders', function (Pharmacy $pharmacy) {
                     $ordersCount = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)->count();
