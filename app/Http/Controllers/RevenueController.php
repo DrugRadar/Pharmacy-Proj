@@ -9,7 +9,7 @@ use Yajra\DataTables\DataTables;
 
 class RevenueController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
     {
         if (Auth::user()->roles[0]->name=='admin') {
             if ($request->ajax()) {
@@ -23,20 +23,20 @@ class RevenueController extends Controller
                     $ordersCount = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)->count();
                     return $ordersCount;
                 })
-               ->addColumn('totalRevenue', function (Pharmacy $pharmacy) {
-                   $ordersRevenue = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)
-                                                       ->where('status', 'confirmed')
-                                                       ->sum('total_price');
-                   return $ordersRevenue;
-               })
+                ->addColumn('totalRevenue', function (Pharmacy $pharmacy) {
+                    $ordersRevenue = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)
+                                                    ->where('status', 'confirmed')
+                                                    ->sum('total_price');
+                    return $ordersRevenue;
+                })
                 ->make(true);
-                
+
             }
             return view('dashboard.revenue.index');
             }else if(Auth::user()->roles[0]->name == 'pharmacy'){
                 $pharmacy_id = Auth::user()->id;
                 $PharmacyRevenue = DB::table('orders')->where('assigned_pharmacy_id',$pharmacy_id)
-                                                             ->sum('total_price');
+                                                            ->sum('total_price');
                 return view('dashboard.revenue.PharmacyRevenue',['pharmacy_revenue'=>$PharmacyRevenue]);
             }
         }

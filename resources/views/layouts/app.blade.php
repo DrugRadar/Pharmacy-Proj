@@ -286,7 +286,8 @@ thead {
         </nav>
 
 
-        <div class="container container d-flex flex-column justify-content-center" style="min-height: 71vh; padding-right:25px !important;">
+        <div class="container container d-flex flex-column justify-content-center"
+            style="min-height: 71vh; padding-right:25px !important;">
             @yield('content')
         </div>
 
