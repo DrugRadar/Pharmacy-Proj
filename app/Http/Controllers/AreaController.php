@@ -59,19 +59,16 @@ class AreaController extends Controller
         return back();
     }
 
-    //  public function getArea(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $data = Area::latest()->get();
-    //         return DataTables::of($data)
-    //             ->addIndexColumn()
-    //             ->addColumn('action', function($row){
-    //                 $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-    //                 return $actionBtn;
-    //             })
-    //             ->rawColumns(['action'])
-    //             ->make(true);
-    //     }
-    //     return view('dashboard.area.index');
-    // }
+    private function showActionBtns($row){
+
+        $actionBtn = '<a id="$row->id" class="btn btn-primary" title="Click to edit area" href="' . route('area.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+        if($row['deleted_at']){
+            $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore area" href="' . route('area.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+        }
+        else{
+            $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete area" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+        }
+        return $actionBtn;
+    }
 }
