@@ -1,0 +1,67 @@
+name: address
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/client/{clientId}/address/{addressId}'
+    metadata:
+      groupName: address
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a specific address for a client.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      clientId:
+        name: clientId
+        description: 'The ID of the client who owns the address.'
+        required: true
+        example: atque
+        type: string
+        custom: []
+      addressId:
+        name: addressId
+        description: 'The ID of the address to be deleted.'
+        required: true
+        example: quibusdam
+        type: string
+        custom: []
+    cleanUrlParameters:
+      clientId: atque
+      addressId: quibusdam
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Address deleted successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "message": "Address not found"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

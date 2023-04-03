@@ -1,0 +1,116 @@
+name: Addresses
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/client/{clientId}/address/{addressId}'
+    metadata:
+      groupName: Addresses
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified address of a client'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      clientId:
+        name: clientId
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        custom: []
+      addressId:
+        name: addressId
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      clientId: 1
+      addressId: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      street_name:
+        name: street_name
+        description: 'The street name of the address.'
+        required: true
+        example: quia
+        type: string
+        custom: []
+      building_number:
+        name: building_number
+        description: 'The building number of the address.'
+        required: true
+        example: accusantium
+        type: string
+        custom: []
+      floor_number:
+        name: floor_number
+        description: 'The floor number of the address.'
+        required: true
+        example: non
+        type: string
+        custom: []
+      flat_number:
+        name: flat_number
+        description: 'The flat number of the address.'
+        required: true
+        example: excepturi
+        type: string
+        custom: []
+      is_main:
+        name: is_main
+        description: 'Whether the address is the main address of the client.'
+        required: true
+        example: false
+        type: boolean
+        custom: []
+    cleanBodyParameters:
+      street_name: quia
+      building_number: accusantium
+      floor_number: non
+      flat_number: excepturi
+      is_main: false
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+           "data": {
+               "id": 1,
+               "street_name": "123 Main St",
+               "building_number": "5",
+               "floor_number": "3",
+               "flat_number": "10",
+               "is_main": true,
+               "client_id": 1
+           },
+           "message": "Address updated successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+           "error": "Address not found"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
