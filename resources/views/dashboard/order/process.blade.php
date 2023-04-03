@@ -17,7 +17,6 @@
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Name</label>
                     <input class="form-control w-50" style="width: 50%" name="client_id" id="exampleFormControlInput1" value="{{$client->name}}" disabled>
-              
                     </input>
         </div>
         <div class="mb-3 mt-3 col-4 p-0">
@@ -27,7 +26,7 @@
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client insured?</label>
                     <input class="form-control w-50" style="width: 50%" name="is_insured" id="exampleFormControlInput1" value="{{$order->is_insured}}" disabled>
-              
+
                     </input>
         </div>
         </div>
@@ -36,7 +35,7 @@
                     <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]">
                     @foreach($medicines as $medicine)
                             <option value="{{$medicine->id}}">{{
-                                $medicine->name    
+                                $medicine->name
                             }}</option>
                     @endforeach
                     </select>
@@ -47,7 +46,7 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
-                                $pharmacy->name    
+                                $pharmacy->name
                             }}</option>
                     @endforeach
                     </select>
@@ -59,7 +58,7 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
                     @foreach($doctors as $doctor)
                             <option value="{{$doctor->id}}">{{
-                                $doctor->name    
+                                $doctor->name
                             }}</option>
                     @endforeach
                     </select>
@@ -69,39 +68,39 @@
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type">
-                            <option value="client">
-                           Client
-                           </option>
-                           <option value="client">
-                           Doctor
-                           </option>
-                           <option value="client">
-                           Pharmacy
-                           </option>
+                        <option value="client">
+                            Client
+                        </option>
+                        <option value="client">
+                            Doctor
+                        </option>
+                        <option value="client">
+                            Pharmacy
+                        </option>
                     </select>
         </div>
         @endif
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">status</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status" value='{{$order->status}}'>
-                    <option value="canceled">
-                           New
-                           </option>        
-                    <option value="processing">
+                        <option value="canceled">
+                            New
+                        </option>
+                        <option value="processing">
                             Processing
-                           </option>
-                           <option value="waiting">
-                           Waiting For User Confirmation
-                           </option>
-                           <option value="confirmed">
-                           Confirmed
-                           </option>
-                           <option value="delivered">
-                           Delivered
-                           </option>
-                           <option value="canceled">
-                           Canceled
-                           </option>
+                        </option>
+                        <option value="waiting">
+                            Waiting For User Confirmation
+                        </option>
+                        <option value="confirmed">
+                            Confirmed
+                        </option>
+                        <option value="delivered">
+                            Delivered
+                        </option>
+                        <option value="canceled">
+                            Canceled
+                        </option>
                     </select>
         </div>
         <button type="submit" class="btn btn-success align-self-end">continue</button>

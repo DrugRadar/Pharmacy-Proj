@@ -11,7 +11,7 @@
                     <select class="js-example-basic-single js-example-responsive" style="width: 50%" name="client_id">
                     @foreach($clients as $client)
                             <option value="{{$client->id}}">{{
-                                $client->name    
+                                $client->name
                             }}</option>
                     @endforeach
                     </select>
@@ -21,7 +21,7 @@
                     <select class="js-example-basic-single js-example-responsive" style="width: 50%" name="client_address_id">
                     @foreach($addresses as $address)
                             <option value="{{$address->id}}">{{
-                              $address->street_name . ' ' . $address->building_number     
+                                $address->street_name . ' ' . $address->building_number
                             }}</option>
                     @endforeach
                     </select>
@@ -29,14 +29,14 @@
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client insured?</label>
                     <select class="js-example-basic-single js-example-responsive" style="width: 50%" name="is_insured">
-               
+
                             <option value="0">
-                              No  
+                                No
                             </option>
                             <option value="1">
-                              Yes  
+                                Yes
                             </option>
-              
+
                     </select>
         </div>
         </div>
@@ -45,7 +45,7 @@
                     <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]">
                     @foreach($medicines as $medicine)
                             <option value="{{$medicine->id}}">{{
-                                $medicine->name    
+                                $medicine->name
                             }}</option>
                     @endforeach
                     </select>
@@ -56,7 +56,7 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
-                                $pharmacy->name    
+                                $pharmacy->name
                             }}</option>
                     @endforeach
                     </select>
@@ -68,7 +68,7 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
                     @foreach($doctors as $doctor)
                             <option value="{{$doctor->id}}">{{
-                                $doctor->name    
+                                $doctor->name
                             }}</option>
                     @endforeach
                     </select>
@@ -79,14 +79,14 @@
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type">
                             <option value="client">
-                           Client
-                           </option>
-                           <option value="client">
-                           Doctor
-                           </option>
-                           <option value="client">
-                           Pharmacy
-                           </option>
+                                Client
+                            </option>
+                            <option value="client">
+                                Doctor
+                            </option>
+                            <option value="client">
+                                Pharmacy
+                            </option>
                     </select>
         </div>
         @endif
@@ -94,20 +94,20 @@
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">status</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status">
                             <option value="processing">
-                            Processing
-                           </option>
-                           <option value="waiting">
-                           Waiting For User Confirmation
-                           </option>
-                           <option value="confirmed">
-                           Confirmed
-                           </option>
-                           <option value="delivered">
-                           Delivered
-                           </option>
-                           <option value="canceled">
-                           Canceled
-                           </option>
+                                Processing
+                            </option>
+                            <option value="waiting">
+                                Waiting For User Confirmation
+                            </option>
+                            <option value="confirmed">
+                                Confirmed
+                            </option>
+                            <option value="delivered">
+                                Delivered
+                            </option>
+                            <option value="canceled">
+                                Canceled
+                            </option>
                     </select>
         </div>
         <button type="submit" class="btn btn-success align-self-end">Order</button>
