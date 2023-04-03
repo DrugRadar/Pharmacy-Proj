@@ -115,7 +115,7 @@
         <hr>
         <div class="col-12">
             <h5>Member since</h5>
-            <p>{{$admin->created_at}}</p>
+            <p>{{$admin->created_at->longRelativeToNowDiffForHumans()}}</p>
         </div>
     </div>
 </div>
