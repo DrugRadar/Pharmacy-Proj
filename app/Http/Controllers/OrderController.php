@@ -19,10 +19,7 @@ use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
-    //
-    function __construct(){
-        $this->middleware('permission:order', ['only' => ['index','create','update','store','process','continue','send','edit','destroy']]);
-    }
+    
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){
@@ -33,7 +30,7 @@ class OrderController extends Controller
         }
         else if(Auth::user()->roles[0]->name=='doctor'){
             $doctor = Doctor::find(Auth::user()->userable_id);
-            $pharmacyId=$doctor->Pharmacy->id;
+            $pharmacyId=$doctor->pharmacy->id;
             $data = Order::withTrashed()->where('assigned_pharmacy_id', $pharmacyId)->with('doctor')->get();
         }
         if ($request->ajax()) {

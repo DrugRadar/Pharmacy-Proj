@@ -18,11 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PharmacyController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
-        $this->middleware('role:pharmacy', ['only' => ['show']]);
-    }
+
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Pharmacy::withTrashed()->latest()->get();

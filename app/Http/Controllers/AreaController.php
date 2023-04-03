@@ -12,10 +12,6 @@ use Yajra\DataTables\DataTables;
 
 class AreaController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
-    }
 
     public function index(Request $request){
         if ($request->ajax()) {
