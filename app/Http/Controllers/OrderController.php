@@ -20,6 +20,9 @@ use Yajra\DataTables\DataTables;
 class OrderController extends Controller
 {
     //
+    function __construct(){
+        $this->middleware('permission:order', ['only' => ['index','create','update','store','process','continue','send','edit','destroy']]);
+    }
     public function index(Request $request){
 
         if(Auth::user()->roles[0]->name=='admin'){

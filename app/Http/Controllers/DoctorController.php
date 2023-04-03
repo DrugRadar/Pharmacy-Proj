@@ -123,11 +123,15 @@ class DoctorController extends Controller
     public function ban($id){
         $bannedDoctor=Doctor::find($id);
         $bannedDoctor->ban();
+        $user=User::where('userable_id',$bannedDoctor->id)->first();
+        $user->assignRole(['banned']);
         return redirect()->route('doctor.index');
     }
     public function unBan($id){
         $bannedDoctor=Doctor::find($id);
         $bannedDoctor->unban();
+        $user=User::where('userable_id',$bannedDoctor->id)->first();
+        $user->removeRole('banned');
         return redirect()->route('doctor.index');
     }
     public function profile(){
