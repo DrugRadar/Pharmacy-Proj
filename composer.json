@@ -20,10 +20,12 @@
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-permission": "^5.10",
         "stripe/stripe-php": "^10.12",
-        "yajra/laravel-datatables-oracle": "^10.4"
+        "yajra/laravel-datatables-oracle": "^10.4",
+        "webpatser/laravel-countries": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "knuckleswtf/scribe": "^4.17",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
