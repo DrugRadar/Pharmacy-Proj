@@ -11,6 +11,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
+                <th scope="col">Country</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -39,6 +40,10 @@ $(function() {
             {
                 data: 'address',
                 name: 'address'
+            },
+            {
+                data: 'country',
+                name: 'country'
             },
             {
                 data: 'action',

@@ -55,8 +55,8 @@
         </div>
         </div>
         <div class="mb-3 mt-3">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">Medicines</label>
-                    <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]">
+            <label for="orderMedicine" class="form-label col-2 p-0">Medicines</label>
+                    <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]" id="orderMedicine">
                     @foreach($order->orderMedicine as  $key =>  $medicine)
                             <option  value="{{$medicine->medicine_id?$medicine->medicine_id:$medicine->medicine_name}}" selected="selected">{{
                                 $medicine->medicine_name?$medicine->medicine_name:Medicine::find($medicine->medicine_id)->name
@@ -72,8 +72,8 @@
         </div>
         @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">Assigned Pharmacy</label>
-                    <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
+            <label for="orderPharmacy" class="form-label col-2 p-0">Assigned Pharmacy</label>
+                    <select class="js-example-basic-single js-example-responsive col-8 p-0" id="orderPharmacy" style="width: 50%" name="assigned_pharmacy_id">
                     @if($order->assigned_pharmacy_id)
                     <option value="{{$order->assigned_pharmacy_id}}">{{
                         Pharmacy::find($order->assigned_pharmacy_id)->name
@@ -89,8 +89,8 @@
         @endif
         @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
         <div class="mb-3 mt-3 me-2">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">Doctor</label>
-                    <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
+            <label for="orderDoctor" class="form-label col-2 p-0">Doctor</label>
+                    <select class="js-example-basic-single js-example-responsive col-8 p-0" id="orderDoctor" style="width: 50%" name="doctor_id">
                     @if($order->doctor_id)
                     <option value="{{$order->doctor_id}}">{{
                         Doctor::find($order->doctor_id)->name
@@ -106,8 +106,8 @@
         @endif
         @if(Auth::user()->hasrole('admin'))
         <div class="mb-3 mt-3 me-2">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
-                    <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type">
+            <label for="orderCreator" class="form-label col-2 p-0">Creator Type</label>
+                    <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type" id="orderCreator">
                             <option value="client">
                                 Client
                             </option>
@@ -121,8 +121,8 @@
         </div>
         @endif
         <div class="mb-3 mt-3 me-2">
-            <label for="exampleFormControlInput1" class="form-label col-2 p-0">status</label>
-                    <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status" value='{{$order->status}}'>
+            <label for="orderStatus" class="form-label col-2 p-0">status</label>
+                    <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status" id="orderStatus">
                         <option value="canceled">
                             New
                         </option>
