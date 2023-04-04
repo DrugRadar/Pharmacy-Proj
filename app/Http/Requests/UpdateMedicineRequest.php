@@ -19,13 +19,12 @@ class UpdateMedicineRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'name' => ["required", "max:255"],
             'type' => ["required", "max:255"],
             'price' => ["required", "integer", "min:0"],
-            'quantity' => ["required", "integer", "min:1"],
         ];
     }
 }
