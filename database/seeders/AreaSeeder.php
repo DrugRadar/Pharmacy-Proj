@@ -17,14 +17,17 @@ class AreaSeeder extends Seeder
             [
                 'name' => 'Smouha',
                 'address' => '26 smouha',
+                'country_id' => '818',
             ],
             [
                 'name' => 'Sidibishr',
                 'address' => '16 mahmoud reda',
+                'country_id' => '818',
             ],
             [
                 'name' => 'campchizar',
                 'address' => '46 helipolis',
+                'country_id' => '818',
             ],
         ];
 

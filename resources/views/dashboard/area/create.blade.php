@@ -23,7 +23,7 @@
 
         <div class="mb-3">
             <label for="areaCountry" class="form-label">country</label>
-            <select name="country_id" class="form-control w-100" id="creator">
+            <select name="country_id" class="js-example-basic-single js-states form-control w-100" id="areaCountry">
                 @foreach($countries as $country)
                 <option value="{{$country->id}}" {{ old('country_id') == $country->id ? 'selected' : '' }}>{{$country->name}}</option>
                 @endforeach
@@ -38,4 +38,12 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+$(document).ready(function() {    
+$(".js-example-basic-single").select2();
+});
+</script>
 @endsection

@@ -7,6 +7,8 @@ use App\Models\OrderPrescription;
 use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -24,7 +26,6 @@ class Order extends Model
         'total_price',
         'client_address_id'
     ];
-
     public function orderMedicine()
     {
         return $this->hasMany(OrderMedicine::class);
@@ -38,9 +39,5 @@ class Order extends Model
     }
     public function doctor(){
         return $this->belongsTo(Doctor::class);
-    }
-    public function pharmacy(){
-        return $this->belongsTo(Pharmacy::class);
-    }
-    
+    }    
 }
