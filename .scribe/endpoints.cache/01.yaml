@@ -46,7 +46,7 @@ endpoints:
         name: gender
         description: 'Must be one of <code>male</code> or <code>female</code>.'
         required: true
-        example: female
+        example: male
         type: string
         custom: []
       password:
@@ -60,7 +60,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
         required: true
-        example: '2010-01-17'
+        example: '1999-03-30'
         type: string
         custom: []
       avatar_image:
@@ -74,14 +74,14 @@ endpoints:
         name: mobile_number
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: wcgdbfjcwuxuxnku
+        example: huwyerkanzj
         type: string
         custom: []
       national_id:
         name: national_id
         description: 'Must be 14 digits.'
         required: true
-        example: '17850698088476'
+        example: '05072619594761'
         type: string
         custom: []
       phone:
@@ -94,11 +94,11 @@ endpoints:
     cleanBodyParameters:
       name: 'John Doe'
       email: john.doe@example.com
-      gender: female
+      gender: male
       password: secret
-      date_of_birth: '2010-01-17'
-      mobile_number: wcgdbfjcwuxuxnku
-      national_id: '17850698088476'
+      date_of_birth: '1999-03-30'
+      mobile_number: huwyerkanzj
+      national_id: '05072619594761'
       phone: '+1234567890'
     fileParameters:
       avatar_image: null
@@ -155,27 +155,27 @@ endpoints:
         name: email
         description: 'The email of the client.'
         required: true
-        example: mdare@example.org
+        example: ofelia88@example.org
         type: string
         custom: []
       password:
         name: password
         description: 'The password of the client.'
         required: true
-        example: 'v8.b*EO2!:v'
+        example: '}''M@\/7fcuF.dY'
         type: string
         custom: []
       device_name:
         name: device_name
         description: 'The name of the device.'
         required: true
-        example: suscipit
+        example: debitis
         type: string
         custom: []
     cleanBodyParameters:
-      email: mdare@example.org
-      password: 'v8.b*EO2!:v'
-      device_name: suscipit
+      email: ofelia88@example.org
+      password: '}''M@\/7fcuF.dY'
+      device_name: debitis
     fileParameters: []
     responses:
       -
@@ -254,19 +254,19 @@ endpoints:
         name: id
         description: 'The ID of the verify email.'
         required: true
-        example: recusandae
+        example: architecto
         type: string
         custom: []
       hash:
         name: hash
         description: ''
         required: true
-        example: et
+        example: neque
         type: string
         custom: []
     cleanUrlParameters:
-      id: recusandae
-      hash: et
+      id: architecto
+      hash: neque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -277,7 +277,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\Client] recusandae",
+              "message": "No query results for model [App\\Models\\Client] architecto",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",
               "line": 408,
@@ -746,7 +746,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: njwrt
+        example: lzejdix
         type: string
         custom: []
       gender:
@@ -760,7 +760,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
         required: true
-        example: '2003-02-15'
+        example: '1994-08-14'
         type: string
         custom: []
       avatar_image:
@@ -774,22 +774,22 @@ endpoints:
         name: mobile_number
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: chavkpqdbxiqfz
+        example: ltdwfunn
         type: string
         custom: []
       national_id:
         name: national_id
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: pouahngjrlqxsvi
+        example: jdlsxyuvxegfpdndrn
         type: string
         custom: []
     cleanBodyParameters:
-      name: njwrt
+      name: lzejdix
       gender: female
-      date_of_birth: '2003-02-15'
-      mobile_number: chavkpqdbxiqfz
-      national_id: pouahngjrlqxsvi
+      date_of_birth: '1994-08-14'
+      mobile_number: ltdwfunn
+      national_id: jdlsxyuvxegfpdndrn
     fileParameters:
       avatar_image: null
     responses: []
@@ -827,6 +827,55 @@ endpoints:
         custom: []
     cleanUrlParameters:
       id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/client/{clientId}/orders'
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      clientId:
+        name: clientId
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      clientId: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -24,19 +24,19 @@ endpoints:
         name: clientId
         description: 'The ID of the client who owns the address.'
         required: true
-        example: atque
+        example: autem
         type: string
         custom: []
       addressId:
         name: addressId
         description: 'The ID of the address to be deleted.'
         required: true
-        example: quibusdam
+        example: quasi
         type: string
         custom: []
     cleanUrlParameters:
-      clientId: atque
-      addressId: quibusdam
+      clientId: autem
+      addressId: quasi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

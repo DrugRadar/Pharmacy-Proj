@@ -10,7 +10,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Get authenticated user'
       description: ''
       authenticated: false
       custom: []
@@ -61,19 +61,19 @@ endpoints:
         name: id
         description: 'The ID of the verify.'
         required: true
-        example: ut
+        example: nisi
         type: string
         custom: []
       hash:
         name: hash
         description: ''
         required: true
-        example: dignissimos
+        example: quia
         type: string
         custom: []
     cleanUrlParameters:
-      id: ut
-      hash: dignissimos
+      id: nisi
+      hash: quia
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -104,8 +104,8 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a new order.'
-      description: ''
+      title: 'Create a new order for a client.'
+      description: 'This function takes in a `CreateOrderRequest` object as a parameter, which contains the request data for creating a new order. It validates the request data, checks if the delivering address ID exists for the authenticated client, and creates a new order in the database with the provided data. The prescription data is also filled in for the order. A JSON response is returned with the status message "Order created successfully" and the order data.'
       authenticated: false
       custom: []
     headers:
@@ -127,7 +127,7 @@ endpoints:
         name: delivering_address_id
         description: ''
         required: true
-        example: modi
+        example: omnis
         type: string
         custom: []
       prescription:
@@ -135,14 +135,14 @@ endpoints:
         description: ''
         required: true
         example:
-          - ducimus
+          - dolorem
         type: 'string[]'
         custom: []
     cleanBodyParameters:
       is_insured: false
-      delivering_address_id: modi
+      delivering_address_id: omnis
       prescription:
-        - ducimus
+        - dolorem
     fileParameters: []
     responses: []
     responseFields: []
@@ -160,8 +160,8 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Retrieve a list of orders for the authenticated client.'
-      description: ''
+      title: 'Retrieve the orders for a client.'
+      description: 'This function retrieves the orders associated with the authenticated client. It queries the `Order` model to fetch all orders that have the same client ID as the authenticated client. The retrieved orders are then transformed into a collection of `OrderResource` objects and returned as the response.'
       authenticated: false
       custom: []
     headers:
@@ -199,8 +199,8 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Display the specified order.'
-      description: ''
+      title: 'Retrieve the details of a specific order.'
+      description: 'This function retrieves the details of a specific order identified by the given ID. It queries the `Order` model to find the order with the provided ID. If the order is found, it is transformed into an `OrderResource` object and returned as the response. If the order is not found, an appropriate error response is returned.'
       authenticated: false
       custom: []
     headers:
@@ -246,8 +246,8 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update an existing order.'
-      description: ''
+      title: 'Update the details of an existing order.'
+      description: 'This function updates the details of an existing order identified by the given ID. It first retrieves the order using the `Order` model and checks if the order status is "new". If the order status is "new", it then validates and updates the order details based on the provided request data. If the updated order details are valid, the order is saved and a success response is returned with the updated order details. If the order status is not "new", an appropriate error response is returned indicating that the order cannot be updated. If the delivering address ID provided in the request does not exist for the client, another error response is returned indicating the same.'
       authenticated: false
       custom: []
     headers:
@@ -277,7 +277,7 @@ endpoints:
         name: delivering_address_id
         description: ''
         required: true
-        example: dolor
+        example: corrupti
         type: string
         custom: []
       prescription:
@@ -285,14 +285,14 @@ endpoints:
         description: ''
         required: true
         example:
-          - cupiditate
+          - consequatur
         type: 'string[]'
         custom: []
     cleanBodyParameters:
       is_insured: false
-      delivering_address_id: dolor
+      delivering_address_id: corrupti
       prescription:
-        - cupiditate
+        - consequatur
     fileParameters: []
     responses: []
     responseFields: []
