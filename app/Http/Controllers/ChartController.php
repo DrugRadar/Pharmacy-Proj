@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Order;
+use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ChartController extends Controller
 {
@@ -27,7 +31,7 @@ class ChartController extends Controller
             ->whereYear('created_at', $currentYear)
             ->groupBy('month')
             ->orderBy('month')
-            ->get(); 
+            ->get();
         }
         // Create arrays for the labels and data values
         $labels = $revenueData->pluck('month')->toArray();
@@ -36,4 +40,36 @@ class ChartController extends Controller
         // Return the chart view with the labels and data
         return view('dashboard.charts.revenue', compact('labels', 'data'));
     }
+
+    public function genderAttendance()
+    {
+         $males = Client::where('gender', 'male')->count();
+        $females = Client::where('gender', 'female')->count();
+
+        return response()->json([
+            'labels' => ['Males', 'Females'],
+            'datasets' => [
+                [
+                    'data' => [$males, $females],
+                    'backgroundColor' => ['#36a2eb', '#ff6384']
+                ]
+            ]
+        ]);
+
+    }
+
+    public function topUsers()
+{
+    $client = Client::all();
+
+    $data = DB::table('orders')
+                ->select(DB::raw('client_id, COUNT(*) as orders'))
+                ->groupBy('client_id')
+                ->orderByDesc('orders')
+                ->limit(10)
+                ->get();
+
+    return response()->json(['data' => $data]);
+}
+
 }
