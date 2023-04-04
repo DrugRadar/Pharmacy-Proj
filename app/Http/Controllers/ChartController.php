@@ -72,18 +72,4 @@ class ChartController extends Controller
     return response()->json(['data' => $data]);
 }
 
-// public function topUsers()
-// {
-//     $data = DB::table('orders')
-//                 ->join('clients', 'orders.client_id', '=', 'clients.id')
-//                 ->select('clients.name', 'orders.client_id', DB::raw('COUNT(*) as orders'))
-//                 ->groupBy('orders.client_id')
-//                 ->orderByDesc('orders')
-//                 ->limit(10)
-//                 ->get();
-
-//     return response()->json(['data' => $data]);
-// }
-
-
 }
