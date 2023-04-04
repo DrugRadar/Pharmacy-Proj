@@ -73,7 +73,7 @@
                             <select name="area_id" class="form-control w-100" id="AreaInput">
                                 @if(Auth::user()->hasrole('admin'))
                                 @foreach($areas as $area)
-                                <option value="{{$area->id}}" {{ old('area_id', $pharmacy->area_id) == $area_id ? 'selected' : '' }}>{{$area->name}}</option>
+                                <option value="{{$area->id}}" {{ old('area_id', $pharmacy->area_id) == $area->id ? 'selected' : '' }}>{{$area->name}}</option>
                                 @endforeach
                                 @endif
                             </select>
