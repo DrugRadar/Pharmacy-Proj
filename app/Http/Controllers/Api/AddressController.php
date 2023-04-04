@@ -85,8 +85,6 @@ class AddressController extends Controller
         $flat_number = $request->flat_number;
         $is_main = $request->is_main;
 
-        // if( $this->checkForClientId($$areaId , $client->id) ){}
-
         $validated = new Address([
             'area_id' => $areaId,
             'street_name'=> $street_name,
