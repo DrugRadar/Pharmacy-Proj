@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
 
     }
     protected $commands = [
-        // ...
         CreateAdminCommand::class,
         NotifyInactiveClients::class,
         UnbanUserCommand::class,
