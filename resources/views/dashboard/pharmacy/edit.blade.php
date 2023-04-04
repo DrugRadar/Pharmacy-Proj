@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="col-12">
-    <form method="POST" action="{{route('pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
+    <form method="POST" action="{{route(Auth::user()->hasrole('pharmacy')?'pharmacy.profile.update':'pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
         @csrf
         @method('put')
         <div class="card">
@@ -71,9 +71,11 @@
                         <div class="mb-2 col-6">
                             <label for="AreaInput" class="form-label">area</label>
                             <select name="area_id" class="form-control w-100" id="AreaInput">
+                                @if(Auth::user()->hasrole('admin'))
                                 @foreach($areas as $area)
                                 <option value="{{$area->id}}" {{ old('area_id', $area->id) == '1' ? 'selected' : '' }}>{{$area->name}}</option>
                                 @endforeach
+                                @endif
                             </select>
                             @error('area_id')
                                 <p class="text-danger mt-1">{{ $message }}</p>

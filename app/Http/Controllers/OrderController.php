@@ -17,6 +17,7 @@ use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
+    
     public function index(Request $request){
         if(Auth::user()->roles[0]->name=='admin'){
             $data = Order::withTrashed()->with('doctor')->latest()->get();
