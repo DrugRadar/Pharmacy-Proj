@@ -16,12 +16,6 @@ use App\Http\Requests\StoreDoctorRequest;
 
 class DoctorController extends Controller
 {
-    function __construct(){
-        $this->middleware('permission:see all doctors', ['only' => ['index']]);
-        $this->middleware('permission:delete doctor', ['only' => ['delete']]);
-        $this->middleware('permission:create doctor', ['only' => ['create','store']]);
-        $this->middleware('permission:edit doctor', ['only' => ['edit','update']]);
-    }
 
     public function index(Request $request){
         if(Auth::user()->roles[0]->name=='admin'){
@@ -33,24 +27,7 @@ class DoctorController extends Controller
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row) {
-                    $actionBtn  = '<a id="$row->id" class="btn btn-primary" href="' . route('doctor.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
-                    
-                    if($row['banned_at']){
-                        $actionBtn .= '<a href="'.route('doctor.unBan', $row->id).'" class="ban btn btn-dark btn-sm">unban</a>  ';
-                    }else{
-                        $actionBtn .= '<a href="'.route('doctor.ban', $row->id).'" class="ban btn btn-dark btn-sm">ban</a>  ';
-                    }
-
-                    if($row['deleted_at']){
-                        $actionBtn .= '<a id="$row->id" class="btn btn-success" href="' . route('doctor.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
-                    }
-                    else{
-                        $actionBtn .= '<button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
-                    }
-                    return $actionBtn;
-                })
+                ->addColumn('action', function($row) {return $this->showActionBtns($row);})
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -66,7 +43,7 @@ class DoctorController extends Controller
         $newDoctor = Doctor::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>  $request->password,
+            'password' =>  Hash::make( $request->password),
             'national_id' =>  $request->national_id,
             'pharmacy_id'=> $request->pharmacy_id,
         ]);
@@ -104,13 +81,17 @@ class DoctorController extends Controller
         }
 
         $this->updateDoctor($request, $doctor);
+        if(Auth::user()->roles[0]->name=='doctor')
+        {
+            return redirect()->route('doctor.profile',Auth::user()->userable_id);
+        }
         return redirect()->route('doctor.index');
     }
 
     private function updateDoctor($request, $doctor) {
         $doctor->name = $request->name;
         $doctor->email = $request->email;
-        $doctor->password = $request->password;
+        $doctor->password =Hash::make( $request->password);
         $doctor->national_id = $request->national_id;
         $doctor->pharmacy_id = $request->pharmacy_id;
         $doctor->save();
@@ -150,4 +131,22 @@ class DoctorController extends Controller
         return back();
     }
 
+    private function showActionBtns($row){
+        $actionBtn  = '<a id="$row->id" class="btn btn-primary" title="Click to edit doctor" href="' . route('doctor.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
+                    
+        if($row['banned_at']){
+            $actionBtn .= '<a href="'.route('doctor.unBan', $row->id).'" class="ban btn btn-dark" title="Click to unban doctor"><i class=\'bx bx-user-check\' style="font-size:20px;"></i></a>  ';
+        }else{
+            $actionBtn .= '<a href="'.route('doctor.ban', $row->id).'" class="ban btn btn-dark" title="Click to ban doctor"><i class=\'bx bx-block\'></i></a>  ';
+        }
+
+        if($row['deleted_at']){
+            $actionBtn .= '<a id="$row->id" class="btn btn-success" title="Click to restore doctor" href="' . route('doctor.restore', $row->id) . '"><i class=\'bx bx-recycle\'></i></a>';
+        }
+        else{
+            $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete doctor" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
+        }
+        return $actionBtn;
+    }
 }

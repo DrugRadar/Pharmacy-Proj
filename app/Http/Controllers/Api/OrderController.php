@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
+    /**
+ * Create a new order.
+ *
+ * @param CreateOrderRequest $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+
     public function create(CreateOrderRequest $request){
         $client = auth()->user();
         $validated = $request->validated();
@@ -63,77 +70,98 @@ class OrderController extends Controller
         }
     }
 
+    /**
+ * Retrieve a list of orders for the authenticated client.
+ *
+ * @return \Illuminate\Http\JsonResponse
+ */
+
     public function index() {
         $client = auth()->user();
         $orders = Order::where('client_id', $client->id)->get();
-        $formattedOrders = [];
+        // $formattedOrders = [];
 
-        foreach ($orders as $order) {
-            $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
-            $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
-            $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
-            $medicines = [];
-            foreach ($medicinesInfo as $medicineInfo) {
-                $medicines[] = [
-                    'id'=>$medicineInfo->id,
-                    'name' => $medicineInfo->name,
-                    'type' => $medicineInfo->type,
-                    'quantity' => $medicineInfo->quantity,
-                    'total_price' => $medicineInfo->total_price
-                ];
-            }
-            $formattedOrder = [
-                'id' => $order->id,
-                'medicines' => $medicines,
-                'order_total_price' => $order->total_price,
-                'ordered_at' => $order->created_at->diffForHumans(),
-                'status' => $order->status,
-                'assigned_pharmacy' => [
-                    'id' => $pharmacyInfo->id,
-                    'name' => $pharmacyInfo->name,
-                    'area_id' => $pharmacyInfo->area_id,
-                    'avatar_image' => $pharmacyInfo->avatar_image,
-                ]
-            ];
-          //  $formattedOrder = new OrderResource($formattedOrder);
-            $formattedOrders[] = $formattedOrder;
-        }
+        // foreach ($orders as $order) {
+        //     $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        //     $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
+        //     $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
+        //     $medicines = [];
+        //     foreach ($medicinesInfo as $medicineInfo) {
+        //         $medicines[] = [
+        //             'id'=>$medicineInfo->id,
+        //             'name' => $medicineInfo->name,
+        //             'type' => $medicineInfo->type,
+        //             'quantity' => $medicineInfo->quantity,
+        //             'total_price' => $medicineInfo->total_price
+        //         ];
+        //     }
+        //     $formattedOrder = [
+        //         'id' => $order->id,
+        //         'medicines' => $medicines,
+        //         'order_total_price' => $order->total_price,
+        //         'ordered_at' => $order->created_at->diffForHumans(),
+        //         'status' => $order->status,
+        //         'assigned_pharmacy' => [
+        //             'id' => $pharmacyInfo->id,
+        //             'name' => $pharmacyInfo->name,
+        //             'area_id' => $pharmacyInfo->area_id,
+        //             'avatar_image' => $pharmacyInfo->avatar_image,
+        //         ]
+        //     ];
+        //   //  $formattedOrder = new OrderResource($formattedOrder);
+        //     $formattedOrders[] = $formattedOrder;
+        // }
 
-        return response()->json($formattedOrders, 200);
+        // return response()->json($formattedOrders, 200);
+        return  OrderResource::collection($orders); 
     }
+
+    /**
+ * Display the specified order.
+ *
+ * @param  int  $id
+ */
 
     public function show($id){
         $client = auth()->user();
         $order = Order::find($id);
-        $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
-        $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
-        $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
-        $avatar_url = url($pharmacyInfo->avatar_image);
-        $medicines = [];
-        foreach ($medicinesInfo as $medicineInfo) {
-            $medicines[] = [
-                'id'=>$medicineInfo->id,
-                'name' => $medicineInfo->name,
-                'type' => $medicineInfo->type,
-                'quantity' => $medicineInfo->quantity,
-                'total_price' => $medicineInfo->total_price
-            ];
-        }
-        $formattedOrder = [
-            'id' => $order->id,
-            'medicines' => $medicines,
-            'order_total_price' => $order->total_price,
-            'ordered_at' => $order->created_at->diffForHumans(),
-            'status' => $order->status,
-            'assigned_pharmacy' => [
-                'id' => $pharmacyInfo->id,
-                'name' => $pharmacyInfo->name,
-                'address' => $pharmacyInfo->area_id,
-                'avatar_image_url' => $avatar_url,
-            ]
-        ];
-        return response()->json(new OrderResource($formattedOrder), 200);
+        // $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
+        // $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
+        // $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
+        // $avatar_url = url($pharmacyInfo->avatar_image);
+        // $medicines = [];
+        // foreach ($medicinesInfo as $medicineInfo) {
+        //     $medicines[] = [
+        //         'id'=>$medicineInfo->id,
+        //         'name' => $medicineInfo->name,
+        //         'type' => $medicineInfo->type,
+        //         'quantity' => $medicineInfo->quantity,
+        //         'total_price' => $medicineInfo->total_price
+        //     ];
+        // }
+        // $formattedOrder = [
+        //     'id' => $order->id,
+        //     'medicines' => $medicines,
+        //     'order_total_price' => $order->total_price,
+        //     'ordered_at' => $order->created_at->diffForHumans(),
+        //     'status' => $order->status,
+        //     'assigned_pharmacy' => [
+        //         'id' => $pharmacyInfo->id,
+        //         'name' => $pharmacyInfo->name,
+        //         'address' => $pharmacyInfo->area_id,
+        //         'avatar_image_url' => $avatar_url,
+        //     ]
+        // ];
+        return response()->json(new OrderResource($order), 200);
     }
+
+
+/**
+ * Update an existing order.
+ *
+ * @param UpdateOrderRequest $request
+ * @param int $id
+ */
 
     public function edit(UpdateOrderRequest $request,$id){
         $order = Order::find($id);
@@ -179,15 +207,4 @@ class OrderController extends Controller
         $rows = OrderPrescription::where("order_id", $order_id)->delete();
     }
 
-    // public function confirmOrder($id){
-    //     $order = Order::find($id);
-    //     if ($order) {
-    //         $order->status = 'confirmed';
-    //         $order->save();
-    //         return view('confirmed');
-    //     } else {
-    //         abort(404);
-    //     }
-    //     // return response()->json("order confirmed" , 200);
-    // }
 }

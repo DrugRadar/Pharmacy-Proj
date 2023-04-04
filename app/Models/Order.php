@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Medicine;
 use App\Models\OrderPrescription;
+use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,4 +39,8 @@ class Order extends Model
     public function doctor(){
         return $this->belongsTo(Doctor::class);
     }
+    public function pharmacy(){
+        return $this->belongsTo(Pharmacy::class);
+    }
+    
 }

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="col-12">
     <form method="POST" action="{{route('pharmacy.update',$pharmacy->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
         @csrf

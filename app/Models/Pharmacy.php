@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Doctor;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,5 +40,20 @@ class Pharmacy extends Model implements HasMedia
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($parent) {
+            $parent->doctor()->delete(); // Delete all child records
+        });
+    }
+
+    public function doctor(){
+        return $this->hasMany(Doctor::class);
+    }
+    public function order(){
+        return $this->hasMany(Order::class);
     }
 }

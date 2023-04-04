@@ -2,7 +2,8 @@
 @section('content')
 <div class="col-12">
     <h1>Doctor</h1>
-    <form method="POST" action="{{route('doctor.update',$doctor->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
+    <form method="POST" action="{{route(Auth::user()->hasrole('doctor')?'doctor.profile.update':'doctor.update',$doctor->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
+
         @csrf
         @method('put')
         <div class="card">
@@ -41,7 +42,6 @@
                         </div>
 
                         <div class="mb-3 col-12">
-                            <label for="exampleFormControlTextarea1" class="form-label">Email</label>
                             <input type="text" name="email" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Email"  value="{{ old('email', $doctor->email) }}">
                             @error('email')
                                 <p class="text-danger mt-1">{{ $message }}</p>
@@ -59,9 +59,12 @@
                         <div class="mb-3 col-6">
                             <label for="exampleFormControlTextarea1" class="form-label">doctor Name</label>
                             <select name="pharmacy_id" class="form-control w-100">
+                                {{Auth::user()->hasrole('admin')?' ':''}} 
+                                @if(Auth::user()->hasrole('admin'))
                                 @foreach($pharmacies as $pharmacy)
                                 <option value="{{$pharmacy->id}}" {{ old('pharmacy_id', $pharmacy->id) == '1' ? 'selected' : '' }}>{{$pharmacy->name}}</option>
                                 @endforeach
+                                @endif
                             </select>
                             @error('pharmacy_id')
                                 <p class="text-danger mt-1">{{ $message }}</p>

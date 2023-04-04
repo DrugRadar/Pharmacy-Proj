@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div>
+@if (Session::has('error'))
+ <div class="alert alert-danger text-center">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+     <p class="text-white fw-bold">{{ Session::get('error') }}</p>
+ </div>
+ @endif
     <h2 style="margin-top: 5px;">Pharmacies</h2>
     <div class="text-center" style="margin-top: -50px;">
         <a href="{{route('pharmacy.create')}}" class="mt-4 btn btn-success">Create Pharmacy</a>

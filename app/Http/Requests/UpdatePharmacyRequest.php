@@ -30,7 +30,9 @@ class UpdatePharmacyRequest extends FormRequest
             'national_id' => ['required','integer','digits:14', Rule::unique('pharmacies')->ignore($this->pharmacy)],
             'avatar_image' => ['image',"max:255",'mimes:jpeg,jpg,png'],
             'area_id' => ["required", "exists:areas,id"],
-            'priority' => ['required', 'integer', 'min:0']
+            'priority' => ['required', 'integer', 'min:0'],
+            'email' => ['required', "max:255", 'email', $this->id ],
+
         ];
     }
 

@@ -1,0 +1,848 @@
+name: 'Client management'
+description: |-
+
+  APIs for managing clients
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/client/register
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Register a new client.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the client.'
+        required: true
+        example: 'John Doe'
+        type: string
+        custom: []
+      email:
+        name: email
+        description: 'The email address of the client.'
+        required: true
+        example: john.doe@example.com
+        type: string
+        custom: []
+      gender:
+        name: gender
+        description: 'Must be one of <code>male</code> or <code>female</code>.'
+        required: true
+        example: female
+        type: string
+        custom: []
+      password:
+        name: password
+        description: 'The password of the client.'
+        required: true
+        example: secret
+        type: string
+        custom: []
+      date_of_birth:
+        name: date_of_birth
+        description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
+        required: true
+        example: '2010-01-17'
+        type: string
+        custom: []
+      avatar_image:
+        name: avatar_image
+        description: 'The avatar image of the client.'
+        required: true
+        example: null
+        type: file
+        custom: []
+      mobile_number:
+        name: mobile_number
+        description: 'Must not be greater than 20 characters.'
+        required: true
+        example: wcgdbfjcwuxuxnku
+        type: string
+        custom: []
+      national_id:
+        name: national_id
+        description: 'Must be 14 digits.'
+        required: true
+        example: '17850698088476'
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: 'The phone number of the client.'
+        required: true
+        example: '+1234567890'
+        type: string
+        custom: []
+    cleanBodyParameters:
+      name: 'John Doe'
+      email: john.doe@example.com
+      gender: female
+      password: secret
+      date_of_birth: '2010-01-17'
+      mobile_number: wcgdbfjcwuxuxnku
+      national_id: '17850698088476'
+      phone: '+1234567890'
+    fileParameters:
+      avatar_image: null
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+              "message": "Client created successfully",
+              "data": {
+                  "id": 1,
+                  "name": "John Doe",
+                  "email": "john.doe@example.com",
+                  "phone": "+1234567890",
+                  "avatar_image_url": "https://example.com/storage/avatars/1/avatar.png",
+                  "email_verified_at": null,
+                  "created_at": "2023-04-03T10:00:00.000000Z",
+                  "updated_at": "2023-04-03T10:00:00.000000Z"
+              }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/client/login
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Log in a client.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: 'The email of the client.'
+        required: true
+        example: mdare@example.org
+        type: string
+        custom: []
+      password:
+        name: password
+        description: 'The password of the client.'
+        required: true
+        example: 'v8.b*EO2!:v'
+        type: string
+        custom: []
+      device_name:
+        name: device_name
+        description: 'The name of the device.'
+        required: true
+        example: suscipit
+        type: string
+        custom: []
+    cleanBodyParameters:
+      email: mdare@example.org
+      password: 'v8.b*EO2!:v'
+      device_name: suscipit
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+              "message": "Client logged in successfully",
+              "data": {
+                  "user": {
+                      "id": 1,
+                      "name": "John Doe",
+                      "email": "john.doe@example.com",
+                      "avatar_url": "http://example.com/avatar.png",
+                      "created_at": "2022-04-01T15:00:00.000000Z",
+                      "updated_at": "2022-04-01T15:00:00.000000Z"
+                  },
+                  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+              "message": "Incorrect password"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+              "message": "Email not verified"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+              "message": "Client not found"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/verify-email/{id}/{hash}'
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Verify a client's email address using a verification hash."
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the verify email.'
+        required: true
+        example: recusandae
+        type: string
+        custom: []
+      hash:
+        name: hash
+        description: ''
+        required: true
+        example: et
+        type: string
+        custom: []
+    cleanUrlParameters:
+      id: recusandae
+      hash: et
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Client] recusandae",
+              "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
+              "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",
+              "line": 408,
+              "trace": [
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",
+                      "line": 384,
+                      "function": "prepareException",
+                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\nunomaduro\\collision\\src\\Adapters\\Laravel\\ExceptionHandler.php",
+                      "line": 54,
+                      "function": "render",
+                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
+                      "line": 51,
+                      "function": "render",
+                      "class": "NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 143,
+                      "function": "handleException",
+                      "class": "Illuminate\\Routing\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",
+                      "line": 50,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php",
+                      "line": 126,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php",
+                      "line": 92,
+                      "function": "handleRequest",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php",
+                      "line": 54,
+                      "function": "handleRequestUsingNamedLimiter",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 116,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+                      "line": 797,
+                      "function": "then",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+                      "line": 776,
+                      "function": "runRouteWithinStack",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+                      "line": 740,
+                      "function": "runRoute",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+                      "line": 729,
+                      "function": "dispatchToRoute",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+                      "line": 200,
+                      "function": "dispatch",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 141,
+                      "function": "Illuminate\\Foundation\\Http\\{closure}",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
+                      "line": 21,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",
+                      "line": 31,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
+                      "line": 21,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",
+                      "line": 40,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php",
+                      "line": 27,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",
+                      "line": 86,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",
+                      "line": 62,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",
+                      "line": 39,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+                      "line": 116,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+                      "line": 175,
+                      "function": "then",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+                      "line": 144,
+                      "function": "sendRequestThroughRouter",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php",
+                      "line": 299,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php",
+                      "line": 287,
+                      "function": "callLaravelOrLumenRoute",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php",
+                      "line": 92,
+                      "function": "makeApiCall",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php",
+                      "line": 45,
+                      "function": "makeResponseCall",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Strategies\\Responses\\ResponseCalls.php",
+                      "line": 35,
+                      "function": "makeResponseCallIfConditionsPass",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php",
+                      "line": 209,
+                      "function": "__invoke",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php",
+                      "line": 163,
+                      "function": "iterateThroughStrategies",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Extracting\\Extractor.php",
+                      "line": 95,
+                      "function": "fetchResponses",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php",
+                      "line": 124,
+                      "function": "processRoute",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php",
+                      "line": 71,
+                      "function": "extractEndpointsInfoFromLaravelApp",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\GroupedEndpoints\\GroupedEndpointsFromApp.php",
+                      "line": 49,
+                      "function": "extractEndpointsInfoAndWriteToDisk",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\knuckleswtf\\scribe\\src\\Commands\\GenerateDocumentation.php",
+                      "line": 51,
+                      "function": "get",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
+                      "line": 36,
+                      "function": "handle",
+                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php",
+                      "line": 41,
+                      "function": "Illuminate\\Container\\{closure}",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
+                      "line": 93,
+                      "function": "unwrapIfClosure",
+                      "class": "Illuminate\\Container\\Util",
+                      "type": "::"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
+                      "line": 35,
+                      "function": "callBoundMethod",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php",
+                      "line": 661,
+                      "function": "call",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
+                      "line": 194,
+                      "function": "call",
+                      "class": "Illuminate\\Container\\Container",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Command\\Command.php",
+                      "line": 312,
+                      "function": "execute",
+                      "class": "Illuminate\\Console\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
+                      "line": 163,
+                      "function": "run",
+                      "class": "Symfony\\Component\\Console\\Command\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php",
+                      "line": 1040,
+                      "function": "run",
+                      "class": "Illuminate\\Console\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php",
+                      "line": 314,
+                      "function": "doRunCommand",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\symfony\\console\\Application.php",
+                      "line": 168,
+                      "function": "doRun",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php",
+                      "line": 200,
+                      "function": "run",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\artisan",
+                      "line": 35,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Console\\Kernel",
+                      "type": "->"
+                  }
+              ]
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/client/{id}'
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Update a client's profile."
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the client.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: njwrt
+        type: string
+        custom: []
+      gender:
+        name: gender
+        description: 'Must be one of <code>male</code> or <code>female</code>.'
+        required: true
+        example: female
+        type: string
+        custom: []
+      date_of_birth:
+        name: date_of_birth
+        description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
+        required: true
+        example: '2003-02-15'
+        type: string
+        custom: []
+      avatar_image:
+        name: avatar_image
+        description: 'Must be an image. Must not be greater than 2048 kilobytes.'
+        required: false
+        example: null
+        type: file
+        custom: []
+      mobile_number:
+        name: mobile_number
+        description: 'Must not be greater than 20 characters.'
+        required: true
+        example: chavkpqdbxiqfz
+        type: string
+        custom: []
+      national_id:
+        name: national_id
+        description: 'Must not be greater than 20 characters.'
+        required: true
+        example: pouahngjrlqxsvi
+        type: string
+        custom: []
+    cleanBodyParameters:
+      name: njwrt
+      gender: female
+      date_of_birth: '2003-02-15'
+      mobile_number: chavkpqdbxiqfz
+      national_id: pouahngjrlqxsvi
+    fileParameters:
+      avatar_image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/client/{id}'
+    metadata:
+      groupName: 'Client management'
+      groupDescription: |-
+
+        APIs for managing clients
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get the specified client.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the client.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
