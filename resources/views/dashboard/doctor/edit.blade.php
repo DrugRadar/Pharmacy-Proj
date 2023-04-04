@@ -25,16 +25,16 @@
                 <div class="col-md-8">
                     <div class="card-body row">
                         <div class="mb-3 col-6">
-                            <label for="exampleFormControlInput1" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Name" value="{{ old('name', $doctor->name) }}">
+                            <label for="doctor_name" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control w-100" id="doctor_name" placeholder="Doctor Name" value="{{ old('name', $doctor->name) }}">
                             @error('name')
                                 <p class="text-danger mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div class="mb-3 col-6">
-                            <label for="exampleFormControlTextarea1" class="form-label">national_id</label>
-                            <input type="text" name="national_id" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor National id"
+                            <label for="doctorNationalId" class="form-label">national_id</label>
+                            <input type="text" name="national_id" class="form-control w-100" id="doctorNationalId" placeholder="Doctor National id"
                                 value="{{ old('national_id', $doctor->national_id) }}">
                                 @error('national_id')
                                     <p class="text-danger mt-1">{{ $message }}</p>
@@ -42,27 +42,28 @@
                         </div>
 
                         <div class="mb-3 col-12">
-                            <input type="text" name="email" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Email"  value="{{ old('email', $doctor->email) }}">
+                            <label for="doctorEmail" class="form-label">Email</label>
+                            <input type="text" name="email" class="form-control w-100" id="doctorEmail" placeholder="Doctor Email"  value="{{ old('email', $doctor->email) }}">
                             @error('email')
                                 <p class="text-danger mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div class="mb-3 col-6">
-                            <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Password" value="{{ old('password', $doctor->password) }}">
+                            <label for="doctorPassword" class="form-label">Password</label>
+                            <input type="text" name="password" class="form-control w-100" id="doctorPassword" placeholder="Doctor Password" value="{{ old('password', $doctor->password) }}">
                             @error('password')
                                 <p class="text-danger mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div class="mb-3 col-6">
-                            <label for="exampleFormControlTextarea1" class="form-label">doctor Name</label>
-                            <select name="pharmacy_id" class="form-control w-100">
+                            <label for="doctorPharmacy" class="form-label">pharmacy Name</label>
+                            <select name="pharmacy_id" class="form-control w-100" id="doctorPharmacy">
                                 {{Auth::user()->hasrole('admin')?' ':''}} 
                                 @if(Auth::user()->hasrole('admin'))
                                 @foreach($pharmacies as $pharmacy)
-                                <option value="{{$pharmacy->id}}" {{ old('pharmacy_id', $pharmacy->id) == '1' ? 'selected' : '' }}>{{$pharmacy->name}}</option>
+                                <option value="{{$pharmacy->id}}" {{ old('pharmacy_id', $doctor->pharmacy_id) == $pharmacy->id ? 'selected' : '' }}>{{$pharmacy->name}}</option>
                                 @endforeach
                                 @endif
                             </select>

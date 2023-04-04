@@ -6,17 +6,29 @@
         @csrf
         @method('put')
         <div class="mb-3 mt-3">
-            <label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input type="text" name="name" class="form-control w-100" id="exampleFormControlInput1" placeholder="Area name"  value="{{ old('name', $area->name) }}">
+            <label for="areaName" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control w-100" id="areaName" placeholder="Area name"  value="{{ old('name', $area->name) }}">
             @error('name')
                 <p class="text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-            <input type="text" name="address" class="form-control w-100" id="exampleFormControlInput1" placeholder="Adreess" value="{{ old('address', $area->address) }}">
+            <label for="areaAddress" class="form-label">Address</label>
+            <input type="text" name="address" class="form-control w-100" id="areaAddress" placeholder="Adreess" value="{{ old('address', $area->address) }}">
             @error('address')
+                <p class="text-danger mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="areaCountry" class="form-label">country</label>
+            <select name="country_id" class="form-control w-100" id="creator">
+                @foreach($countries as $country)
+                <option value="{{$country->id}}" {{ old('country_id',  $area->country_id) == $country->id ? 'selected' : '' }}>{{$country->name}}</option>
+                @endforeach
+            </select>
+            @error('country_id')
                 <p class="text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
