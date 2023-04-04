@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<?php use App\Models\Pharmacy; ?>
+
 <div class="">
     <h1>Process Order</h1>
 
@@ -44,6 +46,11 @@
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Assigned Pharmacy</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
+                    @if($order->assigned_pharmacy_id)
+                    <option value="{{$order->assigned_pharmacy_id}}">{{
+                        Pharmacy::find($order->assigned_pharmacy_id)->name   
+                            }}</option>
+                    @endif 
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
                                 $pharmacy->name

@@ -31,7 +31,7 @@
 
         <div class="mb-3 col-6">
             <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-            <input type="text" name="password" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Password">
+            <input type="password" name="password" class="form-control w-100" id="exampleFormControlInput1" placeholder="Doctor Password">
             @error('password')
                 <p class="text-danger mt-1">{{ $message }}</p>
             @enderror

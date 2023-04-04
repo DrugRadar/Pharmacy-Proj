@@ -43,7 +43,7 @@ class DoctorController extends Controller
         $newDoctor = Doctor::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>  $request->password,
+            'password' =>  Hash::make( $request->password),
             'national_id' =>  $request->national_id,
             'pharmacy_id'=> $request->pharmacy_id,
         ]);
@@ -91,7 +91,7 @@ class DoctorController extends Controller
     private function updateDoctor($request, $doctor) {
         $doctor->name = $request->name;
         $doctor->email = $request->email;
-        $doctor->password = $request->password;
+        $doctor->password =Hash::make( $request->password);
         $doctor->national_id = $request->national_id;
         $doctor->pharmacy_id = $request->pharmacy_id;
         $doctor->save();
