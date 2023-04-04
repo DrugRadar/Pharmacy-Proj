@@ -10,14 +10,11 @@ use Yajra\DataTables\DataTables;
 
 class MedicineController extends Controller
 {
-    //
-    function __construct()
-    {
+    function __construct(){
         $this->middleware('role:admin', ['only' => ['index','show','edit','delete','create','update','store']]);
-
     }
-    public function index(Request $request)
-    {
+
+    public function index(Request $request){
         if ($request->ajax()) {
             $data = Medicine::withTrashed()->latest()->get();
             return DataTables::of($data)
@@ -38,13 +35,12 @@ class MedicineController extends Controller
         }
         return view('dashboard.medicine.index');
     }
-    public function create()
-    {
+
+    public function create(){
         return view('dashboard.medicine.create');
     }
 
-    public function store(StoreMedicineRequest $request)
-    {
+    public function store(StoreMedicineRequest $request){
         $newMedicine= Medicine::create([
             'name' => $request->name,
             'type' => $request->type,
@@ -60,15 +56,11 @@ class MedicineController extends Controller
     }
 
     public function update(UpdateMedicineRequest $request ,$id){
-        $medicine= Medicine::find($id);
+        $medicine = Medicine::find($id);
         $this->updateMedicine($request, $medicine);
         return redirect()->route('medicine.index');
     }
-    public function destroy($id){
-        $medicine= Medicine::find($id);
-        $medicine->delete();
-        return redirect()->route('medicine.index');
-    }
+    
     private function updateMedicine($request, $medicine) {
         $medicine->name = $request->name;
         $medicine->type = $request->type;
@@ -76,9 +68,14 @@ class MedicineController extends Controller
         $medicine->save();
     }
 
+    public function destroy($id){
+        $medicine= Medicine::find($id);
+        $medicine->delete();
+        return redirect()->route('medicine.index');
+    }
+
     public function restore($id){
         Medicine::withTrashed()->find($id)->restore();
         return back();
     }
-
 }

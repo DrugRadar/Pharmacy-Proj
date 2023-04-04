@@ -38,6 +38,7 @@ class PharmacyController extends Controller
                         <i class=\'bx bx-recycle\'></i></a>';
                     }
                     else{
+
                         $actionBtn .= '<button type="button" class="delete btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
                     }

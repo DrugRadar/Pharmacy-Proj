@@ -25,7 +25,7 @@ class UpdatePharmacyRequest extends FormRequest
     {
         return [
             'name' => ['required', "max:255"],
-            'email' => ['required', "max:255", 'email', Rule::unique('users')->ignore($this->getDoctorIdInUser())],
+            'email' => ['required', "max:255", 'email', Rule::unique('users')->ignore($this->getPharmacyIdInUser())],
             'password' => ['required', "max:255",'min:6'],
             'national_id' => ['required','integer','digits:14', Rule::unique('pharmacies')->ignore($this->pharmacy)],
             'avatar_image' => ['image',"max:255",'mimes:jpeg,jpg,png'],
@@ -42,7 +42,7 @@ class UpdatePharmacyRequest extends FormRequest
         ];
     }
 
-    public function getDoctorIdInUser() {
+    public function getPharmacyIdInUser() {
         $user = User::where('userable_id', $this->pharmacy)
             ->where('userable_type', 'App\Models\Pharmacy')
             ->get();
