@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
 
         Route::resource('address', AddressController::class);
         Route::get('/address/{id}/restore', [AddressController::class, 'restore'])->name('address.restore');
-        
+
         Route::resource('pharmacy', PharmacyController::class);
         Route::get('/pharmacy/restore/{id}', [PharmacyController::class, 'restore'])->name('pharmacy.restore');
     });
@@ -59,9 +59,9 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::get('/doctor/{id}/restore', [DoctorController::class, 'restore'])->name('doctor.restore');
         Route::get('/doctor/{id}/ban', [DoctorController::class, 'ban'])->name('doctor.ban');
         Route::get('/doctor/{id}/unBan', [DoctorController::class, 'unBan'])->name('doctor.unBan');
-        
+
         Route::match(['get', 'put'], 'orders/export', [PharmacyController::class, 'export'])->name("orders.export");
-        
+
         Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
         Route::get('/charts', [ChartController::class, 'revenue'])->name('chart.revenue');
 
@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::get('/order/{id}/restore', [OrderController::class, 'restore'])->name('order.restore');
         Route::get('/order/{id}/delivered', [OrderController::class, 'deliveringOrder'])->name('order.delivered');
     });
-    
+
     Route::get('/order/confirm/{id}',[OrderConfirmationController::class, 'confirmOrder'])->name('order.orderConfirm');
     Route::get('/order/cancel/{id}',[OrderConfirmationController::class, 'cancelOrder'])->name('order.orderCancel');
 
@@ -95,11 +95,6 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
     Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 });
-
-
-// login Route
-
-// Route::get('/confirmOrder', [OrderController::class, 'SendOrderConfirmationMail'])->name("order");
 
 Auth::routes();
 

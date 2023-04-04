@@ -23,14 +23,13 @@
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+    <style>
+        table {
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
 </head>
-<style>
-    table {
-        text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-</style>
 
 <body class="g-sidenav-show bg-gray-200">
     <aside
@@ -216,7 +215,7 @@
                         </div>
                         <span class="nav-link-text ms-1">Statistics</span>
                     </a>
-                </li>       
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('revenue.index')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

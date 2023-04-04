@@ -42,12 +42,12 @@ class MedicineController extends Controller
         return view('dashboard.medicine.edit',['medicine' => $medicine]);
     }
 
-    public function update(UpdateMedicineRequest $request ,$id){
+    public function update(UpdateMedicineRequest $request, $id){
         $medicine = Medicine::find($id);
         $this->updateMedicine($request, $medicine);
         return redirect()->route('medicine.index');
     }
-    
+
     private function updateMedicine($request, $medicine) {
         $medicine->name = $request->name;
         $medicine->type = $request->type;
