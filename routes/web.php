@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
@@ -63,9 +64,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::put('/address/{id}', [AddressController::class, 'update'])->name('address.update');
         Route::get('/address/{id}/edit', [AddressController::class, 'edit'])->name('address.edit');
         Route::get('/address/{id}/restore', [AddressController::class, 'restore'])->name('address.restore');
-
         Route::resource('pharmacy', PharmacyController::class);
-
         Route::get('/pharmacy/restore/{id}', [PharmacyController::class, 'restore'])->name('pharmacy.restore');
     });
     Route::group(['middleware' => ['auth','role:admin|pharmacy']], function(){
@@ -80,6 +79,8 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::get('/doctor/{id}/unBan', [DoctorController::class, 'unBan'])->name('doctor.unBan');
         Route::match(['get', 'put'], 'orders/export', [PharmacyController::class, 'export'])->name("orders.export");
         Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
+        Route::get('/charts', [ChartController::class, 'revenue'])->name('chart.revenue');
+
     });
     Route::group(['middleware' => ['auth','role:pharmacy']], function(){
 
@@ -119,8 +120,6 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
 // login Route
 
 // Route::get('/confirmOrder', [OrderController::class, 'SendOrderConfirmationMail'])->name("order");
-
-
 
 Auth::routes();
 

@@ -45,7 +45,7 @@ class PharmacyController extends Controller
         $newPharmacy= Pharmacy::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>  $request->password,
+            'password' => Hash::make ($request->password),
             'national_id' =>  $request->national_id,
             'priority' => $request->priority,
             'area_id' =>  $request->area_id,
@@ -94,7 +94,7 @@ class PharmacyController extends Controller
     private function updatePharmacy($request, $pharmacy) {
         $pharmacy->name = $request->name;
         $pharmacy->email = $request->email;
-        $pharmacy->password = $request->password;
+        $pharmacy->password = Hash::make($request->password);
         $pharmacy->priority = $request->priority;
         $pharmacy->national_id = $request->national_id;
         $pharmacy->save();
