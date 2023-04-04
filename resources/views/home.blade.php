@@ -54,7 +54,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card blurred-box">
-                {{-- <div class="card-header">{{ __('Dashboard') }}</div> --}}
                 <div class="card-body d-flex justify-content-center align-items-center flex-column">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">

@@ -32,10 +32,10 @@
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Address</label>
             <!-- <input class="form-control w-50" style="width: 50%" name="client_address" id="exampleFormControlInput1" value="{{$clientAddress->street_name}}" disabled> -->
-            <select class="js-example-basic-single js-example-responsive form-control w-50" style="width: 50%" name="client_address_id" value="{{$clientAddress->street_name}}">        
+            <select class="js-example-basic-single js-example-responsive form-control w-50" style="width: 50%" name="client_address_id" value="{{$clientAddress->street_name}}">
             @foreach($addresses as $address)
                             <option  value="{{$address->id}}">{{
-                              $address->street_name . ' ' . $address->building_number     
+                                $address->street_name . ' ' . $address->building_number
                             }}</option>
                     @endforeach
             </select>
@@ -43,29 +43,29 @@
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client insured?</label>
             <select class="js-example-basic-single js-example-responsive" style="width: 50%" name="is_insured">
-               
-               <option value="0">
-                 No  
-               </option>
-               <option value="1">
-                 Yes  
-               </option>
- 
-       </select>
+
+                <option value="0">
+                    No
+                </option>
+                <option value="1">
+                    Yes
+                </option>
+
+        </select>
         </div>
         </div>
         <div class="mb-3 mt-3">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Medicines</label>
                     <select class="js-example-basic-single-tags js-example-responsive col-8 p-0" multiple="multiple" style="width: 50%" name="medicine_id[]">
                     @foreach($order->orderMedicine as  $key =>  $medicine)
-                            <option  value="{{$medicine->medicine_id?$medicine->medicine_id:$medicine->medicine_name}}" selected="selected">{{  
+                            <option  value="{{$medicine->medicine_id?$medicine->medicine_id:$medicine->medicine_name}}" selected="selected">{{
                                 $medicine->medicine_name?$medicine->medicine_name:Medicine::find($medicine->medicine_id)->name
                             }}</option>
 
                     @endforeach
                     @foreach($medicines as  $medicine)
-                            <option  value="{{$medicine->id}}">{{  
-                               $medicine->name
+                            <option  value="{{$medicine->id}}">{{
+                                $medicine->name
                             }}</option>
                     @endforeach
                     </select>
@@ -76,12 +76,12 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="assigned_pharmacy_id">
                     @if($order->assigned_pharmacy_id)
                     <option value="{{$order->assigned_pharmacy_id}}">{{
-                        Pharmacy::find($order->assigned_pharmacy_id)->name   
+                        Pharmacy::find($order->assigned_pharmacy_id)->name
                             }}</option>
-                    @endif        
+                    @endif
                     @foreach($pharmacies as $pharmacy)
                             <option value="{{$pharmacy->id}}">{{
-                                $pharmacy->name    
+                                $pharmacy->name
                             }}</option>
                     @endforeach
                     </select>
@@ -93,12 +93,12 @@
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" id="pharmacy" style="width: 50%" name="doctor_id">
                     @if($order->doctor_id)
                     <option value="{{$order->doctor_id}}">{{
-                        Doctor::find($order->doctor_id)->name   
+                        Doctor::find($order->doctor_id)->name
                             }}</option>
-                    @endif        
+                    @endif
                     @foreach($doctors as $doctor)
                             <option value="{{$doctor->id}}">{{
-                                $doctor->name    
+                                $doctor->name
                             }}</option>
                     @endforeach
                     </select>
@@ -109,38 +109,38 @@
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">Creator Type</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="creator_type">
                             <option value="client">
-                           Client
-                           </option>
-                           <option value="client">
-                           Doctor
-                           </option>
-                           <option value="client">
-                           Pharmacy
-                           </option>
+                                Client
+                            </option>
+                            <option value="client">
+                                Doctor
+                            </option>
+                            <option value="client">
+                                Pharmacy
+                            </option>
                     </select>
         </div>
         @endif
         <div class="mb-3 mt-3 me-2">
             <label for="exampleFormControlInput1" class="form-label col-2 p-0">status</label>
                     <select class="js-example-basic-single js-example-responsive col-8 p-0" style="width: 50%" name="status" value='{{$order->status}}'>
-                    <option value="canceled">
-                           New
-                           </option>        
-                    <option value="processing">
+                        <option value="canceled">
+                            New
+                        </option>
+                        <option value="processing">
                             Processing
-                           </option>
-                           <option value="waiting">
-                           Waiting For User Confirmation
-                           </option>
-                           <option value="confirmed">
-                           Confirmed
-                           </option>
-                           <option value="delivered">
-                           Delivered
-                           </option>
-                           <option value="canceled">
-                           Canceled
-                           </option>
+                        </option>
+                        <option value="waiting">
+                            Waiting For User Confirmation
+                        </option>
+                        <option value="confirmed">
+                            Confirmed
+                        </option>
+                        <option value="delivered">
+                            Delivered
+                        </option>
+                        <option value="canceled">
+                            Canceled
+                        </option>
                     </select>
         </div>
         <button type="submit" class="btn btn-success align-self-end">continue</button>
