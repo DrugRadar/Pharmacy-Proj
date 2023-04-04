@@ -4,17 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
-use App\Http\Requests\Api\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Address;
-use App\Models\Client;
-use App\Models\Medicine;
 use App\Models\Order;
-use App\Models\OrderMedicine;
 use App\Models\OrderPrescription;
-use App\Models\Pharmacy;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
@@ -163,7 +156,7 @@ class OrderController extends Controller
  * @param int $id
  */
 
-    public function edit(UpdateOrderRequest $request,$id){
+    public function edit(CreateOrderRequest $request,$id){
         $order = Order::find($id);
 
         if($order->status == "new"){

@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\AddressResource;
+
 use App\Models\Address;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\AddressResource;
+use App\Http\Requests\Api\AddressRegisterRequest;
 
 /**
  * @group Address management
@@ -72,17 +74,18 @@ class AddressController extends Controller
  *       "error": "Internal Server Error"
  *     }
  */
-    public function create(Request $request){
+    public function create(AddressRegisterRequest $request){
 
         $client = auth()->user();
-        $validated = $request->all();
 
-        $areaId= $validated['area_id'];
-        $street_name = $validated['street_name'];
-        $building_number = $validated['building_number'];
-        $floor_number = $validated['floor_number'];
-        $flat_number = $validated['flat_number'];
-        $is_main = $validated['is_main'];
+        $areaId= $request->area_id;
+        $street_name = $request->street_name;
+        $building_number = $request->building_number;
+        $floor_number = $request->floor_number;
+        $flat_number = $request->flat_number;
+        $is_main = $request->is_main;
+
+        // if( $this->checkForClientId($$areaId , $client->id) ){}
 
         $validated = new Address([
             'area_id' => $areaId,
@@ -159,11 +162,8 @@ class AddressController extends Controller
  */
 
     public function index($id) {
-
         $client = auth()->user();
-
         $addresses = Address::where('client_id', $id)->get();
-
         $showAddresses = [];
 
         foreach ($addresses as $address) {
