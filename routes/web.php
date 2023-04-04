@@ -64,7 +64,8 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
         Route::match(['get', 'put'], 'orders/export', [PharmacyController::class, 'export'])->name("orders.export");
 
         Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
-        Route::get('/charts', [ChartController::class, 'revenue'])->name('chart.revenue');
+        Route::get('/charts', [ChartController::class, 'index'])->name('chart.index');
+        Route::get('/charts/revenue', [ChartController::class, 'revenue'])->name('chart.revenue');
         Route::get('/attendance/gender', [ChartController::class, 'genderAttendance'])->name('chart.gender');
         Route::get('/topUsers', [ChartController::class, 'topUsers'])->name('chart.topuser');
 

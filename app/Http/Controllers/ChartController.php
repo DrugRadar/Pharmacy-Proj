@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class ChartController extends Controller
 {
+    public function index(){
+         return view('dashboard.charts.revenue');
+
+    } 
     public function revenue()
     {
         // Get the current year
@@ -38,7 +42,8 @@ class ChartController extends Controller
         $data = $revenueData->pluck('revenue')->toArray();
 
         // Return the chart view with the labels and data
-        return view('dashboard.charts.revenue', compact('labels', 'data'));
+        return response()->json(['data' => $revenueData]);
+        // return view('dashboard.charts.revenue', compact('labels', 'data'));
     }
 
     public function genderAttendance()
