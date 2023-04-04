@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -36,4 +37,23 @@ class ChartController extends Controller
         // Return the chart view with the labels and data
         return view('dashboard.charts.revenue', compact('labels', 'data'));
     }
+
+    public function genderAttendance()
+    {   
+         $males = Client::where('gender', 'male')->count();
+        $females = Client::where('gender', 'female')->count();
+    
+        return response()->json([
+            'labels' => ['Males', 'Females'],
+            'datasets' => [
+                [
+                    'data' => [$males, $females],
+                    'backgroundColor' => ['#36a2eb', '#ff6384']
+                ]
+            ]
+        ]);
+        
+    }
+    
+    
 }
