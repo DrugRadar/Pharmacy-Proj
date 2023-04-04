@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
@@ -64,6 +65,7 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
 
         Route::get('/revenue', [RevenueController::class, 'index'])->name("revenue.index");
         Route::get('/charts', [ChartController::class, 'revenue'])->name('chart.revenue');
+        Route::get('/attendance/gender', [ChartController::class, 'genderAttendance'])->name('chart.gender');
 
     });
 
@@ -93,6 +95,10 @@ Route::group(['middleware' => ['auth',"role:admin|pharmacy|doctor"]], function()
 
     Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
     Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
+
+    
+    
+
 
 });
 

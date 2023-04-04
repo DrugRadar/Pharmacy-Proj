@@ -24,12 +24,14 @@
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
-        table {
-            text-align: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
+    table {
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
     </style>
 </head>
+
+
 
 <body class="g-sidenav-show bg-gray-200">
     <aside
@@ -126,16 +128,14 @@
 
                     </a>
                     @elseif(Auth::user()->hasrole('doctor'))
-                    <a class="nav-link text-white"
-                        href="{{route('doctor.profile', Auth::user()->userable_id)}}">
+                    <a class="nav-link text-white" href="{{route('doctor.profile', Auth::user()->userable_id)}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Profile</span>
                     </a>
                     @elseif(Auth::user()->hasrole('pharmacy'))
-                    <a class="nav-link text-white"
-                        href="{{route('pharmacy.profile', Auth::user()->userable_id)}}">
+                    <a class="nav-link text-white" href="{{route('pharmacy.profile', Auth::user()->userable_id)}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
@@ -184,9 +184,9 @@
                 </li>
                 @endif
                 @if(Auth::user()->hasrole('banned'))
-                    <div class="alert alert-success">
-                        This Account banned for 3 days
-                    </div>
+                <div class="alert alert-success">
+                    This Account banned for 3 days
+                </div>
                 @else
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('order.index')}}">
@@ -211,7 +211,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('chart.revenue')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class='bx bx-stats'style="font-size: 25px;"></i>
+                            <i class='bx bx-stats' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Statistics</span>
                     </a>
