@@ -6,6 +6,8 @@ use App\Models\Doctor;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -53,7 +55,5 @@ class Pharmacy extends Model implements HasMedia
     public function doctor(){
         return $this->hasMany(Doctor::class);
     }
-    public function order(){
-        return $this->hasMany(Order::class);
-    }
+
 }
