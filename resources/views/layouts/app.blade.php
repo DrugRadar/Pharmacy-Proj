@@ -23,6 +23,7 @@
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('css/lightmode.css')}}">
     <style>
     table {
         text-align: center;
@@ -35,10 +36,10 @@
 
 <body class="g-sidenav-show bg-gray-200">
     <aside
-        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start ms-1 bg-gradient-dark"
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start ms-1 bg-gradient-dark "
         id="sidenav-main">
         <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+            <i class="fas fa-times p-3 cursor-pointer  opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href=" {{route('dashboard.index')}}" target="_parent" target="_blank">
                 <div class="logo-container" style="display:flex;">
@@ -119,8 +120,8 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     @if(Auth::user()->hasrole('admin'))
-                    <a class="nav-link text-white" href="{{route('dashboard.admin.profile' )}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('dashboard.admin.profile' )}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
 
@@ -128,15 +129,15 @@
 
                     </a>
                     @elseif(Auth::user()->hasrole('doctor'))
-                    <a class="nav-link text-white" href="{{route('doctor.profile', Auth::user()->userable_id)}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('doctor.profile', Auth::user()->userable_id)}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Profile</span>
                     </a>
                     @elseif(Auth::user()->hasrole('pharmacy'))
-                    <a class="nav-link text-white" href="{{route('pharmacy.profile', Auth::user()->userable_id)}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('pharmacy.profile', Auth::user()->userable_id)}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user-pin' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Profile</span>
@@ -145,8 +146,8 @@
                 </li>
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('pharmacy.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('pharmacy.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-user' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Pharmacies</span>
@@ -155,8 +156,8 @@
                 @endif
                 @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('doctor.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('doctor.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-group' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Doctors</span>
@@ -165,8 +166,8 @@
                 @endif
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('area.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('area.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-map-pin' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Areas</span>
@@ -175,8 +176,8 @@
                 @endif
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('medicine.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('medicine.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bxs-capsule' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Medicines</span>
@@ -189,8 +190,8 @@
                 </div>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('order.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('order.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-cycling' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Orders</span>
@@ -199,8 +200,8 @@
                 @endif
                 @if(Auth::user()->hasrole('admin'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('address.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('address.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-street-view' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Addresses</span>
@@ -209,16 +210,16 @@
                 @endif
                 @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('chart.revenue')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('chart.revenue')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-stats' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Statistics</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('revenue.index')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('revenue.index')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Revenue</span>
@@ -227,8 +228,8 @@
                 @endif
                 @if(Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('orders.export')}}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <a class="nav-link " href="{{route('orders.export')}}">
+                        <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-export' style="font-size: 25px;"></i>
                         </div>
                         <span class="nav-link-text ms-1">Export Orders</span>
@@ -377,6 +378,7 @@
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{asset('js/darkmode.js')}}"></script>
 
     @yield('modal')
     @yield('scripts')
