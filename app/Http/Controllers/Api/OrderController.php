@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderPrescription;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends Controller
 {
@@ -19,6 +20,18 @@ class OrderController extends Controller
  * @return \Illuminate\Http\JsonResponse
  */
 
+/**
+ * Create a new order for a client.
+ *
+ * This function takes in a `CreateOrderRequest` object as a parameter, which contains the request data for creating a new order. It validates the request data, checks if the delivering address ID exists for the authenticated client, and creates a new order in the database with the provided data. The prescription data is also filled in for the order. A JSON response is returned with the status message "Order created successfully" and the order data.
+ *
+ * @param CreateOrderRequest $request The request object containing the order data.
+ *
+ * @return JsonResponse The response containing the status message and order data.
+ *
+ * @throws \Illuminate\Validation\ValidationException If the request data fails validation.
+ * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the delivering address ID does not exist for the client.
+ */
     public function create(CreateOrderRequest $request){
         $client = auth()->user();
         $validated = $request->validated();
@@ -63,97 +76,44 @@ class OrderController extends Controller
         }
     }
 
-    /**
- * Retrieve a list of orders for the authenticated client.
+/**
+ * Retrieve the orders for a client.
  *
- * @return \Illuminate\Http\JsonResponse
+ * This function retrieves the orders associated with the authenticated client. It queries the `Order` model to fetch all orders that have the same client ID as the authenticated client. The retrieved orders are then transformed into a collection of `OrderResource` objects and returned as the response.
+ *
+ * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection The collection of orders as `OrderResource` objects.
  */
-
     public function index() {
         $client = auth()->user();
         $orders = Order::where('client_id', $client->id)->get();
-        // $formattedOrders = [];
-
-        // foreach ($orders as $order) {
-        //     $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
-        //     $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
-        //     $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
-        //     $medicines = [];
-        //     foreach ($medicinesInfo as $medicineInfo) {
-        //         $medicines[] = [
-        //             'id'=>$medicineInfo->id,
-        //             'name' => $medicineInfo->name,
-        //             'type' => $medicineInfo->type,
-        //             'quantity' => $medicineInfo->quantity,
-        //             'total_price' => $medicineInfo->total_price
-        //         ];
-        //     }
-        //     $formattedOrder = [
-        //         'id' => $order->id,
-        //         'medicines' => $medicines,
-        //         'order_total_price' => $order->total_price,
-        //         'ordered_at' => $order->created_at->diffForHumans(),
-        //         'status' => $order->status,
-        //         'assigned_pharmacy' => [
-        //             'id' => $pharmacyInfo->id,
-        //             'name' => $pharmacyInfo->name,
-        //             'area_id' => $pharmacyInfo->area_id,
-        //             'avatar_image' => $pharmacyInfo->avatar_image,
-        //         ]
-        //     ];
-        //   //  $formattedOrder = new OrderResource($formattedOrder);
-        //     $formattedOrders[] = $formattedOrder;
-        // }
-
-        // return response()->json($formattedOrders, 200);
-        return  OrderResource::collection($orders); 
+        return  OrderResource::collection($orders);
     }
 
-    /**
- * Display the specified order.
+/**
+ * Retrieve the details of a specific order.
  *
- * @param  int  $id
+ * This function retrieves the details of a specific order identified by the given ID. It queries the `Order` model to find the order with the provided ID. If the order is found, it is transformed into an `OrderResource` object and returned as the response. If the order is not found, an appropriate error response is returned.
+ *
+ * @param int $id The ID of the order to retrieve.
+ *
+ * @return \Illuminate\Http\JsonResponse The order details as an `OrderResource` object, or an error response if the order is not found.
  */
-
     public function show($id){
         $client = auth()->user();
         $order = Order::find($id);
-        // $pharmacyInfo = Pharmacy::where('id', $order->assigned_pharmacy_id)->first();
-        // $medicineIds = OrderMedicine::where('order_id', $order->id)->pluck('medicine_id');
-        // $medicinesInfo = Medicine::whereIn('id', $medicineIds)->get();
-        // $avatar_url = url($pharmacyInfo->avatar_image);
-        // $medicines = [];
-        // foreach ($medicinesInfo as $medicineInfo) {
-        //     $medicines[] = [
-        //         'id'=>$medicineInfo->id,
-        //         'name' => $medicineInfo->name,
-        //         'type' => $medicineInfo->type,
-        //         'quantity' => $medicineInfo->quantity,
-        //         'total_price' => $medicineInfo->total_price
-        //     ];
-        // }
-        // $formattedOrder = [
-        //     'id' => $order->id,
-        //     'medicines' => $medicines,
-        //     'order_total_price' => $order->total_price,
-        //     'ordered_at' => $order->created_at->diffForHumans(),
-        //     'status' => $order->status,
-        //     'assigned_pharmacy' => [
-        //         'id' => $pharmacyInfo->id,
-        //         'name' => $pharmacyInfo->name,
-        //         'address' => $pharmacyInfo->area_id,
-        //         'avatar_image_url' => $avatar_url,
-        //     ]
-        // ];
         return response()->json(new OrderResource($order), 200);
     }
 
 
 /**
- * Update an existing order.
+ * Update the details of an existing order.
  *
- * @param UpdateOrderRequest $request
- * @param int $id
+ * This function updates the details of an existing order identified by the given ID. It first retrieves the order using the `Order` model and checks if the order status is "new". If the order status is "new", it then validates and updates the order details based on the provided request data. If the updated order details are valid, the order is saved and a success response is returned with the updated order details. If the order status is not "new", an appropriate error response is returned indicating that the order cannot be updated. If the delivering address ID provided in the request does not exist for the client, another error response is returned indicating the same.
+ *
+ * @param CreateOrderRequest $request The request object containing the updated order details.
+ * @param int $id The ID of the order to update.
+ *
+ * @return \Illuminate\Http\JsonResponse The updated order details as a JSON response, or an error response if the order status is not "new" or the delivering address ID does not exist for the client.
  */
 
     public function edit(CreateOrderRequest $request,$id){
