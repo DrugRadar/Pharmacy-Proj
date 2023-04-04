@@ -108,7 +108,6 @@ class PharmacyController extends Controller
             Session::flash('error', 'You can not delete this pharmacy ');
             return back();
         }
-        
     }
 
     public function getPharmacy(Request $request){
