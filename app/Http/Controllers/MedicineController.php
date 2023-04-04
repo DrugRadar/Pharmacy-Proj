@@ -10,7 +10,6 @@ use Yajra\DataTables\DataTables;
 
 class MedicineController extends Controller
 {
-    //
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -23,13 +22,12 @@ class MedicineController extends Controller
         }
         return view('dashboard.medicine.index');
     }
-    public function create()
-    {
+
+    public function create(){
         return view('dashboard.medicine.create');
     }
 
-    public function store(StoreMedicineRequest $request)
-    {
+    public function store(StoreMedicineRequest $request){
         $newMedicine= Medicine::create([
             'name' => $request->name,
             'type' => $request->type,
@@ -45,20 +43,22 @@ class MedicineController extends Controller
     }
 
     public function update(UpdateMedicineRequest $request ,$id){
-        $medicine= Medicine::find($id);
+        $medicine = Medicine::find($id);
         $this->updateMedicine($request, $medicine);
         return redirect()->route('medicine.index');
     }
-    public function destroy($id){
-        $medicine= Medicine::find($id);
-        $medicine->delete();
-        return redirect()->route('medicine.index');
-    }
+    
     private function updateMedicine($request, $medicine) {
         $medicine->name = $request->name;
         $medicine->type = $request->type;
         $medicine->price = $request->price;
         $medicine->save();
+    }
+
+    public function destroy($id){
+        $medicine= Medicine::find($id);
+        $medicine->delete();
+        return redirect()->route('medicine.index');
     }
 
     public function restore($id){

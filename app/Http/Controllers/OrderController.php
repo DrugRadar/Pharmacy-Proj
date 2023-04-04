@@ -10,18 +10,15 @@ use App\Models\Medicine;
 use App\Models\Order;
 use App\Models\OrderMedicine;
 use App\Models\Pharmacy;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
     
     public function index(Request $request){
-
         if(Auth::user()->roles[0]->name=='admin'){
             $data = Order::withTrashed()->with('doctor')->latest()->get();
         }
@@ -42,8 +39,10 @@ class OrderController extends Controller
                 ->addColumn('doctor_name', function ($row) {
                 return $row->doctor?->name ?? 'N/A';
                 })
+                ->addColumn('creator_type', function ($row) {
+                    return $row->creator_type;
+                })
                 ->addColumn('is_insured', function ($row) {
-                    
                     return $row->is_insured?"true":"false";
                 })
                 ->addColumn('action',function ($row) {return $this->showActionBtns($row);})
@@ -73,7 +72,6 @@ class OrderController extends Controller
     }
 
     public function store(Request $request){
-
         $user = Auth::user();
         $creator_type=$request->creator_type;
         $doctor_id = $request->doctor_id;
@@ -99,6 +97,7 @@ class OrderController extends Controller
         ]);
         return $this->continue($request,$newOrder->id);
     }
+
     public function process($id){
         $user = Auth::user();
         $order= Order::find($id);
@@ -113,6 +112,7 @@ class OrderController extends Controller
         }
         return view('dashboard.order.process',['order' => $order,'client'=>$client,'medicines'=>$medicines,'doctors'=>$doctors,'clientAddress'=>$clientAddress]);
     }
+
     public function continue(Request $request,$orderId){
         $medicine_id= $request->medicine_id;
         $medicines =array() ;
@@ -129,6 +129,7 @@ class OrderController extends Controller
         session()->put('data',$request->all());
         return view('dashboard.order.medicinesOrder',['data' => $request,'orderId' => $orderId,'medicines'=>$medicines]);
     }
+
     public function send(Request $request,$id){
         $order= Order::find($id);
         $orderInfo=session()->get('data');
@@ -148,8 +149,7 @@ class OrderController extends Controller
         return to_route('order.index');
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $order=Order::find($id);
         $client=Client::find($order->client_id);
         $clientAddress=Address::find($order->client_address_id);
@@ -167,10 +167,9 @@ class OrderController extends Controller
             $doctors=Doctor::all();
         }
         return view('dashboard.order.edit',['order' => $order,'medicines'=>$medicines,'pharmacies'=>$pharmacies,'doctors'=>$doctors,'client'=>$client,'clientAddress'=>$clientAddress,'addresses'=>$addresses]);
-
     }
-    public function update(Request $request,$id)
-    {
+
+    public function update(Request $request,$id){
         $order=Order::find($id);
         $user = Auth::user();
         $creator_type=$request->creator_type;
@@ -202,45 +201,46 @@ class OrderController extends Controller
     }
 
     private function pushMedicinesToOrder($orderInfo,$order,$medicinesQuantities){
-    try {
-        if(OrderMedicine::find($order->id))
-        {
-            $order->orderMedicine()->delete();
-        }
-    foreach ($orderInfo['medicine_id'] as $key => $medicine_id) {
-        $medicine=Medicine::find($medicine_id);
-        if ($medicine) {
-            $order->orderMedicine()->create([
-                    'medicine_id' => $medicine_id,
-                    'quantity' => $medicinesQuantities[$key],
+        try {
+            if(OrderMedicine::find($order->id)){
+                $order->orderMedicine()->delete();
+            }
+            foreach ($orderInfo['medicine_id'] as $key => $medicine_id) {
+                $medicine=Medicine::find($medicine_id);
+                if ($medicine) {
+                    $order->orderMedicine()->create([
+                            'medicine_id' => $medicine_id,
+                            'quantity' => $medicinesQuantities[$key],
+                            ]);
+                } else {
+                    $order->orderMedicine()->create([
+                        'medicine_name' => $medicine_id,
+                        'quantity' => $medicinesQuantities[$key],
                     ]);
-        } else {
-            $order->orderMedicine()->create([
-                'medicine_name' => $medicine_id,
-                'quantity' => $medicinesQuantities[$key],
-            ]);
+                }
+                $this->sendOrderConfirmationMail($order) ;
+            }
+        }catch (\Exception $e) {
+            throw $e;
         }
-       $this->sendOrderConfirmationMail($order) ;
     }
-    }catch (\Exception $e) {
-        throw $e;
-    }
-    }
-    public function sendOrderConfirmationMail( $orderData)
-    {
+
+    public function sendOrderConfirmationMail( $orderData){
         Mail::to($orderData->client->email)->send(new ConfirmOrder($orderData));
     }
+
     public function deliveringOrder($id){
         $order = Order::find($id);
         $order->status='delivered';
         $order->save();
         return back();
     }
+
     private function showActionBtns($row){
-        if($row->status =='confirmed')
-        {
+        if($row->status =='confirmed'){
             $actionBtn  = '<a href="' . route('order.delivered', $row->id) . '" class="edit btn btn-success" title="delivered" >delivered</a>  ';
         }
+
         elseif($row->status == 'WaitingForUserConfirmation' || $row->status == 'canceled' || $row->status == 'delivered'){
             $actionBtn  = '<a href="" class="edit btn btn-success disabled" title="unable to process" aria-disabled="true"><i class=\'bx bx-cog\'></i></a>  ';    
             $actionBtn .= '<a id="$row->id" class="btn btn-primary disabled" title="unable to edit" href=""><i class=\'bx bx-edit\'></i></a>  ';
@@ -261,7 +261,7 @@ class OrderController extends Controller
                 $actionBtn .= '<button type="button" class="delete btn btn-danger" title="Click to delete order" data-bs-toggle="modal"
                 data-bs-target="#exampleModal" id="'.$row->id.'"><i class=\'bx bxs-trash-alt\'></i></button>';
             }
-       }
+        }
 
         return $actionBtn;
     }

@@ -24,7 +24,7 @@ class UpdateMedicineRequest extends FormRequest
         return [
             'name' => ["required", "max:255"],
             'type' => ["required", "max:255"],
-            'price' => ["required", "numeric", "min:0"],
+            'price' => ["required", "integer", "min:0"],
             'quantity' => ["required", "integer", "min:1"],
         ];
     }

@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -30,8 +28,8 @@ class PharmacyController extends Controller
                     return $row->area->name;
                 })
             ->addColumn('action', function($row){return $this->showActionBtns($row);})
-                ->rawColumns(['action'])
-                ->make(true);
+            ->rawColumns(['action'])
+            ->make(true);
         }
         return view('dashboard.pharmacy.index');
     }
@@ -102,8 +100,6 @@ class PharmacyController extends Controller
 
     public function destroy($id){
         $pharmacyOrders = Order::where([['assigned_pharmacy_id',$id],['status' , '!=', 'delivered']])->get();
-        // dd($pharmacyOrders); 
-
         if(!$pharmacyOrders){
             Pharmacy::destroy($id);
             return redirect()->route('pharmacy.index');

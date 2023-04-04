@@ -2,7 +2,7 @@
 @section('content')
 <div class="col-12">
     <h1>Medicine</h1>
-    <form method="POST" action="{{route('medicine.update',$medicine->id)}}" class="w-lg-50 mx-auto">
+    <form method="POST" action="{{route('medicine.update',$medicine->id)}}" enctype="multipart/form-data" class="w-lg-75 row mx-auto">
         @csrf
         @method('put')
         <div class="mb-3 col-12">
@@ -29,7 +29,7 @@
             @enderror
         </div>
 
-        <div class="mb-3 col-12 d-flex justify-content-center">
+        <div class="mb-2 col-12 d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Update</button>
         </div>
     </form>
