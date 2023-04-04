@@ -16,14 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('app:notify-inactive-clients')->daily();
-        $schedule->command('app:notify-inactive-clients')->everyMinute();
+        $schedule->command('app:notify-inactive-clients')->daily();
         $schedule->command('orders:scan-new-orders')->everyMinute();
         $schedule->command('unban-doctor')->dailyAt('00:00');
 
     }
     protected $commands = [
-        // ...
         CreateAdminCommand::class,
         NotifyInactiveClients::class,
         UnbanUserCommand::class,

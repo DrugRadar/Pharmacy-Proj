@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\ClientRegisterRequest;
-use App\Http\Requests\Api\ClientUpdateProfileRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\OrderResource;
-use App\Models\Client;
+use Carbon\Carbon;
 use App\Models\Order;
-use App\Notifications\ClientVerified;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
+use App\Notifications\ClientVerified;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Resources\ClientResource;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Requests\Api\ClientRegisterRequest;
+use Illuminate\Auth\Access\AuthorizationException;
+use App\Http\Requests\Api\ClientUpdateProfileRequest;
 
 /**
  * @group Client management
@@ -55,8 +55,6 @@ class ClientController extends Controller
 
     public function register(ClientRegisterRequest $request)
     {
-
-
         $data = $request->all();
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
@@ -155,6 +153,8 @@ public function login(Request $request)
     }
 
     $token = $user->createToken($request->device_name)->plainTextToken;
+    $current_time = Carbon::now();
+    Client::where('id', $user->id)->update(['last_visit' => $current_time]);
 
     return response()->json([
         'message' => 'Client logged in successfully',
@@ -322,10 +322,10 @@ public function login(Request $request)
 
     public function clientOrders(Request $request, $id){
         $orders = Order::where('client_id', $id)->get();;
-        return response()->json([            
+        return response()->json([
             'data' =>  OrderResource::collection($orders),
         ], 201);
 
     }
-      
+
 }

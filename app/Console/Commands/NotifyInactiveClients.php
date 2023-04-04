@@ -29,10 +29,8 @@ class NotifyInactiveClients extends Command
      */
     public function handle(): void
     {
-        // $clients = Client::where('last_visit', '<', Carbon::now()->subMonth())->get();
-        $clients = Client::where('last_visit', '>', Carbon::now()->subMinute())->get();
+        $clients = Client::where('last_visit', '<', Carbon::now()->subMonth())->get();
         foreach ( $clients as $client ) {
-            $this->info('Notification sent to ' . $client->email);
             Mail::to($client->email)->send(new InactiveClientMail($client));
         }
     }
