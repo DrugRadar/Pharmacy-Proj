@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div style="width: 400px; height:300px; display:grid; place-items:center; margin:auto;">
+    <div style="width: 400px; height:200px; display:grid; place-items:center; margin:auto;">
         <canvas id="revenue-chart"></canvas>
     </div>
-    <div class="chartWrapper" style="height:270px; display:flex;justify-content:center;">
+    <div class="chartWrapper" style="height:200px; display:flex;justify-content:center;">
         <canvas id="gender-chart"></canvas>
         <canvas id="ordersChart"></canvas>
     </div>
