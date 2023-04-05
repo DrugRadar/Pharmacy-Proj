@@ -13,7 +13,6 @@
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">National id</th>
-            <th scope="col">Created at</th>
             <th scope="col">Actions</th>
 
         </tr>
@@ -48,10 +47,6 @@ $(function() {
             {
                 data: 'national_id',
                 name: 'national_id'
-            },
-            {
-                data: 'created_at',
-                name: 'created_at'
             },
             {
                 data: 'action',
