@@ -1,3 +1,34 @@
 .darkMode{
-    background-image: linear-gradient( #000000,#5d9ca3) !important;
+    background-image: linear-gradient( #000000,white) !important;
+}
+
+.darkMode nav, .darkMode i{
+    color: white !important;
+}
+/*
+.darkMode table, .lightMode tr, .lightMode td{
+    background-color: rgb(10, 7, 7) !important;
+    color: white;
+}
+
+.darkMode table.dataTable tbody tr {
+    background-color:  rgb(10, 7, 7) !important;
+}
+
+.darkMode  .table-striped>tbody>tr:nth-of-type(odd)>*{
+    background-color: rgb(39, 38, 38) !important;
+    color: white;
+
+}
+
+.darkMode tbody, td, tfoot, th, tr{
+    background-color:  rgb(10, 7, 7) !important;
+}
+
+.darkMode tbody, td, tfoot, th,  tr{
+    background-color: black !important;
+} */
+
+.darkMode h2 , .darkMode h1{
+    color: white !important;
 }

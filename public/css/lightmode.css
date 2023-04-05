@@ -2,7 +2,35 @@
     background-image: linear-gradient(330.93deg, #FFB234 -6.5%, rgba(141, 42, 19, 0.5) 42.31%, transparent 81.62%) !important;
 }
 
-.lightMode aside {
+/* .lightMode table, .lightMode tr, .lightMode td{
+    background-color: white !important;
+    color: black;
+}
+
+.lightMode .table>thead{
+    background-color: white !important;
+}
+
+
+.lightMode table, .lightMode tr, .lightMode td{
+    background-color:white !important;
+    color: black;
+}
+
+.lightMode table.dataTable tbody tr {
+    background-color: white !important;
+}
+
+.lightMode  .table-striped>tbody>tr:nth-of-type(odd)>*{
+    background-color: rgb(146, 143, 143) !important;
+    color: black;
 
 }
 
+.lightMode tbody, td, tfoot, th, tr{
+    background-color: white !important;
+}
+
+.lightMode tbody, td, tfoot, th,  tr{
+    background-color: white !important;
+} */
