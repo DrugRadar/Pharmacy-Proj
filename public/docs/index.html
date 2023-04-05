@@ -109,6 +109,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="client-management-GETapi-client--id-">
                                 <a href="#client-management-GETapi-client--id-">Get the specified client.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="client-management-GETapi-client--clientId--orders">
+                                <a href="#client-management-GETapi-client--clientId--orders">GET api/client/{clientId}/orders</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-endpoints" class="tocify-header">
@@ -117,22 +120,22 @@
                 </li>
                                     <ul id="tocify-subheader-endpoints" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
-                                <a href="#endpoints-GETapi-user">GET api/user</a>
+                                <a href="#endpoints-GETapi-user">Get authenticated user</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-email-verify--id---hash-">
                                 <a href="#endpoints-GETapi-email-verify--id---hash-">GET api/email/verify/{id}/{hash}</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-orders">
-                                <a href="#endpoints-POSTapi-orders">Create a new order.</a>
+                                <a href="#endpoints-POSTapi-orders">Create a new order for a client.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-orders">
-                                <a href="#endpoints-GETapi-orders">Retrieve a list of orders for the authenticated client.</a>
+                                <a href="#endpoints-GETapi-orders">Retrieve the orders for a client.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-orders--id-">
-                                <a href="#endpoints-GETapi-orders--id-">Display the specified order.</a>
+                                <a href="#endpoints-GETapi-orders--id-">Retrieve the details of a specific order.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-PUTapi-orders--id-">
-                                <a href="#endpoints-PUTapi-orders--id-">Update an existing order.</a>
+                                <a href="#endpoints-PUTapi-orders--id-">Update the details of an existing order.</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -155,7 +158,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: April 3, 2023</li>
+        <li>Last updated: April 4, 2023</li>
     </ul>
 </div>
 
@@ -190,22 +193,22 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/client/1/address/1" \
+    "http://localhost:8000/api/client/1/address/7" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"street_name\": \"quia\",
-    \"building_number\": \"accusantium\",
-    \"floor_number\": \"non\",
-    \"flat_number\": \"excepturi\",
-    \"is_main\": false
+    \"street_name\": \"ut\",
+    \"building_number\": \"inventore\",
+    \"floor_number\": \"et\",
+    \"flat_number\": \"eligendi\",
+    \"is_main\": true
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/client/1/address/1"
+    "http://localhost:8000/api/client/1/address/7"
 );
 
 const headers = {
@@ -214,11 +217,11 @@ const headers = {
 };
 
 let body = {
-    "street_name": "quia",
-    "building_number": "accusantium",
-    "floor_number": "non",
-    "flat_number": "excepturi",
-    "is_main": false
+    "street_name": "ut",
+    "building_number": "inventore",
+    "floor_number": "et",
+    "flat_number": "eligendi",
+    "is_main": true
 };
 
 fetch(url, {
@@ -337,10 +340,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="addressId"                data-endpoint="PUTapi-client--clientId--address--addressId-"
-               value="1"
+               value="7"
                data-component="url">
     <br>
-<p>Example: <code>1</code></p>
+<p>Example: <code>7</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -349,10 +352,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="street_name"                data-endpoint="PUTapi-client--clientId--address--addressId-"
-               value="quia"
+               value="ut"
                data-component="body">
     <br>
-<p>The street name of the address. Example: <code>quia</code></p>
+<p>The street name of the address. Example: <code>ut</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>building_number</code></b>&nbsp;&nbsp;
@@ -360,10 +363,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="building_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
-               value="accusantium"
+               value="inventore"
                data-component="body">
     <br>
-<p>The building number of the address. Example: <code>accusantium</code></p>
+<p>The building number of the address. Example: <code>inventore</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>floor_number</code></b>&nbsp;&nbsp;
@@ -371,10 +374,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="floor_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
-               value="non"
+               value="et"
                data-component="body">
     <br>
-<p>The floor number of the address. Example: <code>non</code></p>
+<p>The floor number of the address. Example: <code>et</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>flat_number</code></b>&nbsp;&nbsp;
@@ -382,10 +385,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="flat_number"                data-endpoint="PUTapi-client--clientId--address--addressId-"
-               value="excepturi"
+               value="eligendi"
                data-component="body">
     <br>
-<p>The flat number of the address. Example: <code>excepturi</code></p>
+<p>The flat number of the address. Example: <code>eligendi</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>is_main</code></b>&nbsp;&nbsp;
@@ -406,7 +409,7 @@ fetch(url, {
             <code>false</code>
         </label>
     <br>
-<p>Whether the address is the main address of the client. Example: <code>false</code></p>
+<p>Whether the address is the main address of the client. Example: <code>true</code></p>
         </div>
         </form>
 
@@ -429,7 +432,16 @@ fetch(url, {
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/address" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"street_name\": \"zsmoimjjep\",
+    \"building_number\": 16,
+    \"floor_number\": 67,
+    \"flat_number\": 8,
+    \"is_main\": \"1\",
+    \"area_id\": \"odit\"
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -442,9 +454,19 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "street_name": "zsmoimjjep",
+    "building_number": 16,
+    "floor_number": 67,
+    "flat_number": 8,
+    "is_main": "1",
+    "area_id": "odit"
+};
+
 fetch(url, {
     method: "POST",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
@@ -512,7 +534,74 @@ fetch(url, {
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>street_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="street_name"                data-endpoint="POSTapi-address"
+               value="zsmoimjjep"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>zsmoimjjep</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>building_number</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="building_number"                data-endpoint="POSTapi-address"
+               value="16"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Example: <code>16</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>floor_number</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="floor_number"                data-endpoint="POSTapi-address"
+               value="67"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Example: <code>67</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>flat_number</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="flat_number"                data-endpoint="POSTapi-address"
+               value="8"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Example: <code>8</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_main</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="is_main"                data-endpoint="POSTapi-address"
+               value="1"
+               data-component="body">
+    <br>
+<p>Must be one of <code>0</code> or <code>1</code>. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>area_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="area_id"                data-endpoint="POSTapi-address"
+               value="odit"
+               data-component="body">
+    <br>
+<p>Example: <code>odit</code></p>
+        </div>
+        </form>
 
                     <h2 id="address-management-GETapi-address--id-">GET api/address/{id}</h2>
 
@@ -527,14 +616,14 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/address/1" \
+    --get "http://localhost:8000/api/address/7" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/address/1"
+    "http://localhost:8000/api/address/7"
 );
 
 const headers = {
@@ -635,10 +724,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="GETapi-address--id-"
-               value="1"
+               value="7"
                data-component="url">
     <br>
-<p>The ID of the address. Example: <code>1</code></p>
+<p>The ID of the address. Example: <code>7</code></p>
             </div>
                     </form>
 
@@ -664,13 +753,13 @@ access-control-allow-origin: *
     --header "Accept: application/json" \
     --form "name=John Doe" \
     --form "email=john.doe@example.com" \
-    --form "gender=female" \
+    --form "gender=male" \
     --form "password=secret" \
-    --form "date_of_birth=2010-01-17" \
-    --form "mobile_number=wcgdbfjcwuxuxnku" \
-    --form "national_id=17850698088476" \
+    --form "date_of_birth=1999-03-30" \
+    --form "mobile_number=huwyerkanzj" \
+    --form "national_id=05072619594761" \
     --form "phone=+1234567890" \
-    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\php77AF.tmp" </code></pre></div>
+    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\phpEEF4.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -686,11 +775,11 @@ const headers = {
 const body = new FormData();
 body.append('name', 'John Doe');
 body.append('email', 'john.doe@example.com');
-body.append('gender', 'female');
+body.append('gender', 'male');
 body.append('password', 'secret');
-body.append('date_of_birth', '2010-01-17');
-body.append('mobile_number', 'wcgdbfjcwuxuxnku');
-body.append('national_id', '17850698088476');
+body.append('date_of_birth', '1999-03-30');
+body.append('mobile_number', 'huwyerkanzj');
+body.append('national_id', '05072619594761');
 body.append('phone', '+1234567890');
 body.append('avatar_image', document.querySelector('input[name="avatar_image"]').files[0]);
 
@@ -813,10 +902,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="gender"                data-endpoint="POSTapi-client-register"
-               value="female"
+               value="male"
                data-component="body">
     <br>
-<p>Must be one of <code>male</code> or <code>female</code>. Example: <code>female</code></p>
+<p>Must be one of <code>male</code> or <code>female</code>. Example: <code>male</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -835,10 +924,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="date_of_birth"                data-endpoint="POSTapi-client-register"
-               value="2010-01-17"
+               value="1999-03-30"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>2010-01-17</code></p>
+<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>1999-03-30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>avatar_image</code></b>&nbsp;&nbsp;
@@ -849,7 +938,7 @@ fetch(url, {
                value=""
                data-component="body">
     <br>
-<p>The avatar image of the client. Example: <code>C:\Users\radwa\AppData\Local\Temp\php77AF.tmp</code></p>
+<p>The avatar image of the client. Example: <code>C:\Users\radwa\AppData\Local\Temp\phpEEF4.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>mobile_number</code></b>&nbsp;&nbsp;
@@ -857,10 +946,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="mobile_number"                data-endpoint="POSTapi-client-register"
-               value="wcgdbfjcwuxuxnku"
+               value="huwyerkanzj"
                data-component="body">
     <br>
-<p>Must not be greater than 20 characters. Example: <code>wcgdbfjcwuxuxnku</code></p>
+<p>Must not be greater than 20 characters. Example: <code>huwyerkanzj</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>national_id</code></b>&nbsp;&nbsp;
@@ -868,10 +957,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="national_id"                data-endpoint="POSTapi-client-register"
-               value="17850698088476"
+               value="05072619594761"
                data-component="body">
     <br>
-<p>Must be 14 digits. Example: <code>17850698088476</code></p>
+<p>Must be 14 digits. Example: <code>05072619594761</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
@@ -903,9 +992,9 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"mdare@example.org\",
-    \"password\": \"v8.b*EO2!:v\",
-    \"device_name\": \"suscipit\"
+    \"email\": \"ofelia88@example.org\",
+    \"password\": \"}\'M@\\\\\\/7fcuF.dY\",
+    \"device_name\": \"debitis\"
 }"
 </code></pre></div>
 
@@ -921,9 +1010,9 @@ const headers = {
 };
 
 let body = {
-    "email": "mdare@example.org",
-    "password": "v8.b*EO2!:v",
-    "device_name": "suscipit"
+    "email": "ofelia88@example.org",
+    "password": "}'M@\\\/7fcuF.dY",
+    "device_name": "debitis"
 };
 
 fetch(url, {
@@ -1051,10 +1140,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="POSTapi-client-login"
-               value="mdare@example.org"
+               value="ofelia88@example.org"
                data-component="body">
     <br>
-<p>The email of the client. Example: <code>mdare@example.org</code></p>
+<p>The email of the client. Example: <code>ofelia88@example.org</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -1062,10 +1151,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-client-login"
-               value="v8.b*EO2!:v"
+               value="}'M@\/7fcuF.dY"
                data-component="body">
     <br>
-<p>The password of the client. Example: <code>v8.b*EO2!:v</code></p>
+<p>The password of the client. Example: <code>}'M@\/7fcuF.dY</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>device_name</code></b>&nbsp;&nbsp;
@@ -1073,10 +1162,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="device_name"                data-endpoint="POSTapi-client-login"
-               value="suscipit"
+               value="debitis"
                data-component="body">
     <br>
-<p>The name of the device. Example: <code>suscipit</code></p>
+<p>The name of the device. Example: <code>debitis</code></p>
         </div>
         </form>
 
@@ -1093,14 +1182,14 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/verify-email/recusandae/et" \
+    --get "http://localhost:8000/api/verify-email/architecto/neque" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/verify-email/recusandae/et"
+    "http://localhost:8000/api/verify-email/architecto/neque"
 );
 
 const headers = {
@@ -1131,7 +1220,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Client] recusandae&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Client] architecto&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;C:\\Users\\radwa\\OneDrive\\Desktop\\open source RADWA\\Laravel\\LaravelFinalProject\\Pharmacy-Proj\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php&quot;,
     &quot;line&quot;: 408,
@@ -1621,10 +1710,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-verify-email--id---hash-"
-               value="recusandae"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the verify email. Example: <code>recusandae</code></p>
+<p>The ID of the verify email. Example: <code>architecto</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
@@ -1632,10 +1721,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="hash"                data-endpoint="GETapi-verify-email--id---hash-"
-               value="et"
+               value="neque"
                data-component="url">
     <br>
-<p>Example: <code>et</code></p>
+<p>Example: <code>neque</code></p>
             </div>
                     </form>
 
@@ -1655,12 +1744,12 @@ access-control-allow-origin: *
     "http://localhost:8000/api/client/1" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "name=njwrt" \
+    --form "name=lzejdix" \
     --form "gender=female" \
-    --form "date_of_birth=2003-02-15" \
-    --form "mobile_number=chavkpqdbxiqfz" \
-    --form "national_id=pouahngjrlqxsvi" \
-    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\php77EF.tmp" </code></pre></div>
+    --form "date_of_birth=1994-08-14" \
+    --form "mobile_number=ltdwfunn" \
+    --form "national_id=jdlsxyuvxegfpdndrn" \
+    --form "avatar_image=@C:\Users\radwa\AppData\Local\Temp\phpEF63.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1674,11 +1763,11 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('name', 'njwrt');
+body.append('name', 'lzejdix');
 body.append('gender', 'female');
-body.append('date_of_birth', '2003-02-15');
-body.append('mobile_number', 'chavkpqdbxiqfz');
-body.append('national_id', 'pouahngjrlqxsvi');
+body.append('date_of_birth', '1994-08-14');
+body.append('mobile_number', 'ltdwfunn');
+body.append('national_id', 'jdlsxyuvxegfpdndrn');
 body.append('avatar_image', document.querySelector('input[name="avatar_image"]').files[0]);
 
 fetch(url, {
@@ -1771,10 +1860,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="PUTapi-client--id-"
-               value="njwrt"
+               value="lzejdix"
                data-component="body">
     <br>
-<p>Must not be greater than 255 characters. Example: <code>njwrt</code></p>
+<p>Must not be greater than 255 characters. Example: <code>lzejdix</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -1793,10 +1882,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="date_of_birth"                data-endpoint="PUTapi-client--id-"
-               value="2003-02-15"
+               value="1994-08-14"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>2003-02-15</code></p>
+<p>Must be a valid date. Must be a date before or equal to <code>today</code>. Example: <code>1994-08-14</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>avatar_image</code></b>&nbsp;&nbsp;
@@ -1807,7 +1896,7 @@ fetch(url, {
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\radwa\AppData\Local\Temp\php77EF.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\radwa\AppData\Local\Temp\phpEF63.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>mobile_number</code></b>&nbsp;&nbsp;
@@ -1815,10 +1904,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="mobile_number"                data-endpoint="PUTapi-client--id-"
-               value="chavkpqdbxiqfz"
+               value="ltdwfunn"
                data-component="body">
     <br>
-<p>Must not be greater than 20 characters. Example: <code>chavkpqdbxiqfz</code></p>
+<p>Must not be greater than 20 characters. Example: <code>ltdwfunn</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>national_id</code></b>&nbsp;&nbsp;
@@ -1826,10 +1915,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="national_id"                data-endpoint="PUTapi-client--id-"
-               value="pouahngjrlqxsvi"
+               value="jdlsxyuvxegfpdndrn"
                data-component="body">
     <br>
-<p>Must not be greater than 20 characters. Example: <code>pouahngjrlqxsvi</code></p>
+<p>Must not be greater than 20 characters. Example: <code>jdlsxyuvxegfpdndrn</code></p>
         </div>
         </form>
 
@@ -1961,11 +2050,139 @@ access-control-allow-origin: *
             </div>
                     </form>
 
+                    <h2 id="client-management-GETapi-client--clientId--orders">GET api/client/{clientId}/orders</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-client--clientId--orders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/client/1/orders" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/client/1/orders"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-client--clientId--orders">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-client--clientId--orders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-client--clientId--orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-client--clientId--orders" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-client--clientId--orders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-client--clientId--orders"></code></pre>
+</span>
+<form id="form-GETapi-client--clientId--orders" data-method="GET"
+      data-path="api/client/{clientId}/orders"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-client--clientId--orders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-client--clientId--orders"
+                    onclick="tryItOut('GETapi-client--clientId--orders');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-client--clientId--orders"
+                    onclick="cancelTryOut('GETapi-client--clientId--orders');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-client--clientId--orders" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/client/{clientId}/orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-client--clientId--orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-client--clientId--orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>clientId</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               name="clientId"                data-endpoint="GETapi-client--clientId--orders"
+               value="1"
+               data-component="url">
+    <br>
+<p>Example: <code>1</code></p>
+            </div>
+                    </form>
+
                 <h1 id="endpoints">Endpoints</h1>
 
     
 
-                                <h2 id="endpoints-GETapi-user">GET api/user</h2>
+                                <h2 id="endpoints-GETapi-user">Get authenticated user</h2>
 
 <p>
 </p>
@@ -2094,14 +2311,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/email/verify/ut/dignissimos" \
+    --get "http://localhost:8000/api/email/verify/nisi/quia" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/email/verify/ut/dignissimos"
+    "http://localhost:8000/api/email/verify/nisi/quia"
 );
 
 const headers = {
@@ -2202,10 +2419,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-email-verify--id---hash-"
-               value="ut"
+               value="nisi"
                data-component="url">
     <br>
-<p>The ID of the verify. Example: <code>ut</code></p>
+<p>The ID of the verify. Example: <code>nisi</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
@@ -2213,19 +2430,19 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="hash"                data-endpoint="GETapi-email-verify--id---hash-"
-               value="dignissimos"
+               value="quia"
                data-component="url">
     <br>
-<p>Example: <code>dignissimos</code></p>
+<p>Example: <code>quia</code></p>
             </div>
                     </form>
 
-                    <h2 id="endpoints-POSTapi-orders">Create a new order.</h2>
+                    <h2 id="endpoints-POSTapi-orders">Create a new order for a client.</h2>
 
 <p>
 </p>
 
-
+<p>This function takes in a <code>CreateOrderRequest</code> object as a parameter, which contains the request data for creating a new order. It validates the request data, checks if the delivering address ID exists for the authenticated client, and creates a new order in the database with the provided data. The prescription data is also filled in for the order. A JSON response is returned with the status message &quot;Order created successfully&quot; and the order data.</p>
 
 <span id="example-requests-POSTapi-orders">
 <blockquote>Example request:</blockquote>
@@ -2238,9 +2455,9 @@ access-control-allow-origin: *
     --header "Accept: application/json" \
     --data "{
     \"is_insured\": false,
-    \"delivering_address_id\": \"modi\",
+    \"delivering_address_id\": \"omnis\",
     \"prescription\": [
-        \"ducimus\"
+        \"dolorem\"
     ]
 }"
 </code></pre></div>
@@ -2258,9 +2475,9 @@ const headers = {
 
 let body = {
     "is_insured": false,
-    "delivering_address_id": "modi",
+    "delivering_address_id": "omnis",
     "prescription": [
-        "ducimus"
+        "dolorem"
     ]
 };
 
@@ -2363,10 +2580,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="delivering_address_id"                data-endpoint="POSTapi-orders"
-               value="modi"
+               value="omnis"
                data-component="body">
     <br>
-<p>Example: <code>modi</code></p>
+<p>Example: <code>omnis</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>prescription</code></b>&nbsp;&nbsp;
@@ -2383,12 +2600,12 @@ fetch(url, {
         </div>
         </form>
 
-                    <h2 id="endpoints-GETapi-orders">Retrieve a list of orders for the authenticated client.</h2>
+                    <h2 id="endpoints-GETapi-orders">Retrieve the orders for a client.</h2>
 
 <p>
 </p>
 
-
+<p>This function retrieves the orders associated with the authenticated client. It queries the <code>Order</code> model to fetch all orders that have the same client ID as the authenticated client. The retrieved orders are then transformed into a collection of <code>OrderResource</code> objects and returned as the response.</p>
 
 <span id="example-requests-GETapi-orders">
 <blockquote>Example request:</blockquote>
@@ -2499,12 +2716,12 @@ access-control-allow-origin: *
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-orders--id-">Display the specified order.</h2>
+                    <h2 id="endpoints-GETapi-orders--id-">Retrieve the details of a specific order.</h2>
 
 <p>
 </p>
 
-
+<p>This function retrieves the details of a specific order identified by the given ID. It queries the <code>Order</code> model to find the order with the provided ID. If the order is found, it is transformed into an <code>OrderResource</code> object and returned as the response. If the order is not found, an appropriate error response is returned.</p>
 
 <span id="example-requests-GETapi-orders--id-">
 <blockquote>Example request:</blockquote>
@@ -2627,12 +2844,12 @@ access-control-allow-origin: *
             </div>
                     </form>
 
-                    <h2 id="endpoints-PUTapi-orders--id-">Update an existing order.</h2>
+                    <h2 id="endpoints-PUTapi-orders--id-">Update the details of an existing order.</h2>
 
 <p>
 </p>
 
-
+<p>This function updates the details of an existing order identified by the given ID. It first retrieves the order using the <code>Order</code> model and checks if the order status is &quot;new&quot;. If the order status is &quot;new&quot;, it then validates and updates the order details based on the provided request data. If the updated order details are valid, the order is saved and a success response is returned with the updated order details. If the order status is not &quot;new&quot;, an appropriate error response is returned indicating that the order cannot be updated. If the delivering address ID provided in the request does not exist for the client, another error response is returned indicating the same.</p>
 
 <span id="example-requests-PUTapi-orders--id-">
 <blockquote>Example request:</blockquote>
@@ -2645,9 +2862,9 @@ access-control-allow-origin: *
     --header "Accept: application/json" \
     --data "{
     \"is_insured\": false,
-    \"delivering_address_id\": \"dolor\",
+    \"delivering_address_id\": \"corrupti\",
     \"prescription\": [
-        \"cupiditate\"
+        \"consequatur\"
     ]
 }"
 </code></pre></div>
@@ -2665,9 +2882,9 @@ const headers = {
 
 let body = {
     "is_insured": false,
-    "delivering_address_id": "dolor",
+    "delivering_address_id": "corrupti",
     "prescription": [
-        "cupiditate"
+        "consequatur"
     ]
 };
 
@@ -2782,10 +2999,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="delivering_address_id"                data-endpoint="PUTapi-orders--id-"
-               value="dolor"
+               value="corrupti"
                data-component="body">
     <br>
-<p>Example: <code>dolor</code></p>
+<p>Example: <code>corrupti</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>prescription</code></b>&nbsp;&nbsp;
@@ -2819,14 +3036,14 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/client/atque/address/quibusdam" \
+    "http://localhost:8000/api/client/autem/address/quasi" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/client/atque/address/quibusdam"
+    "http://localhost:8000/api/client/autem/address/quasi"
 );
 
 const headers = {
@@ -2929,10 +3146,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="clientId"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
-               value="atque"
+               value="autem"
                data-component="url">
     <br>
-<p>The ID of the client who owns the address. Example: <code>atque</code></p>
+<p>The ID of the client who owns the address. Example: <code>autem</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>addressId</code></b>&nbsp;&nbsp;
@@ -2940,10 +3157,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="addressId"                data-endpoint="DELETEapi-client--clientId--address--addressId-"
-               value="quibusdam"
+               value="quasi"
                data-component="url">
     <br>
-<p>The ID of the address to be deleted. Example: <code>quibusdam</code></p>
+<p>The ID of the address to be deleted. Example: <code>quasi</code></p>
             </div>
                     </form>
 
