@@ -8,6 +8,7 @@
     </div>
 
     <table class="table table-dark table-striped mt-4 " style="max-width: 85% !important;" id="orders-table">
+    
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -18,6 +19,7 @@
                 <th scope="col">is_insured</th>
                 <th scope="col">Actions</th>
             </tr>
+            <button class="btn btn-success" onclick="()=>{refreshTable()}" id="reload">reload</button>
         </thead>
         <tbody>
             <x-modal role="order"></x-modal>
@@ -66,7 +68,12 @@ $(function() {
         ]
     });
 });
-
+$(function() {
+    $('#reload').on('click',()=>{
+    var table =  $('#orders-table');
+    table.DataTable().ajax.reload();
+    })
+})
 $(document).on('click', '.delete', function() {
     window.orderId = $(this).attr('id');
     var id = window.orderId;
