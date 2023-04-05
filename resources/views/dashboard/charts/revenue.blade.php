@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div style="width: 400px; height:200px; display:grid; place-items:center; margin:auto;">
-        <canvas id="revenue-chart"></canvas>
-    </div>
-    <div class="chartWrapper" style="height:201px; display:flex;justify-content:center;">
+    {{-- <div style="width: 400px; height:200px; display:grid; place-items:center; margin:auto;">
+    </div> --}}
+    <div class="chartWrapper" style="height:275px; display:flex;justify-content:center;">
         <canvas id="gender-chart"></canvas>
+        <canvas id="revenue-chart"></canvas>
         <canvas id="ordersChart"></canvas>
     </div>
 </div>
@@ -91,7 +91,7 @@ var userChart =  $(document).ready(function() {
                         'rgba(75, 192, 192, 0.5)'
                     ],
                 }]
-                
+
             };
             var chart = new Chart(document.getElementById('ordersChart'), {
                 type: 'pie',

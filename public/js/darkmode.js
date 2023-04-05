@@ -6,6 +6,7 @@ let navLinkText = document.querySelector(".nav-link-text");
 let i = document.querySelector('i');
 let footer = document.querySelector('footer');
 let aside = document.querySelector('aside');
+let chartWrapper = document.querySelector(".chartWrapper");
 
 
 const savedValue = localStorage.getItem("site-mode");
