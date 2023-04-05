@@ -2,11 +2,3 @@
 .darkMode .tfoot {
     background-color: black !important;
 }
-
-.darkMode nav, .darkMode i{
-    color: white !important;
-}
-
-.darkMode h2 , .darkMode h1{
-    color: white !important;
-}
