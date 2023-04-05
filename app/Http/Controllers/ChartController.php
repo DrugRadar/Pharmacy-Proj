@@ -19,10 +19,8 @@ class ChartController extends Controller
     } 
     public function revenue()
     {
-        // Get the current year
         $currentYear = Carbon::now()->year;
         if (Auth::user()->roles[0]->name == 'admin') {
-    // Query the orders table for the revenue by month for the current year
          $revenueData = Order::selectRaw('MONTH(created_at) as month, SUM(total_price) as revenue')
         ->whereYear('created_at', $currentYear)
         ->groupBy('month')
@@ -37,20 +35,13 @@ class ChartController extends Controller
             ->orderBy('month')
             ->get();
         }
-        // Create arrays for the labels and data values
-        $labels = $revenueData->pluck('month')->toArray();
-        $data = $revenueData->pluck('revenue')->toArray();
-
-        // Return the chart view with the labels and data
         return response()->json(['data' => $revenueData]);
-        // return view('dashboard.charts.revenue', compact('labels', 'data'));
     }
 
     public function genderAttendance()
     {
          $males = Client::where('gender', 'male')->count();
         $females = Client::where('gender', 'female')->count();
-
         return response()->json([
             'labels' => ['Males', 'Females'],
             'datasets' => [
@@ -60,20 +51,18 @@ class ChartController extends Controller
                 ]
             ]
         ]);
-
     }
 
     public function topUsers()
 {
     $client = Client::all();
-
     $data = DB::table('orders')
-                ->select(DB::raw('client_id, COUNT(*) as orders'))
+                ->join('clients','orders.client_id', '=', 'clients.id')
+                ->select(DB::raw('name, COUNT(*) as orders'))
                 ->groupBy('client_id')
                 ->orderByDesc('orders')
                 ->limit(10)
                 ->get();
-
     return response()->json(['data' => $data]);
 }
 
