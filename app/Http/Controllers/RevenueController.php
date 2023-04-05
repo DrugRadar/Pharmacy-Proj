@@ -25,7 +25,7 @@ class RevenueController extends Controller
                 })
                 ->addColumn('totalRevenue', function (Pharmacy $pharmacy) {
                     $ordersRevenue = DB::table('orders')->where('assigned_pharmacy_id', $pharmacy->id)
-                                                    ->where('status', 'confirmed')
+                                                    ->where('status', 'delivered')
                                                     ->sum('total_price');
                     return $ordersRevenue;
                 })
