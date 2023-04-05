@@ -41,5 +41,4 @@ class Doctor extends Model implements BannableContract, HasMedia
     }
 
 
-
 }
