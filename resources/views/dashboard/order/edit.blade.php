@@ -31,7 +31,6 @@
         </div>
         <div class="mb-3 mt-3 col-4 p-0">
             <label for="exampleFormControlInput1" class="form-label">Client Address</label>
-            <!-- <input class="form-control w-50" style="width: 50%" name="client_address" id="exampleFormControlInput1" value="{{$clientAddress->street_name}}" disabled> -->
             <select class="js-example-basic-single js-example-responsive form-control w-50" style="width: 50%" name="client_address_id" value="{{$clientAddress->street_name}}">
             @foreach($addresses as $address)
                             <option  value="{{$address->id}}">{{

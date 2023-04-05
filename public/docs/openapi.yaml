@@ -96,23 +96,23 @@ paths:
                 street_name:
                   type: string
                   description: 'The street name of the address.'
-                  example: quia
+                  example: ut
                 building_number:
                   type: string
                   description: 'The building number of the address.'
-                  example: accusantium
+                  example: inventore
                 floor_number:
                   type: string
                   description: 'The floor number of the address.'
-                  example: non
+                  example: et
                 flat_number:
                   type: string
                   description: 'The flat number of the address.'
-                  example: excepturi
+                  example: eligendi
                 is_main:
                   type: boolean
                   description: 'Whether the address is the main address of the client.'
-                  example: false
+                  example: true
               required:
                 - street_name
                 - building_number
@@ -180,7 +180,7 @@ paths:
         in: path
         name: addressId
         description: ''
-        example: 1
+        example: 7
         required: true
         schema:
           type: integer
@@ -207,6 +207,44 @@ paths:
       responses: {  }
       tags:
         - 'Address management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                street_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: zsmoimjjep
+                building_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 16
+                floor_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 67
+                flat_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 8
+                is_main:
+                  type: string
+                  description: 'Must be one of <code>0</code> or <code>1</code>.'
+                  example: '1'
+                area_id:
+                  type: string
+                  description: ''
+                  example: odit
+              required:
+                - street_name
+                - building_number
+                - floor_number
+                - flat_number
+                - is_main
+                - area_id
       security: []
   '/api/address/{id}':
     get:
@@ -249,7 +287,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the address.'
-        example: 1
+        example: 7
         required: true
         schema:
           type: integer
@@ -342,7 +380,7 @@ paths:
                 gender:
                   type: string
                   description: 'Must be one of <code>male</code> or <code>female</code>.'
-                  example: female
+                  example: male
                 password:
                   type: string
                   description: 'The password of the client.'
@@ -350,7 +388,7 @@ paths:
                 date_of_birth:
                   type: string
                   description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
-                  example: '2010-01-17'
+                  example: '1999-03-30'
                 avatar_image:
                   type: string
                   format: binary
@@ -358,11 +396,11 @@ paths:
                 mobile_number:
                   type: string
                   description: 'Must not be greater than 20 characters.'
-                  example: wcgdbfjcwuxuxnku
+                  example: huwyerkanzj
                 national_id:
                   type: string
                   description: 'Must be 14 digits.'
-                  example: '17850698088476'
+                  example: '05072619594761'
                 phone:
                   type: string
                   description: 'The phone number of the client.'
@@ -483,15 +521,15 @@ paths:
                 email:
                   type: string
                   description: 'The email of the client.'
-                  example: mdare@example.org
+                  example: ofelia88@example.org
                 password:
                   type: string
                   description: 'The password of the client.'
-                  example: 'v8.b*EO2!:v'
+                  example: '}''M@\/7fcuF.dY'
                 device_name:
                   type: string
                   description: 'The name of the device.'
-                  example: suscipit
+                  example: debitis
               required:
                 - email
                 - password
@@ -525,7 +563,7 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Client] recusandae'
+                  message: 'No query results for model [App\Models\Client] architecto'
                   exception: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
                   file: 'C:\Users\radwa\OneDrive\Desktop\open source RADWA\Laravel\LaravelFinalProject\Pharmacy-Proj\vendor\laravel\framework\src\Illuminate\Foundation\Exceptions\Handler.php'
                   line: 408
@@ -887,7 +925,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Client] recusandae'
+                    example: 'No query results for model [App\Models\Client] architecto'
                   exception:
                     type: string
                     example: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -1280,7 +1318,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the verify email.'
-        example: recusandae
+        example: architecto
         required: true
         schema:
           type: string
@@ -1288,7 +1326,7 @@ paths:
         in: path
         name: hash
         description: ''
-        example: et
+        example: neque
         required: true
         schema:
           type: string
@@ -1325,7 +1363,7 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: njwrt
+                  example: lzejdix
                 gender:
                   type: string
                   description: 'Must be one of <code>male</code> or <code>female</code>.'
@@ -1333,7 +1371,7 @@ paths:
                 date_of_birth:
                   type: string
                   description: 'Must be a valid date. Must be a date before or equal to <code>today</code>.'
-                  example: '2003-02-15'
+                  example: '1994-08-14'
                 avatar_image:
                   type: string
                   format: binary
@@ -1341,11 +1379,11 @@ paths:
                 mobile_number:
                   type: string
                   description: 'Must not be greater than 20 characters.'
-                  example: chavkpqdbxiqfz
+                  example: ltdwfunn
                 national_id:
                   type: string
                   description: 'Must not be greater than 20 characters.'
-                  example: pouahngjrlqxsvi
+                  example: jdlsxyuvxegfpdndrn
               required:
                 - name
                 - gender
@@ -1397,10 +1435,55 @@ paths:
         required: true
         schema:
           type: integer
-  /api/user:
+  '/api/client/{clientId}/orders':
     get:
       summary: ''
-      operationId: getApiUser
+      operationId: getApiClientClientIdOrders
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - 'Client management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: clientId
+        description: ''
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/user:
+    get:
+      summary: 'Get authenticated user'
+      operationId: getAuthenticatedUser
       description: ''
       parameters:
         -
@@ -1474,7 +1557,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the verify.'
-        example: ut
+        example: nisi
         required: true
         schema:
           type: string
@@ -1482,15 +1565,15 @@ paths:
         in: path
         name: hash
         description: ''
-        example: dignissimos
+        example: quia
         required: true
         schema:
           type: string
   /api/orders:
     post:
-      summary: 'Create a new order.'
-      operationId: createANewOrder
-      description: ''
+      summary: 'Create a new order for a client.'
+      operationId: createANewOrderForAClient
+      description: 'This function takes in a `CreateOrderRequest` object as a parameter, which contains the request data for creating a new order. It validates the request data, checks if the delivering address ID exists for the authenticated client, and creates a new order in the database with the provided data. The prescription data is also filled in for the order. A JSON response is returned with the status message "Order created successfully" and the order data.'
       parameters:
         -
           in: header
@@ -1523,12 +1606,12 @@ paths:
                 delivering_address_id:
                   type: string
                   description: ''
-                  example: modi
+                  example: omnis
                 prescription:
                   type: array
                   description: ''
                   example:
-                    - ducimus
+                    - dolorem
                   items:
                     type: string
               required:
@@ -1537,9 +1620,9 @@ paths:
                 - prescription
       security: []
     get:
-      summary: 'Retrieve a list of orders for the authenticated client.'
-      operationId: retrieveAListOfOrdersForTheAuthenticatedClient
-      description: ''
+      summary: 'Retrieve the orders for a client.'
+      operationId: retrieveTheOrdersForAClient
+      description: 'This function retrieves the orders associated with the authenticated client. It queries the `Order` model to fetch all orders that have the same client ID as the authenticated client. The retrieved orders are then transformed into a collection of `OrderResource` objects and returned as the response.'
       parameters:
         -
           in: header
@@ -1573,9 +1656,9 @@ paths:
       security: []
   '/api/orders/{id}':
     get:
-      summary: 'Display the specified order.'
-      operationId: displayTheSpecifiedOrder
-      description: ''
+      summary: 'Retrieve the details of a specific order.'
+      operationId: retrieveTheDetailsOfASpecificOrder
+      description: 'This function retrieves the details of a specific order identified by the given ID. It queries the `Order` model to find the order with the provided ID. If the order is found, it is transformed into an `OrderResource` object and returned as the response. If the order is not found, an appropriate error response is returned.'
       parameters:
         -
           in: header
@@ -1608,9 +1691,9 @@ paths:
         - Endpoints
       security: []
     put:
-      summary: 'Update an existing order.'
-      operationId: updateAnExistingOrder
-      description: ''
+      summary: 'Update the details of an existing order.'
+      operationId: updateTheDetailsOfAnExistingOrder
+      description: 'This function updates the details of an existing order identified by the given ID. It first retrieves the order using the `Order` model and checks if the order status is "new". If the order status is "new", it then validates and updates the order details based on the provided request data. If the updated order details are valid, the order is saved and a success response is returned with the updated order details. If the order status is not "new", an appropriate error response is returned indicating that the order cannot be updated. If the delivering address ID provided in the request does not exist for the client, another error response is returned indicating the same.'
       parameters:
         -
           in: header
@@ -1643,12 +1726,12 @@ paths:
                 delivering_address_id:
                   type: string
                   description: ''
-                  example: dolor
+                  example: corrupti
                 prescription:
                   type: array
                   description: ''
                   example:
-                    - cupiditate
+                    - consequatur
                   items:
                     type: string
               required:

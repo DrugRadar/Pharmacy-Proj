@@ -12,8 +12,6 @@ use App\Http\Requests\UpdateAddressRequest;
 
 class AddressController extends Controller
 {
-
-
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Address::withTrashed()->latest()->get();
@@ -82,6 +80,7 @@ class AddressController extends Controller
         Address::withTrashed()->find($id)->restore();
         return back();
     }
+
     private function showActionBtns($row){
         $actionBtn = '<a id="$row->id" class="btn btn-primary" title="Click to edit address" href="' . route('address.edit', $row->id) . '"><i class=\'bx bx-edit\'></i></a>  ';
         if($row['deleted_at']){

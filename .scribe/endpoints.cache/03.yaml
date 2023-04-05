@@ -31,12 +31,12 @@ endpoints:
         name: addressId
         description: ''
         required: true
-        example: 1
+        example: 7
         type: integer
         custom: []
     cleanUrlParameters:
       clientId: 1
-      addressId: 1
+      addressId: 7
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -44,43 +44,43 @@ endpoints:
         name: street_name
         description: 'The street name of the address.'
         required: true
-        example: quia
+        example: ut
         type: string
         custom: []
       building_number:
         name: building_number
         description: 'The building number of the address.'
         required: true
-        example: accusantium
+        example: inventore
         type: string
         custom: []
       floor_number:
         name: floor_number
         description: 'The floor number of the address.'
         required: true
-        example: non
+        example: et
         type: string
         custom: []
       flat_number:
         name: flat_number
         description: 'The flat number of the address.'
         required: true
-        example: excepturi
+        example: eligendi
         type: string
         custom: []
       is_main:
         name: is_main
         description: 'Whether the address is the main address of the client.'
         required: true
-        example: false
+        example: true
         type: boolean
         custom: []
     cleanBodyParameters:
-      street_name: quia
-      building_number: accusantium
-      floor_number: non
-      flat_number: excepturi
-      is_main: false
+      street_name: ut
+      building_number: inventore
+      floor_number: et
+      flat_number: eligendi
+      is_main: true
     fileParameters: []
     responses:
       -

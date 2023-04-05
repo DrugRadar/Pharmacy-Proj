@@ -21,7 +21,7 @@
             <label for="addressArea" class="form-label">Area</label>
             <select name="area_id" class="form-control w-100" id="addressArea">
                 @foreach($areas as $area)
-                <option value="{{$area->id}}" {{ old('area_id', $area->id) == $area->id ? 'selected' : '' }}>{{$area->name}}</option>
+                <option value="{{$area->id}}" {{ old('area_id', $address->area_id) == $area->id ? 'selected' : '' }}>{{$area->name}}</option>
                 @endforeach
             </select>
             @error('area_id')
