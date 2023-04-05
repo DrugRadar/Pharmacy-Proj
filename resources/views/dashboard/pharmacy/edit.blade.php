@@ -50,7 +50,7 @@
 
                         <div class="mb-2 col-12">
                             <label for="PasswordInput" class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control w-100" id="PasswordInput" placeholder="Pharmacy Password" value="{{ old('password', $pharmacy->password) }}">
+                            <input type="text" name="password" class="form-control w-100" id="PasswordInput" placeholder="Pharmacy Password">
                             @error('password')
                                 <p class="text-danger mt-1">{{ $message }}</p>
                             @enderror

@@ -40,11 +40,11 @@ class Doctor extends Model implements BannableContract, HasMedia
         return $this->morphOne(User::class, 'userable');
     }
 
-    protected function createdAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('d-m-Y'),
-        );
-    }
+    // protected function createdAt(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => Carbon::parse($value)->format('d-m-Y'),
+    //     );
+    // }
 
 }
