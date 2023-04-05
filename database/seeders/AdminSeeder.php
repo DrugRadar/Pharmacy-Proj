@@ -14,12 +14,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-       $admin=User::factory(1)->create([
+       $admin=User::create([
             'name' => 'admin',
-            'email' => 'admin@admin.com',
+            'email' => 'admin1@admin.com',
             'password' => Hash::make('123456'),
             'is_admin' => true
-        ]);
-        $admin->assignRole(['admin']);
+        ])->assignRole('admin');
+
     }
 }

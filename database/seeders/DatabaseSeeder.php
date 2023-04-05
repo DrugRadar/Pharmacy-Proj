@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MedicineSeeder::class);
         $this->call(PermissionsSeeder::class);
         $this->call(CountriesSeeder::class);
+        $this->call(AdminSeeder::class);
         $this->command->info('Seeded the countries!');
-        // $this->call(AdminSeeder::class);
+       
     }
 }
