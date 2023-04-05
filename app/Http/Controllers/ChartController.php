@@ -57,8 +57,7 @@ class ChartController extends Controller
 {
     $client = Client::all();
     $data = DB::table('orders')
-                ->join('clients','orders.client_id', '=', 'clients.id')
-                ->select(DB::raw('name, COUNT(*) as orders'))
+                ->select(DB::raw('client_id, COUNT(*) as orders'))
                 ->groupBy('client_id')
                 ->orderByDesc('orders')
                 ->limit(10)
