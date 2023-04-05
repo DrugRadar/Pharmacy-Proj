@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use App\Models\Address;
 
 class ScanNewOrders extends Command
 {
@@ -34,7 +35,8 @@ class ScanNewOrders extends Command
         foreach ($new_orders as $order) {
             $pharmacy = null;
             foreach ($pharmacies as $p) {
-                if ($p->area_id == $order->client_address_id) {
+            $address = Address::where('id',$order->client_address_id)->first();
+                if ($p->area_id == $address->area_id) {
                     if ($pharmacy == null || $p->priority > $pharmacy->priority) {
                     $pharmacy = $p;
                     }
