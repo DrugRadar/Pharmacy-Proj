@@ -7,6 +7,7 @@ let i = document.querySelector('i');
 let footer = document.querySelector('footer');
 let aside = document.querySelector('aside');
 let chartWrapper = document.querySelector(".chartWrapper");
+let html = document.querySelector('html');
 
 
 const savedValue = localStorage.getItem("site-mode");
@@ -15,12 +16,14 @@ if (savedValue !== null) {
     if(darkmodebtn.checked){
         body.classList.add("darkMode")
         footer.classList.add("bg-gradient-dark");
+        html.style.backgroundColor = "black !important";
     }
     else{
         body.classList.add("lightMode");
         footer.classList.remove("bg-gradient-dark");
         footer.style.backgroundColor = "rgba(0,0,0,0.5)";
         nav.style.backgroundColor = "rgba(0,0,0,0.5)";
+        // html.style.backgroundColor = "black !important";
     }
 }
 
