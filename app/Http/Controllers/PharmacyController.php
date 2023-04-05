@@ -100,7 +100,7 @@ class PharmacyController extends Controller
 
     public function destroy($id){
         $pharmacyOrders = Order::where([['assigned_pharmacy_id',$id],['status' , '!=', 'delivered']])->get();
-        if(!$pharmacyOrders){
+        if( ! count($pharmacyOrders) > 0 ){
             Pharmacy::destroy($id);
             return redirect()->route('pharmacy.index');
         }

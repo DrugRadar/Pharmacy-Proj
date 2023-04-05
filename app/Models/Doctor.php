@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Models;
-use Cog\Laravel\Ban\Traits\Bannable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Cog\Contracts\Ban\Bannable as BannableContract;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
+use Carbon\Carbon;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Cog\Laravel\Ban\Traits\Bannable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Cog\Contracts\Ban\Bannable as BannableContract;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Doctor extends Model implements BannableContract, HasMedia
 {
@@ -28,11 +31,20 @@ class Doctor extends Model implements BannableContract, HasMedia
         'national_id',
         'pharmacy_id',
     ];
+
     public function pharmacy(){
         return $this->belongsTo(Pharmacy::class);
     }
-    public function user()
-    {
+
+    public function user(){
         return $this->morphOne(User::class, 'userable');
     }
+
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('d-m-Y'),
+        );
+    }
+
 }

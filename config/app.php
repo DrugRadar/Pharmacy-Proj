@@ -201,6 +201,8 @@ return [
         Cog\Laravel\Ban\Providers\BanServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Knuckles\Scribe\ScribeServiceProvider::class,
+
 
 
     ],

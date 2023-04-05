@@ -16,6 +16,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
     <link rel="stylesheet" href="{{asset('css/DarkToggleStyle.css')}}">
     <link rel="stylesheet" href="{{asset('css/logo.css')}}">
+    <link rel="stylesheet" href="{{asset('css/darkMode.css')}}">
+    <link rel="stylesheet" href="{{asset('css/lightmode.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet"
@@ -31,8 +33,6 @@
     }
     </style>
 </head>
-
-
 
 <body class="g-sidenav-show bg-gray-200">
     <aside
@@ -210,7 +210,7 @@
                 @endif
                 @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('chart.revenue')}}">
+                    <a class="nav-link " href="{{route('chart.index')}}">
                         <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-stats' style="font-size: 25px;"></i>
                         </div>
