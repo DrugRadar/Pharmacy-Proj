@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\CreateOrderRequest;
-use App\Http\Resources\OrderResource;
-use App\Models\Address;
 use App\Models\Order;
+use App\Models\Address;
 use App\Models\OrderPrescription;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Api\CreateOrderRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends Controller
