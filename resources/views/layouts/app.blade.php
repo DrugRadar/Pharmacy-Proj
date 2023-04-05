@@ -210,7 +210,7 @@
                 @endif
                 @if(Auth::user()->hasrole('admin')||Auth::user()->hasrole('pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('chart.revenue')}}">
+                    <a class="nav-link " href="{{route('chart.index')}}">
                         <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-stats' style="font-size: 25px;"></i>
                         </div>
@@ -218,7 +218,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('chart.index')}}">
+                    <a class="nav-link " href="{{route('revenue.index')}}">
                         <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                             <i class='bx bx-dollar' style="font-size: 25px;"></i>
                         </div>
