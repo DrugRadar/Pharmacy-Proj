@@ -51,7 +51,7 @@
 
                         <div class="mb-3 col-6">
                             <label for="doctorPassword" class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control w-100" id="doctorPassword" placeholder="Doctor Password" >
+                            <input type="password" name="password" class="form-control w-100" id="doctorPassword" placeholder="Doctor Password" >
                             @error('password')
                                 <p class="text-danger mt-1">{{ $message }}</p>
                             @enderror

@@ -8,9 +8,9 @@
     <form method="POST" action="{{route('order.continue',[$order->id])}}" enctype="multipart/form-data">
         @csrf
         @if($order->orderPrescription )
-        <div class="mb-3 mt-3 col-4 p-0">
+        <div class="mb-3 mt-3 col-4 p-0 d-flex">
+        <label for="exampleFormControlInput1" class="form-label">Prescription</label>
             @foreach($order->orderPrescription as $orderPrescription)
-            <label for="exampleFormControlInput1" class="form-label">Prescription</label>
             <img id="exampleFormControlInput1"src="{{url('storage/image/'.$orderPrescription->prescription)}}" style="width:200px;height:200px"/>
             @endforeach
         </div>
