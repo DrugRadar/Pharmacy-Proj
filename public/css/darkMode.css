@@ -1,17 +1,3 @@
 .darkMode{
     background-image: linear-gradient( #000000,#5d9ca3) !important;
 }
-
-.darkMode .card{
-    background-color: #121212 !important;
-}
-
-.darkMode .card input,
-.darkMode .card select{
-    background-color: black !important;
-    border: none !important;
-}
-
-.darkMode table{
-
-}
