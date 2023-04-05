@@ -32,5 +32,4 @@ class Medicine extends Model
             set : fn (int $value) => ($value*100),
         );
     }
-
 }
