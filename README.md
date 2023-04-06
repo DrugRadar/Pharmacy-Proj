@@ -74,7 +74,7 @@ php artisan create:admin --email=name@example.com --password=123456
 
 ## Support
 
-If you our work, feel free to:
+If you like our work, feel free to:
 
 ⭐ this repository. It helps.
 
