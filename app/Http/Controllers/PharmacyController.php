@@ -93,6 +93,7 @@ class PharmacyController extends Controller
         $pharmacy->name = $request->name;
         $pharmacy->email = $request->email;
         $pharmacy->password = Hash::make($request->password);
+        if($request->priority)
         $pharmacy->priority = $request->priority;
         $pharmacy->national_id = $request->national_id;
         $pharmacy->save();

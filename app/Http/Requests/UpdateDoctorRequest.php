@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,7 +28,7 @@ class UpdateDoctorRequest extends FormRequest
             'name' => ['required', "max:255"],
             'email' => ['required', "max:255",'email', Rule::unique('users')->ignore($this->getDoctorIdInUser())],
             'password' => ['required', "max:255",'min:6'],
-            'national_id' => ['required','integer','digits:14', Rule::unique('doctors')->ignore($this->doctor)],
+            'national_id' => ['required','integer','digits:14', Rule::unique('doctors')->ignore(Auth::user()->roles[0]->name=='doctor' ?  $this->id :$this->doctor)],
             'avatar_image' => ['image', "max:255",'mimes:jpeg,jpg,png'],
             'pharmacy_id' => ["required", "exists:pharmacies,id"],
         ];
@@ -42,7 +43,13 @@ class UpdateDoctorRequest extends FormRequest
     }
 
     public function getDoctorIdInUser() {
-        $user =  User::where('userable_id', $this->doctor)
+        if(Auth::user()->roles[0]->name=='doctor'){
+            $id = $this->id ; 
+        }
+        else{
+            $id = $this -> doctor ; 
+        }
+        $user =  User::where('userable_id', $id)
             ->where('userable_type', 'App\Models\Doctor')
             ->get();
         return $user->first()->id;
