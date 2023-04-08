@@ -60,11 +60,13 @@
                         <div class="mb-3 col-6">
                             <label for="doctorPharmacy" class="form-label">pharmacy Name</label>
                             <select name="pharmacy_id" class="form-control w-100" id="doctorPharmacy">
-                                {{Auth::user()->hasrole('admin')?' ':''}}
                                 @if(Auth::user()->hasrole('admin'))
                                 @foreach($pharmacies as $pharmacy)
                                 <option value="{{$pharmacy->id}}" {{ old('pharmacy_id', $doctor->pharmacy_id) == $pharmacy->id ? 'selected' : '' }}>{{$pharmacy->name}}</option>
-                                @endforeach
+                                @endforeach                         
+                            
+                                @else
+                                <option value="{{$doctor->pharmacy->id}}">{{$doctor->pharmacy->name}}</option>
                                 @endif
                             </select>
                             @error('pharmacy_id')
